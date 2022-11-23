@@ -4,7 +4,7 @@ import {useCallback, useEffect, useMemo, useState} from "react";
 import axios from "axios";
 
 const Abcd = () => {
-  const { user, isValid, refresh } = useTelegramWebApp()
+  const {user, isValid, refresh} = useTelegramWebApp()
   const [data, setData] = useState<{
     integralReward: number,
     total: number,
@@ -42,8 +42,6 @@ const Abcd = () => {
     if (!user || data.length === 0) {
       return undefined
     } else {
-      // query data while chat_id = user.id
-       console.log( data.filter((item) => item.chat_id === String(user.id)))
        return data.find((item) => item.chat_id === String(user.id))
     }
   }, [data, user])
@@ -54,7 +52,7 @@ const Abcd = () => {
 
   return (
     <Stack w={'full'} maxW={'container.sm'} p={'20px'} spacing={'10px'}>
-      { user && userInfo && (
+      {user && userInfo && (
         <>
           <Text fontSize={'20px'} fontWeight={'bold'}>Your Ranking</Text>
           <HStack p={'10px'} bg={'#ECDDDD'} borderRadius={'10px'} spacing={'20px'}>
@@ -72,13 +70,13 @@ const Abcd = () => {
           </HStack>
           <Stack h={'20px'}></Stack>
         </>
-      ) }
+      )}
 
       <Text fontSize={'20px'} fontWeight={'bold'}>Ranking</Text>
-      { data.length > 0 ? data.slice(0, 50).map((item, index) => (
+      {data.length > 0 ? data.slice(0, 50).map((item, index) => (
         <HStack key={item.chat_id} p={'10px'} bg={'#ECDDDD'} borderRadius={'10px'} spacing={'20px'}>
           <Stack minW={'40px'} minH={'40px'} bg={'red'} align={"center"} justify={"center"} borderRadius={'full'}>
-            <Text color={'white'}>{index+1}</Text>
+            <Text color={'white'}>{index + 1}</Text>
           </Stack>
           <Stack w={'full'}>
             <Text fontWeight={'bold'}>{item.wallet.slice(0, 10)}...{item.wallet.slice(-8)}</Text>
@@ -93,7 +91,7 @@ const Abcd = () => {
         <Text fontSize={'sm'}>
           loading...
         </Text>
-      ) }
+      )}
     </Stack>
   );
 }
