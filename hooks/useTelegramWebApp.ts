@@ -15,7 +15,7 @@ const useTelegramWebApp = () => {
   const [user, setUser] = useState<TelegramUser | undefined>(undefined)
   const [isValid, setIsValid] = useState<boolean>(false)
 
-  const refresh = useCallback(async () => {
+  const validInitData = useCallback(async () => {
     if (initData) {
       const res = await axios("/api/telegram", {
         method: "GET",
@@ -32,8 +32,8 @@ const useTelegramWebApp = () => {
     }
   }, [initData])
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
+  const getUser = async () => {
+    if (typeof window !== 'undefined' && !user) {
       // @ts-ignore
       window?.Telegram?.WebApp.ready();
       // @ts-ignore
@@ -43,16 +43,23 @@ const useTelegramWebApp = () => {
       setInitData(initData);
       setUser(initDataUnsafe?.user || undefined)
     }
+  }
+
+  useEffect(() => {
+    getUser();
   }, [])
 
   useEffect(() => {
-    refresh()
-  }, [refresh])
+    validInitData()
+  }, [validInitData])
+
+  setInterval(() => {
+    getUser()
+  }, 1000)
 
   return {
     user,
     isValid,
-    refresh,
   }
 }
 

@@ -4,7 +4,7 @@ import {useCallback, useEffect, useMemo, useState} from "react";
 import axios from "axios";
 
 const Abcd = () => {
-  const {user, refresh} = useTelegramWebApp()
+  const {user} = useTelegramWebApp()
   const [data, setData] = useState<{
     integralReward: number,
     total: number,
@@ -75,7 +75,7 @@ const Abcd = () => {
           <Stack h={'20px'}></Stack>
         </>
       ) : (
-        <Button onClick={refresh}>Login</Button>
+        <Text fontSize={'xs'}>No telegram user</Text>
       )}
       <Text fontSize={'20px'} fontWeight={'bold'}>Ranking</Text>
       {data.length > 0 ? data.slice(0, 50).map((item, index) => (
