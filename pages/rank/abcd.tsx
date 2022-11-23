@@ -42,7 +42,7 @@ const Abcd = () => {
     if (!user || data.length === 0) {
       return undefined
     } else {
-       return data.find((item) => item.chat_id === String(user.id))
+      return data.find((item) => item.chat_id === String(user.id))
     }
   }, [data, user])
 
@@ -52,27 +52,31 @@ const Abcd = () => {
 
   return (
     <Stack w={'full'} maxW={'container.sm'} p={'20px'} spacing={'10px'}>
-      <Text fontSize={'20px'} fontWeight={'bold'}>Your Ranking { user && ", @" + user.username }</Text>
-      {user && userInfo ? (
-        <HStack p={'10px'} bg={'#ECDDDD'} borderRadius={'10px'} spacing={'20px'}>
-          <Stack minW={'40px'} minH={'40px'} bg={'red'} align={"center"} justify={"center"} borderRadius={'full'}>
-            <Text color={'white'}>1</Text>
-          </Stack>
-          <Stack w={'full'}>
-            <Text fontWeight={'bold'}>{userInfo.wallet}</Text>
-            <HStack w={'full'}>
-              <Text fontSize={'sm'} color={'gray.800'}>Point: {userInfo.total}</Text>
-              <Spacer/>
-              <Text fontSize={'sm'} color={'gray.800'}>Giveaway: {userInfo.integralReward}</Text>
+      {user ? (
+        <>
+          <Text fontSize={'20px'} fontWeight={'bold'}>Your Ranking {user && ", @" + user.username}</Text>
+          {userInfo ? (
+            <HStack p={'10px'} bg={'#ECDDDD'} borderRadius={'10px'} spacing={'20px'}>
+              <Stack minW={'40px'} minH={'40px'} bg={'red'} align={"center"} justify={"center"} borderRadius={'full'}>
+                <Text color={'white'}>1</Text>
+              </Stack>
+              <Stack w={'full'}>
+                <Text fontWeight={'bold'}>{userInfo.wallet}</Text>
+                <HStack w={'full'}>
+                  <Text fontSize={'sm'} color={'gray.800'}>Point: {userInfo.total}</Text>
+                  <Spacer/>
+                  <Text fontSize={'sm'} color={'gray.800'}>Giveaway: {userInfo.integralReward}</Text>
+                </HStack>
+              </Stack>
             </HStack>
-          </Stack>
-        </HStack>
+          ) : (
+            <Text>You are not in list.</Text>
+          )}
+          <Stack h={'20px'}></Stack>
+        </>
       ) : (
-        <Button onClick={refresh}>
-          Refresh
-        </Button>
+        <Button onClick={refresh}>Login</Button>
       )}
-      <Stack h={'20px'}></Stack>
       <Text fontSize={'20px'} fontWeight={'bold'}>Ranking</Text>
       {data.length > 0 ? data.slice(0, 50).map((item, index) => (
         <HStack key={item.chat_id} p={'10px'} bg={'#ECDDDD'} borderRadius={'10px'} spacing={'20px'}>
