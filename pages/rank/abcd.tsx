@@ -1,4 +1,4 @@
-import {Button, HStack, Spacer, Stack, Text} from "@chakra-ui/react";
+import {HStack, Spacer, Stack, Text} from "@chakra-ui/react";
 import useTelegramWebApp from "../../hooks/useTelegramWebApp";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import axios from "axios";
@@ -38,11 +38,11 @@ const Abcd = () => {
     }
   }, [])
 
-  const userInfo = useMemo(() => {
+  const userIndex = useMemo(() => {
     if (!user || data.length === 0) {
       return undefined
     } else {
-      return data.find((item) => item.chat_id === String(user.id))
+      return data.findIndex((item) => item.chat_id === String(user.id))
     }
   }, [data, user])
 
@@ -55,17 +55,17 @@ const Abcd = () => {
       {user ? (
         <>
           <Text fontSize={'20px'} fontWeight={'bold'}>Your Ranking {user && ", @" + user.username}</Text>
-          {userInfo ? (
-            <HStack p={'10px'} bg={'#ECDDDD'} borderRadius={'10px'} spacing={'20px'}>
+          {userIndex && userIndex > 0 ? (
+            <HStack p={'10px'} bg={userIndex < 3 ? '#ECDDDD' : '#F2F2F2'} borderRadius={'10px'} spacing={'20px'}>
               <Stack minW={'40px'} minH={'40px'} bg={'red'} align={"center"} justify={"center"} borderRadius={'full'}>
-                <Text color={'white'}>1</Text>
+                <Text color={'white'}>{userIndex + 1}</Text>
               </Stack>
               <Stack w={'full'}>
-                <Text fontWeight={'bold'}>{userInfo.wallet}</Text>
+                <Text fontWeight={'bold'}>{data[userIndex].wallet}</Text>
                 <HStack w={'full'}>
-                  <Text fontSize={'sm'} color={'gray.800'}>Point: {userInfo.total}</Text>
+                  <Text fontSize={'sm'} color={'gray.800'}>Point: {data[userIndex].total}</Text>
                   <Spacer/>
-                  <Text fontSize={'sm'} color={'gray.800'}>Giveaway: {userInfo.integralReward}</Text>
+                  <Text fontSize={'sm'} color={'gray.800'}>Giveaway: {data[userIndex].integralReward}</Text>
                 </HStack>
               </Stack>
             </HStack>
@@ -79,7 +79,7 @@ const Abcd = () => {
       )}
       <Text fontSize={'20px'} fontWeight={'bold'}>Ranking</Text>
       {data.length > 0 ? data.slice(0, 50).map((item, index) => (
-        <HStack key={item.chat_id} p={'10px'} bg={'#ECDDDD'} borderRadius={'10px'} spacing={'20px'}>
+        <HStack key={item.chat_id} p={'10px'} bg={index < 3 ? '#ECDDDD' : '#F2F2F2'} borderRadius={'10px'} spacing={'20px'}>
           <Stack minW={'40px'} minH={'40px'} bg={'red'} align={"center"} justify={"center"} borderRadius={'full'}>
             <Text color={'white'}>{index + 1}</Text>
           </Stack>
