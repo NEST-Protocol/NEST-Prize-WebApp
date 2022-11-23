@@ -52,7 +52,7 @@ const Abcd = () => {
 
   return (
     <Stack w={'full'} maxW={'container.sm'} p={'20px'} spacing={'10px'}>
-      <Text fontSize={'20px'} fontWeight={'bold'}>Your Ranking</Text>
+      <Text fontSize={'20px'} fontWeight={'bold'}>Your Ranking { user && ", @" + user.username }</Text>
       {user && userInfo ? (
         <HStack p={'10px'} bg={'#ECDDDD'} borderRadius={'10px'} spacing={'20px'}>
           <Stack minW={'40px'} minH={'40px'} bg={'red'} align={"center"} justify={"center"} borderRadius={'full'}>
