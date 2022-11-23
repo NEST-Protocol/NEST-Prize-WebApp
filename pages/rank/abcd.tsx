@@ -70,7 +70,7 @@ const Abcd = () => {
               </Stack>
             </HStack>
           ) : (
-            <Text>You are not in list.</Text>
+            <Text fontSize={'xs'}>You are not in list.</Text>
           )}
           <Stack h={'20px'}></Stack>
         </>
