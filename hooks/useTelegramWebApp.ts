@@ -15,7 +15,7 @@ const useTelegramWebApp = () => {
   const [user, setUser] = useState<TelegramUser | undefined>(undefined)
   const [isValid, setIsValid] = useState<boolean>(false)
 
-  const valid = useCallback(async () => {
+  const refresh = useCallback(async () => {
     if (initData) {
       const res = await axios("/api/telegram", {
         method: "GET",
@@ -46,12 +46,13 @@ const useTelegramWebApp = () => {
   }, [])
 
   useEffect(() => {
-    valid()
-  }, [valid])
+    refresh()
+  }, [refresh])
 
   return {
     user,
     isValid,
+    refresh,
   }
 }
 
