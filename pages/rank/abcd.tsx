@@ -55,7 +55,7 @@ const Abcd = () => {
       {user ? (
         <>
           <Text fontSize={'20px'} fontWeight={'bold'}>Your Ranking {user && ", @" + user.username}</Text>
-          {userIndex && userIndex > 0 ? (
+          {userIndex !== undefined && userIndex >= 0 ? (
             <HStack p={'10px'} bg={userIndex < 3 ? '#ECDDDD' : '#F2F2F2'} borderRadius={'10px'} spacing={'20px'}>
               <Stack minW={'40px'} minH={'40px'} bg={'red'} align={"center"} justify={"center"} borderRadius={'full'}>
                 <Text color={'white'}>{userIndex + 1}</Text>
