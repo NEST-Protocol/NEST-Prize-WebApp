@@ -10,14 +10,14 @@ interface TelegramUser {
   language_code: string
 }
 
-const useTelegramWebApp = () => {
+const useTelegramAuth = () => {
   const [initData, setInitData] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<TelegramUser | undefined>(undefined)
   const [isValid, setIsValid] = useState<boolean>(false)
 
   const validInitData = useCallback(async () => {
     if (initData) {
-      const res = await axios("/api/telegram", {
+      const res = await axios("/api/auth", {
         method: "GET",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -63,4 +63,4 @@ const useTelegramWebApp = () => {
   }
 }
 
-export default useTelegramWebApp
+export default useTelegramAuth

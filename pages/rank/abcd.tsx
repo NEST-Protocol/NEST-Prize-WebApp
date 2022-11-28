@@ -1,10 +1,10 @@
 import {HStack, Spacer, Stack, Text} from "@chakra-ui/react";
-import useTelegramWebApp from "../../hooks/useTelegramWebApp";
+import useTelegramAuth from "../../hooks/useTelegramAuth";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import axios from "axios";
 
 const Abcd = () => {
-  const {user} = useTelegramWebApp()
+  const {user} = useTelegramAuth()
   const [data, setData] = useState<{
     integralReward: number,
     total: number,
