@@ -22,7 +22,6 @@
     "eslint-config-next": "13.0.4",
     "framer-motion": "^7.6.9",
     "next": "13.0.4",
-    "postgres": "^3.3.2",
     "qs": "^6.11.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
