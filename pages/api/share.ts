@@ -20,8 +20,13 @@ export default async function handler(
 </svg>
   `;
   // make svg to jpeg, and return it
-  const jpeg = await sharp(Buffer.from(svg)).jpeg().toBuffer();
-  res.setHeader("Content-Type", "image/jpeg");
+  // const jpeg = await sharp(Buffer.from(svg)).jpeg().toBuffer();
+  // res.setHeader("Content-Type", "image/jpeg");
+  // res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  // res.end(jpeg);
+
+  // return svg
+  res.setHeader("Content-Type", "image/svg+xml");
   res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
-  res.end(jpeg);
+  res.end(svg);
 }
