@@ -5,9 +5,6 @@ export default function Home() {
   return (
     <Stack maxW={'container.sm'} w={'full'} h={'full'} textAlign={"center"}>
       <Text>Welcome to NEST Prize!</Text>
-      <Link href={'/rank/abcd'}>
-        rank
-      </Link>
       <Link href={'/prize?code=abcd'}>
         Snatch Prize
       </Link>
