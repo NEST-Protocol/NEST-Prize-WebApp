@@ -5,8 +5,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const text = req.query.text as string || "Hello, world!";
-  const qr = await QRCode.toDataURL(text);
+  const from = req.query.from as string || "";
+  const qr = await QRCode.toDataURL(`https://t.me/NESTRedEnvelopesBot?start=${from}`);
   const svg = `
 <svg width="720" height="1280" viewBox="0 0 720 1280" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="720" height="1280" fill="url(#pattern0)"/>
