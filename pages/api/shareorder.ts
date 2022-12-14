@@ -24,8 +24,17 @@ export default async function handler(
 <path d="M395 482H393V522H395V482Z" fill="#A56250"/>
 </g>
 <image x="260" y="935" width="200" height="200" xlink:href="${qr}"/>
+<text x="232" y="316" fill="#013358" font-weight="bold" font-size="60px" font-family="Montserrat">+87.46%</text>
+<text x="107" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">Long</text>
+<text x="284" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">20x</text>
+<text x="438" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">ETH/USDT</text>
+<text x="470" y="630" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">1234.23</text>
+<text x="470" y="690" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">1234.23</text>
 </g>
 <defs>
+<style type="text/css">
+   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700");
+</style>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_6_2" transform="scale(0.00138889 0.00078125)"/>
 </pattern>
