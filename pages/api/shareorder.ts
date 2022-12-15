@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from "next";
 import QRCode from "qrcode";
+import sharp from "sharp"
 
 export default async function handler(
   req: NextApiRequest,
@@ -54,7 +55,9 @@ export default async function handler(
 </defs>
 </svg>
 `;
-  res.setHeader("Content-Type", "image/svg+xml");
+  // turn svg to jpeg
+  const jpeg = await sharp(Buffer.from(svg)).jpeg().toBuffer();
+  res.setHeader("Content-Type", "image/jpeg");
   res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
-  res.end(svg);
+  res.end(jpeg);
 }
