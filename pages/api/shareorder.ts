@@ -6,6 +6,12 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const from = req.query.from as string || "";
+  const rate = req.query.rate as string || "0";
+  const orientation = req.query.orientation as string || "-";
+  const level = req.query.level as string || "0";
+  const token = req.query.token as string || "-";
+  const open_price = req.query.open_price as string || "0";
+  const now_price = req.query.now_price as string || "0";
   const qr = await QRCode.toDataURL(`https://t.me/NESTRedEnvelopesBot?start=${from}`);
   const svg = `
 <svg width="720" height="1280" viewBox="0 0 720 1280" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -24,12 +30,12 @@ export default async function handler(
 <path d="M395 482H393V522H395V482Z" fill="#A56250"/>
 </g>
 <image x="260" y="935" width="200" height="200" xlink:href="${qr}"/>
-<text x="232" y="316" fill="#013358" font-weight="bold" font-size="60px" font-family="Montserrat">+87.46%</text>
-<text x="107" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">Long</text>
-<text x="284" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">20x</text>
-<text x="438" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">ETH/USDT</text>
-<text x="470" y="630" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">1234.23</text>
-<text x="470" y="690" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">1234.23</text>
+<text x="232" y="316" fill="#013358" font-weight="bold" font-size="60px" font-family="Montserrat">${Number(rate).toFixed(2)}%</text>
+<text x="107" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">${orientation}</text>
+<text x="284" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">${level}x</text>
+<text x="438" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">${token}</text>
+<text x="470" y="630" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">${Number(open_price).toFixed(2)}</text>
+<text x="470" y="690" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">${Number(now_price).toFixed(2)}</text>
 </g>
 <defs>
 <style type="text/css">
