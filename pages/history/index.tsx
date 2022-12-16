@@ -1,6 +1,6 @@
 import {Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr} from "@chakra-ui/react";
 import {useRouter} from "next/router";
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import useTelegramAuth from "../../hooks/useTelegramAuth";
 
