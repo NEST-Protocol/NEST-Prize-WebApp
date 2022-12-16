@@ -72,7 +72,7 @@ const Detail = () => {
       }
       <Text textAlign={"center"} fontWeight={'bold'}>Full List</Text>
       { list.map((item, index) => (
-       <Text key={item.chat_id} fontSize={'sm'}>{list.length - index}. @{item.tgName} have got {item.amount} NEST!</Text>
+       <Text key={item.chat_id}>{list.length - index}. @{item.tgName} have got {item.amount} NEST!</Text>
       )).reverse() }
     </Stack>
   )
