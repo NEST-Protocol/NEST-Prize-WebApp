@@ -1,4 +1,4 @@
-import {Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr} from "@chakra-ui/react";
+import {Stack, Text,} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -54,7 +54,7 @@ const Detail = () => {
   }, [fetchList])
 
   return (
-    <Stack maxW={'container.sm'} w={'full'} h={'100vh'} p={'20px'} spacing={'20px'}>
+    <Stack maxW={'container.sm'} w={'full'} p={'20px'} spacing={'20px'} overflow={"scroll"}>
       <Text fontSize={'sm'} fontWeight={'bold'} cursor={"pointer"}
             onClick={() => {
               router.push({
@@ -70,26 +70,10 @@ const Detail = () => {
           <Text>@{user?.username} have got {myAmount} NEST!</Text>
         )
       }
-
       <Text textAlign={"center"} fontWeight={'bold'}>Full List</Text>
-      <TableContainer>
-        <Table variant='striped'>
-          <Thead>
-            <Tr>
-              <Th>username</Th>
-              <Th isNumeric>amount</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            { list.map((item) => (
-              <Tr key={item.chat_id}>
-                <Td>@{item.tgName}</Td>
-                <Td isNumeric>{item.amount} NEST</Td>
-              </Tr>
-            )) }
-          </Tbody>
-        </Table>
-      </TableContainer>
+      { list.map((item, index) => (
+       <Text key={item.chat_id} fontSize={'sm'}>{list.length - index}. @{item.tgName} have got {item.amount} NEST!</Text>
+      )).reverse() }
     </Stack>
   )
 }
