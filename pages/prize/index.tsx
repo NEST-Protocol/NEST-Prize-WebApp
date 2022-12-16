@@ -67,11 +67,12 @@ const Prize = () => {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
       }
     })
-    if (res.data.errorCode === -1) {
+    if (res.data.errorCode === 0 && res.data.value) {
+      setValid(true)
+    } else {
       setMsg(res.data.message)
       setValid(false)
     }
-    console.log(res)
   }, [router.query.code, user])
 
   useEffect(() => {
