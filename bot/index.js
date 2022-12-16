@@ -114,7 +114,6 @@ bot.start(async (ctx) => {
 
 Your wallet: ${user?.value?.wallet || 'Not set yet'},
 Your twitter: ${user?.value?.twitterName || 'Not set yet'},
-Your balance: ${user?.value?.balance || 0} NEST
 
 Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.from.id}
 
@@ -220,7 +219,6 @@ bot.action('menu', async (ctx) => {
 
 Your wallet: ${res?.data?.value?.wallet || 'Not set yet'},
 Your twitter: ${res?.data?.value?.twitterName || 'Not set yet'},
-Your balance: ${res?.data?.value?.balance || 0} NEST
 
 Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
 
