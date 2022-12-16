@@ -30,7 +30,8 @@ const Prize = () => {
     createTime: '',
   })
   const [status, setStatus] = useState('IDLE')
-  const [msg, setMsg] = useState('')
+  const [checkMsg, setCheckMsg] = useState('')
+  const [snatchMsg, setSnatchMsg] = useState('')
   const [valid, setValid] = useState(false)
   const toast = useToast()
 
@@ -69,7 +70,7 @@ const Prize = () => {
     if (res.data.errorCode === 0 && res.data.value) {
       setValid(true)
     } else {
-      setMsg(res.data.message)
+      setCheckMsg(res.data.message)
       setValid(false)
     }
   }, [router.query.code, user])
@@ -111,11 +112,12 @@ const Prize = () => {
     } else {
       toast({
         title: 'Error',
-        description: "You have snatched error!",
+        description: res.data.message,
         status: 'error',
         position: 'top-right',
       })
       setStatus('ERROR')
+      setSnatchMsg(res.data.message)
     }
   }
 
@@ -134,7 +136,7 @@ const Prize = () => {
 
       <Spacer/>
       <Stack>
-        <Text textAlign={"center"} fontWeight={"bold"} color={'blue'}>{user ? '@' + user?.username : 'Login first'} {msg}</Text>
+        <Text textAlign={"center"} fontWeight={"bold"} color={'blue'}>{user ? '@' + user?.username : 'Login first'} {checkMsg}</Text>
         { valid && (
           <Button minH={'44px'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{ bg: "" }} _active={{ bg: "" }}
                   disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
@@ -164,7 +166,7 @@ const Prize = () => {
               <Text fontSize={'sm'}>
                 { status === 'PROCESSING' && 'Please wait for the result...' }
                 { status === 'SUCCESS' && 'Congratulations! You have successfully snatched the prize!' }
-                { status === 'ERROR' && 'Sorry, you have failed to snatch the prize.' }
+                { status === 'ERROR' && snatchMsg }
               </Text>
               {
                 status === 'PROCESSING' && (
