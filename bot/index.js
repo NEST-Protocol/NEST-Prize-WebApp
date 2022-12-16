@@ -112,8 +112,9 @@ bot.start(async (ctx) => {
     await lmt.removeTokens(1)
     ctx.reply(`Welcome to NEST Prize
 
-You wallet: ${user?.value?.wallet || 'Not set yet'},
-You twitter: ${user?.value?.twitterName || 'Not set yet'},
+Your wallet: ${user?.value?.wallet || 'Not set yet'},
+Your twitter: ${user?.value?.twitterName || 'Not set yet'},
+Your balance: ${user?.value?.balance || 0} NEST
 
 Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.from.id}
 
@@ -217,8 +218,9 @@ bot.action('menu', async (ctx) => {
       .catch((e) => console.log(e))
     await ctx.editMessageText(`Welcome to NEST Prize
 
-You wallet: ${res?.data?.value?.wallet || 'Not set yet'},
-You twitter: ${res?.data.value?.twitterName || 'Not set yet'},
+Your wallet: ${res?.data?.value?.wallet || 'Not set yet'},
+Your twitter: ${res?.data?.value?.twitterName || 'Not set yet'},
+Your balance: ${res?.data?.value?.balance || 0} NEST
 
 Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
 
