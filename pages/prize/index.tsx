@@ -26,7 +26,6 @@ const Prize = () => {
     quantity: 0,
     max: 0,
     min: 0,
-    image: '',
     balance: 0,
     createTime: '',
   })
@@ -127,14 +126,6 @@ const Prize = () => {
   return (
     <Stack maxW={'container.sm'} w={'full'} h={'100vh'} p={'20px'} spacing={'20px'}>
       <Text textAlign={"center"} fontWeight={'bold'}>NEST Prize</Text>
-      {
-        prize.image && (
-          <Stack h={'240px'} w={'full'}>
-            <chakra.img src={prize.image} w={'full'} h={'full'} objectFit={'cover'}/>
-          </Stack>
-        )
-      }
-
       <Stack>
         <Text fontWeight={'bold'}>Event Introduction</Text>
         {/* eslint-disable-next-line react/no-children-prop */}

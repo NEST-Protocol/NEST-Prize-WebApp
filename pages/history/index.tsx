@@ -1,4 +1,4 @@
-import {Stack, Text,} from "@chakra-ui/react";
+import {Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr,} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -71,9 +71,27 @@ const Detail = () => {
         )
       }
       <Text textAlign={"center"} fontWeight={'bold'}>Full List</Text>
-      { list.map((item, index) => (
-       <Text key={item.chat_id}>{list.length - index}. @{item.tgName} have got {item.amount} NEST!</Text>
-      )).reverse() }
+
+      <TableContainer>
+        <Table variant='striped'>
+          <Thead>
+            <Tr>
+              <Th>index</Th>
+              <Th>username</Th>
+              <Th isNumeric>amount</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            { list.map((item, index) => (
+              <Tr key={item.chat_id}>
+                <Td fontSize={'sm'}>{index + 1}</Td>
+                <Td fontSize={'sm'}>@{item.tgName}</Td>
+                <Td fontSize={'sm'} isNumeric>{item.amount} NEST</Td>
+              </Tr>
+            )).reverse() }
+          </Tbody>
+        </Table>
+      </TableContainer>
     </Stack>
   )
 }
