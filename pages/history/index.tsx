@@ -5,7 +5,15 @@ import axios from "axios";
 
 const Detail = () => {
   const router = useRouter();
-  const [list, setList] = useState([])
+  const [list, setList] = useState<{
+    amount: number,
+    wallet: string,
+    twitterName: string,
+    updateTime: string,
+    tgName: string,
+    chat_id: number,
+    status: string,
+  }[]>([])
 
 
   const fetchList = useCallback(async () => {
@@ -20,7 +28,6 @@ const Detail = () => {
           'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
         }
       })
-      console.log(res.data)
       if (res.data.errorCode === 0) {
         setList(res.data.value)
       }
@@ -58,11 +65,13 @@ const Detail = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>1</Td>
-              <Td>@username</Td>
-              <Td isNumeric>25.4 NEST</Td>
-            </Tr>
+            { list.map((item) => (
+              <Tr key={item.chat_id}>
+                <Td>{item.chat_id}</Td>
+                <Td>{item.tgName}</Td>
+                <Td isNumeric>{item.amount} NEST</Td>
+              </Tr>
+            )) }
           </Tbody>
         </Table>
       </TableContainer>
