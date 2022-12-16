@@ -53,9 +53,6 @@ const Prize = () => {
     onOpen()
     if (!router.query.code || Number.isNaN(Number(router.query.code)) || !user) {
       setStatus('ERROR')
-      setTimeout(() => {
-        setStatus('IDLE')
-      }, 3_000)
       return
     }
     setStatus('PROCESSING')
@@ -120,7 +117,6 @@ const Prize = () => {
                 { status === 'PROCESSING' && 'Please wait for the result...' }
                 { status === 'SUCCESS' && 'Congratulations! You have successfully snatched the prize!' }
                 { status === 'ERROR' && 'Sorry, you have failed to snatch the prize.' }
-                { status === 'IDLE' && 'Need Help?' }
               </Text>
               {
                 status === 'PROCESSING' && (
