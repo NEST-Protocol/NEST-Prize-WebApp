@@ -2,6 +2,7 @@ import type {AppProps} from 'next/app'
 import {ChakraProvider, Stack} from "@chakra-ui/react";
 import Script from "next/script";
 import Head from "next/head";
+import '../styles/github.css'
 
 export default function App({Component, pageProps}: AppProps) {
   return (
