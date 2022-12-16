@@ -133,7 +133,7 @@ const Prize = () => {
       </Stack>
 
       <Spacer/>
-      <Stack pb={'40px'}>
+      <Stack>
         <Text textAlign={"center"} fontWeight={"bold"} color={'blue'}>{user ? '@' + user?.username : 'Login first'} {msg}</Text>
         { valid && (
           <Button minH={'44px'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{ bg: "" }} _active={{ bg: "" }}
