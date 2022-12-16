@@ -5,7 +5,7 @@ import {
   ModalHeader,
   ModalOverlay, Progress,
   Spacer,
-  Stack,
+  Stack, useToast,
   Text, useDisclosure, chakra
 } from "@chakra-ui/react";
 import {useCallback, useEffect, useState} from "react";
@@ -16,12 +16,12 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 const Prize = () => {
-  const { user, isValid } = useTelegramAuth()
+  const { user } = useTelegramAuth()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const [prize, setPrize] = useState({
     id: 0,
-    text: '',
+    text: 'loading...',
     status: '',
     quantity: 0,
     max: 0,
@@ -33,21 +33,26 @@ const Prize = () => {
   const [status, setStatus] = useState('IDLE')
   const [msg, setMsg] = useState('')
   const [valid, setValid] = useState(false)
+  const toast = useToast()
 
   const fetchPrize = useCallback(async () => {
     // router.query.code should be integer
     if (!router.query.code || Number.isNaN(Number(router.query.code))) {
       return
     }
-    const res = await axios({
-      method: 'get',
-      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+    try {
+      const res = await axios({
+        method: 'get',
+        url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}`,
+        headers: {
+          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+        }
+      })
+      if (res.data.value) {
+        setPrize(res.data.value)
       }
-    })
-    if (res.data.value) {
-      setPrize(res.data.value)
+    } catch (e) {
+      console.log(e)
     }
   }, [router])
 
@@ -69,6 +74,10 @@ const Prize = () => {
     console.log(res)
   }, [router.query.code, user])
 
+  useEffect(() => {
+    check()
+  }, [check])
+
   const snatch = async () => {
     onOpen()
     if (!router.query.code || Number.isNaN(Number(router.query.code)) || !user) {
@@ -88,14 +97,28 @@ const Prize = () => {
     })
     if (res.data.errorCode === 0) {
       setStatus('SUCCESS')
+      toast({
+        title: 'Success',
+        description: "You have snatched success!",
+        status: 'success',
+        position: 'top-right',
+      })
       setTimeout(() => {
-        setStatus('IDLE')
+        router.push({
+          pathname: '/history',
+          query: {
+            ...router.query
+          }
+        })
       }, 3_000)
     } else {
+      toast({
+        title: 'Error',
+        description: "You have snatched error!",
+        status: 'error',
+        position: 'top-right',
+      })
       setStatus('ERROR')
-      setTimeout(() => {
-        setStatus('IDLE')
-      }, 3_000)
     }
     console.log(res)
   }
@@ -124,10 +147,22 @@ const Prize = () => {
       <Spacer/>
       <Stack pb={'40px'}>
         <Text textAlign={"center"} fontWeight={"bold"} color={'blue'}>{user ? '@' + user?.username : 'Login first'} {msg}</Text>
-        <Button minH={'44px'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{ bg: "" }} _active={{ bg: "" }}
-                disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
-                onClick={snatch}>
-          Snatch!
+        { valid && (
+          <Button minH={'44px'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{ bg: "" }} _active={{ bg: "" }}
+                  disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
+                  onClick={snatch}>
+            Snatch!
+          </Button>
+        ) }
+        <Button variant={"outline"} _hover={{ bg: "" }} _active={{ bg: "" }} onClick={() => {
+          router.push({
+            pathname: '/history',
+            query: {
+              ...router.query
+            }
+          })}
+        }>
+          Full List
         </Button>
       </Stack>
 
