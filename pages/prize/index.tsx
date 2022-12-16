@@ -31,6 +31,8 @@ const Prize = () => {
     createTime: '',
   })
   const [status, setStatus] = useState('IDLE')
+  const [msg, setMsg] = useState('')
+  const [valid, setValid] = useState(false)
 
   const fetchPrize = useCallback(async () => {
     // router.query.code should be integer
@@ -48,6 +50,24 @@ const Prize = () => {
       setPrize(res.data.value)
     }
   }, [router])
+
+  const check = useCallback(async () => {
+    if (!router.query.code || Number.isNaN(Number(router.query.code)) || !user) {
+      return
+    }
+    const res = await axios({
+      method: 'POST',
+      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}/verify?chatId=${user.id}`,
+      headers: {
+        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+      }
+    })
+    if (res.data.errorCode === -1) {
+      setMsg(res.data.message)
+      setValid(false)
+    }
+    console.log(res)
+  }, [router.query.code, user])
 
   const snatch = async () => {
     onOpen()
@@ -102,10 +122,15 @@ const Prize = () => {
       </Stack>
 
       <Spacer/>
-      <Button minH={'44px'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE'}
-              onClick={snatch}>
-        Snatch!
-      </Button>
+      <Stack pb={'40px'}>
+        <Text textAlign={"center"} fontWeight={"bold"} color={'blue'}>{user ? '@' + user?.username : 'Login first'} {msg}</Text>
+        <Button minH={'44px'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{ bg: "" }} _active={{ bg: "" }}
+                disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
+                onClick={snatch}>
+          Snatch!
+        </Button>
+      </Stack>
+
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
@@ -125,7 +150,7 @@ const Prize = () => {
               }
               {
                 !user && (
-                  <Text fontSize={'sm'} color={'red.500'}>Please login first.</Text>
+                  <Text fontSize={'sm'} color={'red.500'} fontWeight={"bold"}>Please login first.</Text>
                 )
               }
             </Stack>
