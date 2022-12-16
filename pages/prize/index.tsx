@@ -93,7 +93,7 @@ const Prize = () => {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
       }
     })
-    if (res.data.errorCode === 0) {
+    if (res.data.errorCode === 0 && res.data.value) {
       setStatus('SUCCESS')
       toast({
         title: 'Success',
@@ -118,7 +118,6 @@ const Prize = () => {
       })
       setStatus('ERROR')
     }
-    console.log(res)
   }
 
   useEffect(() => {
