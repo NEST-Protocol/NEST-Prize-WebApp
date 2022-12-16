@@ -88,10 +88,7 @@ const Prize = () => {
     setStatus('PROCESSING')
     const res = await axios({
       method: 'POST',
-      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}`,
-      data: {
-        chatId: user?.id || 0,
-      },
+      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}?chatId=${user.id}`,
       headers: {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
       }
