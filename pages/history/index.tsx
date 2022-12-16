@@ -76,7 +76,6 @@ const Detail = () => {
         <Table variant='striped'>
           <Thead>
             <Tr>
-              <Th>id</Th>
               <Th>username</Th>
               <Th isNumeric>amount</Th>
             </Tr>
@@ -84,8 +83,7 @@ const Detail = () => {
           <Tbody>
             { list.map((item) => (
               <Tr key={item.chat_id}>
-                <Td>{item.chat_id}</Td>
-                <Td>{item.tgName}</Td>
+                <Td>@{item.tgName}</Td>
                 <Td isNumeric>{item.amount} NEST</Td>
               </Tr>
             )) }
