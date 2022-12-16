@@ -1,10 +1,12 @@
 import {Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr} from "@chakra-ui/react";
 import {useRouter} from "next/router";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import axios from "axios";
+import useTelegramAuth from "../../hooks/useTelegramAuth";
 
 const Detail = () => {
   const router = useRouter();
+  const {user} = useTelegramAuth()
   const [list, setList] = useState<{
     amount: number,
     wallet: string,
@@ -14,7 +16,7 @@ const Detail = () => {
     chat_id: number,
     status: string,
   }[]>([])
-
+  const [myAmount, setMyAmount] = useState(0)
 
   const fetchList = useCallback(async () => {
     if (!router.query.code || Number.isNaN(Number(router.query.code))) {
@@ -36,6 +38,17 @@ const Detail = () => {
     }
   }, [router.query.code])
 
+  const fetchMyAmount = useCallback(async () => {
+    const index = list.findIndex((item) => item.chat_id === user?.id)
+    if (index >= 0) {
+      setMyAmount(list[index].amount)
+    }
+  }, [list, user])
+
+  useEffect(() => {
+    fetchMyAmount()
+  }, [fetchMyAmount])
+
   useEffect(() => {
     fetchList()
   }, [fetchList])
@@ -52,7 +65,11 @@ const Detail = () => {
               })
             }}>« Back</Text>
       <Text textAlign={"center"} fontWeight={'bold'}>Winning Prize List</Text>
-      <Text>@username have got 100 NEST!</Text>
+      {
+        user && myAmount > 0 && (
+          <Text>@{user?.username} have got {myAmount} NEST!</Text>
+        )
+      }
 
       <Text textAlign={"center"} fontWeight={'bold'}>Full List</Text>
       <TableContainer>
