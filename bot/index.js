@@ -75,9 +75,12 @@ bot.start(async (ctx) => {
         }).catch((e) => console.log(e))
       }
       if (prize.errorCode === 0  && prize.value) {
-        ctx.reply(prize.value.text || 'You found a NEST Prize!', Markup.inlineKeyboard([
-          Markup.button.webApp('Snatch!', `https://nest-prize-web-app.vercel.app/prize?code=${ctx.startPayload}`),
-        ]))
+        ctx.reply(prize.value.text || 'You found a NEST Prize!', {
+          parse_mode: 'Markdown',
+          ...Markup.inlineKeyboard([
+            Markup.button.webApp('Snatch!', `https://nest-prize-web-app.vercel.app/prize?code=${ctx.startPayload}`),
+          ])
+        })
         return
       }
       await lmt.removeTokens(1)
