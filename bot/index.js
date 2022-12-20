@@ -166,21 +166,6 @@ You can control me by sending these commands:
   })
 })
 
-bot.command('admin', async (ctx) => {
-  const chat_id = ctx.chat.id;
-  if (chat_id < 0 || WHITELIST.findIndex((id) => id === chat_id) === -1) {
-    await lmt.removeTokens(1)
-    await ctx.reply(`Sorry, ${chat_id} are not allowed to use this command!`, Markup.inlineKeyboard([
-      [Markup.button.url('New Issue', 'https://github.com/NEST-Protocol/NESTRedEnvelopesBot/issues')]
-    ]))
-    return
-  }
-  await lmt.removeTokens(1)
-  await ctx.reply(`NEST Prize Admin Portal`, Markup.inlineKeyboard([
-    [Markup.button.callback('Send', 'setConfig')],
-  ]))
-})
-
 bot.action('inputUserTwitter', async (ctx) => {
   const isBot = ctx.update.callback_query.from.is_bot
   if (isBot) {
@@ -559,25 +544,6 @@ bot.action('checkTwitter', async (ctx) => {
   } catch (e) {
     ctx.answerCbQuery("Some error occurred.")
   }
-})
-
-bot.action('admin', async (ctx) => {
-  const chat_id = ctx.update.callback_query.from.id
-  if (WHITELIST.findIndex((id) => id === chat_id) === -1) {
-    await lmt.removeTokens(1)
-    await ctx.answerCbQuery()
-      .catch((e) => console.log(e))
-    await ctx.reply(`Sorry, ${chat_id} are not allowed to use this command!`, Markup.inlineKeyboard([
-      [Markup.button.url('New Issue', 'https://github.com/NEST-Protocol/NESTRedEnvelopesBot/issues')]
-    ]))
-    return
-  }
-  await lmt.removeTokens(1)
-  await ctx.answerCbQuery()
-    .catch((e) => console.log(e))
-  await ctx.editMessageText('NEST Prize Admin Portal', Markup.inlineKeyboard([
-    [Markup.button.callback('Send', 'setConfig')],
-  ]))
 })
 
 bot.on('message', async (ctx) => {
