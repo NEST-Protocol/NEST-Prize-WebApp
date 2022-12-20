@@ -217,7 +217,7 @@ Giveaway events, click on NESTFi Events.
       ...Markup.inlineKeyboard([
         [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.callback('Invite', 'invite')],
         [Markup.button.callback('Set Twitter', 'inputUserTwitter'), Markup.button.callback('Set Wallet', 'setUserWallet', res?.data?.value?.wallet)],
-        [Markup.button.callback('NESTFi S3 Food Festival', 'NESTFiEvents')],
+        [Markup.button.callback('NESTFi S4 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback('Share my Futures', 'shareMyFutures')],
       ])
     })
@@ -277,7 +277,7 @@ bot.action('NESTFiEvents', async (ctx) => {
     await ctx.editMessageText(`Event Introduction
   
 🍔 Hamburger (New user First Order Bonus)
-Bonus: 50 NEST+
+Bonus: 300NEST
 
 🍕 Pizza (Invitation Bonus)
 Fixed Bonus: 10 NEST.
@@ -287,7 +287,9 @@ Ongoing Bonus:0.5% of the total transaction volume
 Bonus: 10x leverage bonus 10–100 NEST.
 20x leverage bonus 20–200 NEST.
 
-Details：https://nest-protocol.medium.com/s3-nestfi-food-festival-1590987ed5fd`, {
+Details：https://medium.com/@nest-protocol/s4-nestfi-food-festival-4b15ac0bd96f
+
+All delicious meals are done in our kitchen robot!`, {
       parse_mode: 'Markdown',
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
