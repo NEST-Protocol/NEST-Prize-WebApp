@@ -76,7 +76,7 @@ bot.start(async (ctx) => {
       }
       if (prize.errorCode === 0  && prize.value) {
         ctx.reply(prize.value.text || 'You found a NEST Prize!', {
-          parse_mode: 'Markdown',
+          // parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
             Markup.button.webApp('Snatch!', `https://nest-prize-web-app.vercel.app/prize?code=${ctx.startPayload}`),
           ])
