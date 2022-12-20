@@ -473,7 +473,7 @@ Github repository: [NEST-Oracle-V4.0](https://github.com/NEST-Protocol/NEST-Orac
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
         [Markup.button.url('Follow Github', 'https://github.com/NEST-Protocol'), Markup.button.url('Developer Doc', 'https://nestprotocol.org/docs/PVM-Technical-Reference/')],
-        [Markup.button.url('New Issues', 'https://github.com/NEST-Protocol/NESTRedEnvelopesBot/issues/new'), Markup.button.callback('« Back', 'menu')],
+        [Markup.button.url('New Issues', 'https://github.com/NEST-Protocol/NEST-Prize-WebApp/issues/new'), Markup.button.callback('« Back', 'menu')],
       ])
     })
   } catch (e) {
@@ -610,7 +610,7 @@ bot.on('message', async (ctx) => {
             reply_to_message_id: ctx.message.message_id,
             ...Markup.inlineKeyboard([
               [Markup.button.callback('« Back', 'menu')],
-              [Markup.button.url('New Issue', 'https://github.com/NEST-Protocol/NESTRedEnvelopesBot/issues')]
+              [Markup.button.url('New Issue', 'https://github.com/NEST-Protocol/NEST-Prize-WebApp/issues/new')]
             ])
           })
         }
@@ -646,7 +646,7 @@ bot.on('message', async (ctx) => {
             reply_to_message_id: ctx.message.message_id,
             ...Markup.inlineKeyboard([
               [Markup.button.callback('« Back', 'menu')],
-              [Markup.button.url('New Issue', 'https://github.com/NEST-Protocol/NESTRedEnvelopesBot/issues')]
+              [Markup.button.url('New Issue', 'https://github.com/NEST-Protocol/NEST-Prize-WebApp/issues/new')]
             ])
           })
         }
