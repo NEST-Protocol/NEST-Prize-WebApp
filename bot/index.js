@@ -277,7 +277,7 @@ bot.action('NESTFiEvents', async (ctx) => {
     await ctx.editMessageText(`Event Introduction
   
 🍔 Hamburger (New user First Order Bonus)
-Bonus: 300NEST
+Bonus: 200NEST
 
 🍕 Pizza (Invitation Bonus)
 Fixed Bonus: 10 NEST.
