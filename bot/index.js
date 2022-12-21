@@ -73,8 +73,7 @@ bot.start(async (ctx) => {
             'Authorization': `Bearer ${nest_token}`
           }
         }).catch((e) => console.log(e))
-      }
-      if (prize.errorCode === 0  && prize.value) {
+      } else if (prize.errorCode === 0  && prize.value) {
         ctx.reply(prize.value.text || 'You found a NEST Prize!', {
           // parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
@@ -82,10 +81,11 @@ bot.start(async (ctx) => {
           ])
         })
         return
+      } else {
+        await lmt.removeTokens(1)
+        ctx.reply('Sorry, this is not a valid NEST prize or a valid reference link.')
+        return
       }
-      await lmt.removeTokens(1)
-      ctx.reply('Sorry, this is not a valid NEST prize or a valid reference link.')
-      return
     } catch (e) {
       console.log(e)
     }
