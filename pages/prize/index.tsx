@@ -6,7 +6,7 @@ import {
   ModalOverlay, Progress,
   Spacer,
   Stack, useToast,
-  Text, useDisclosure, chakra
+  Text, useDisclosure
 } from "@chakra-ui/react";
 import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/router";
@@ -14,6 +14,7 @@ import axios from "axios";
 import useTelegramAuth from "../../hooks/useTelegramAuth";
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import Head from "next/head";
 
 const Prize = () => {
   const { user } = useTelegramAuth()
@@ -127,6 +128,9 @@ const Prize = () => {
 
   return (
     <Stack maxW={'container.sm'} w={'full'} h={'100vh'} p={'20px'} spacing={'20px'}>
+      <Head>
+        <title>Snatch NEST Prize</title>
+      </Head>
       <Text textAlign={"center"} fontWeight={'bold'}>NEST Prize</Text>
       <Stack>
         <Text fontWeight={'bold'}>Event Introduction</Text>

@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import useTelegramAuth from "../../hooks/useTelegramAuth";
+import Head from "next/head";
 
 const Detail = () => {
   const router = useRouter();
@@ -55,6 +56,9 @@ const Detail = () => {
 
   return (
     <Stack maxW={'container.sm'} w={'full'} p={'20px'} spacing={'20px'} overflow={"scroll"}>
+      <Head>
+        <title>Prize History</title>
+      </Head>
       <Text fontSize={'sm'} fontWeight={'bold'} cursor={"pointer"}
             onClick={() => {
               router.push({
