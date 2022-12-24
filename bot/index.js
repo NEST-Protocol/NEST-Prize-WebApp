@@ -302,11 +302,19 @@ bot.action('pizza', async (ctx) => {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
       }
     })
-    if (res.data.code === 0) {
-      await lmt.removeTokens(1)
-      await ctx.answerCbQuery()
+    const listRes = await axios({
+      method: 'get',
+      url: `https://work.parasset.top/workbench-api/activity/user/invite/list?chatId=${ctx.update.callback_query.from.id}`,
+      headers: {
+        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
+      }
+    })
+    
+    const list = listRes.data.data || []
+    await lmt.removeTokens(1)
+    await ctx.answerCbQuery()
         .catch((e) => console.log(e))
-      await ctx.editMessageText(`**Invitees conditions**
+    await ctx.editMessageText(`**Invitees conditions**
 1. 500 NEST accumulated on open futures positions
 2. Leverage 10X or 20X
 3. Position opening time greater than 5 minutes
@@ -317,16 +325,15 @@ Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_quer
 Complete pizza:
 Total: ${res.data.data.positions.invite_positions10 + res.data.data.positions.invite_positions20} NEST , rewards: ${res.data.data.balance.detail.invite} NEST
 
+Your invitees:
+${list.map((item) => (`@${item.tgName || '-'}: ${item.positions}`)).join('\n')}
 `, {
-        parse_mode: 'Markdown',
-        disable_web_page_preview: true,
-        ...Markup.inlineKeyboard([
-          [Markup.button.callback('« Back', 'NESTFiEvents')]
-        ])
-      })
-    } else {
-      await ctx.answerCbQuery('Some error occurred.')
-    }
+      parse_mode: 'Markdown',
+      disable_web_page_preview: true,
+      ...Markup.inlineKeyboard([
+        [Markup.button.callback('« Back', 'NESTFiEvents')]
+      ])
+    })
   } catch (e) {
     await ctx.answerCbQuery('Some error occurred.')
   }
