@@ -125,8 +125,8 @@ Giveaway events, click on NESTFi Events.
 /help`, {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.callback('Invite', 'invite')],
-        [Markup.button.callback('Set Twitter', 'inputUserTwitter'), Markup.button.callback('Set Wallet', 'setUserWallet', user?.value?.wallet)],
+        [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.url('invite', `https://nest-prize-web-app.vercel.app/api/share2?from=${ctx.from.id}`)],
+        [Markup.button.callback('Set Twitter', 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback('Set Wallet', 'setUserWallet', user?.value?.wallet)],
         [Markup.button.callback('NESTFi S3 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback('Share my Futures', 'shareMyFutures')],
       ])
@@ -134,17 +134,6 @@ Giveaway events, click on NESTFi Events.
 
   } catch (e) {
     console.log(e)
-  }
-})
-
-bot.action('invite', async (ctx) => {
-  await lmt.removeTokens(1)
-  try {
-    await ctx.answerCbQuery()
-    await ctx.replyWithPhoto(`https://nest-prize-web-app.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)
-  } catch (e) {
-    await ctx.answerCbQuery()
-    await ctx.reply(`https://nest-prize-web-app.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)
   }
 })
 
@@ -216,8 +205,8 @@ Giveaway events, click on NESTFi Events.
 /help`, {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.callback('Invite', 'invite')],
-        [Markup.button.callback('Set Twitter', 'inputUserTwitter'), Markup.button.callback('Set Wallet', 'setUserWallet', res?.data?.value?.wallet)],
+        [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.url('invite', `https://nest-prize-web-app.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)],
+        [Markup.button.callback('Set Twitter', 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback('Set Wallet', 'setUserWallet', res?.data?.value?.wallet)],
         [Markup.button.callback('NESTFi S4 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback('Share my Futures', 'shareMyFutures')],
       ])
