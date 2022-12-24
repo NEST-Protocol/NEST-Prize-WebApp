@@ -140,10 +140,10 @@ Giveaway events, click on NESTFi Events.
 bot.action('invite', async (ctx) => {
   await lmt.removeTokens(1)
   try {
-    await ctx.replyWithPhoto(`https://nest-prize-web-app.vercel.app/api/share?from=${ctx.update.callback_query.from.id}`)
+    await ctx.replyWithPhoto(`https://nest-prize-web-app.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)
   } catch (e) {
     console.log(e)
-    await ctx.reply(`https://nest-prize-web-app.vercel.app/api/share?from=${ctx.update.callback_query.from.id}`)
+    await ctx.reply(`https://nest-prize-web-app.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)
   }
 })
 
