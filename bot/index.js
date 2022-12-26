@@ -302,15 +302,7 @@ bot.action('pizza', async (ctx) => {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
       }
     })
-    const listRes = await axios({
-      method: 'get',
-      url: `https://work.parasset.top/workbench-api/activity/user/invite/list?chatId=${ctx.update.callback_query.from.id}`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
-      }
-    })
     
-    const list = listRes.data.data || []
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
         .catch((e) => console.log(e))
@@ -324,9 +316,6 @@ Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_quer
 
 Complete pizza:
 Total: ${res.data.data.positions.invite_positions10 + res.data.data.positions.invite_positions20} NEST , rewards: ${res.data.data.balance.detail.invite} NEST
-
-Your invitees:
-${list.map((item) => (`@${item.tgName || '-'}: ${item.positions}`)).join('\n')}
 `, {
       parse_mode: 'Markdown',
       disable_web_page_preview: true,
