@@ -294,39 +294,23 @@ All delicious meals are done in our kitchen robot!`, {
 })
 
 bot.action('pizza', async (ctx) => {
-  try {
-    const res = await axios({
-      method: 'get',
-      url: `https://work.parasset.top/workbench-api/activity/user/invite/info?chatId=${ctx.update.callback_query.from.id}`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
-      }
-    })
-    
-    await lmt.removeTokens(1)
-    await ctx.answerCbQuery()
-        .catch((e) => console.log(e))
-    await ctx.editMessageText(`**Invitees conditions**
+  await lmt.removeTokens(1)
+  await ctx.answerCbQuery()
+      .catch((e) => console.log(e))
+  await ctx.editMessageText(`**Invitees conditions**
 1. 500 NEST accumulated on open futures positions
 2. Leverage 10X or 20X
 3. Position opening time greater than 5 minutes
 0.5% of initial margin will be awarded to the inviter
 
 Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
-
-Complete pizza:
-Issued: ${res.data.data.issued} NEST, Unissued: ${res.data.data.unissued} NEST, invitee total trading ${res.data.data.totalTrading} NEST
 `, {
-      parse_mode: 'Markdown',
-      disable_web_page_preview: true,
-      ...Markup.inlineKeyboard([
-        [Markup.button.webApp('invite info', `https://nest-prize-web-app.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
-        [Markup.button.callback('« Back', 'NESTFiEvents')],
-      ])
-    })
-  } catch (e) {
-    await ctx.answerCbQuery('Some error occurred.')
-  }
+    disable_web_page_preview: true,
+    ...Markup.inlineKeyboard([
+      [Markup.button.webApp('pizza info', `https://nest-prize-web-app.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
+      [Markup.button.callback('« Back', 'NESTFiEvents')],
+    ])
+  })
 })
 
 bot.action('butterChicken', async (ctx) => {
