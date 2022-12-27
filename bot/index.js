@@ -59,7 +59,7 @@ bot.start(async (ctx) => {
       ])
       const user = res[0].data
       const prize = res[1].data
-
+      
       if (user.errorCode === 0 && user.value) {
         await axios({
           method: 'POST',
@@ -73,7 +73,7 @@ bot.start(async (ctx) => {
             'Authorization': `Bearer ${nest_token}`
           }
         }).catch((e) => console.log(e))
-      } else if (prize.errorCode === 0  && prize.value) {
+      } else if (prize.errorCode === 0 && prize.value) {
         ctx.reply(prize.value.text || 'You found a NEST Prize!', {
           // parse_mode: 'Markdown',
           ...Markup.inlineKeyboard([
@@ -131,7 +131,7 @@ Giveaway events, click on NESTFi Events.
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback('Share my Futures', 'shareMyFutures')],
       ])
     })
-
+    
   } catch (e) {
     console.log(e)
   }
@@ -189,10 +189,10 @@ bot.action('menu', async (ctx) => {
         'Authorization': `Bearer ${nest_token}`,
       }
     })
-
+    
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
-      .catch((e) => console.log(e))
+        .catch((e) => console.log(e))
     await ctx.editMessageText(`Welcome to NEST Prize
 
 Your wallet: ${res?.data?.value?.wallet || 'Not set yet'},
@@ -226,11 +226,11 @@ bot.action('shareMyFutures', async (ctx) => {
         'Authorization': `Bearer ${nest_token}`,
       }
     })
-
+    
     if (!userRes?.data?.value?.wallet) {
       await lmt.removeTokens(1)
       await ctx.answerCbQuery()
-        .catch((e) => console.log(e))
+          .catch((e) => console.log(e))
       await ctx.editMessageText(`Please set your wallet first`, {
         ...Markup.inlineKeyboard([
           [Markup.button.callback('« Back', 'menu')],
@@ -238,7 +238,7 @@ bot.action('shareMyFutures', async (ctx) => {
       })
       return
     }
-
+    
     const res = await axios({
       method: 'GET',
       url: `https://cms.nestfi.net/bot-api/red-bot/user/future?wallet=${userRes?.data?.value?.wallet}`,
@@ -263,7 +263,7 @@ bot.action('NESTFiEvents', async (ctx) => {
   try {
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
-      .catch((e) => console.log(e))
+        .catch((e) => console.log(e))
     await ctx.editMessageText(`Event Introduction
   
 🍔 Hamburger (New user First Order Bonus)
@@ -320,7 +320,8 @@ Issued: ${res.data.data.issued} NEST, Unissued: ${res.data.data.unissued} NEST, 
       parse_mode: 'Markdown',
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.callback('« Back', 'NESTFiEvents')]
+        [Markup.button.webApp('invite info', `https://nest-prize-web-app.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
+        [Markup.button.callback('« Back', 'NESTFiEvents')],
       ])
     })
   } catch (e) {
@@ -350,7 +351,7 @@ bot.action('butterChicken', async (ctx) => {
     const ticket10History = ticket10.data.data?.history || []
     const ticket20Count = ticket20.data.data?.tickets || 0
     const ticket20History = ticket20.data.data?.history || []
-
+    
     await lmt.removeTokens(1)
     ctx.answerCbQuery()
     await ctx.editMessageText(`conditions
@@ -393,10 +394,10 @@ bot.action('draw10x', async (ctx) => {
     })
     const ticketCount = res.data.data?.tickets || 0
     const ticketHistory = res.data.data?.history || []
-
+    
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
-      .catch((e) => console.log(e))
+        .catch((e) => console.log(e))
     await ctx.editMessageText(`10x remaining butter chicken: ${ticketCount}
 ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
       disable_web_page_preview: true,
@@ -421,10 +422,10 @@ bot.action('draw20x', async (ctx) => {
     })
     const ticketCount = res.data.data?.tickets || 0
     const ticketHistory = res.data.data?.history || []
-
+    
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
-      .catch((e) => console.log(e))
+        .catch((e) => console.log(e))
     await ctx.editMessageText(`10x remaining butter chicken: ${ticketCount}
 ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
       disable_web_page_preview: true,
@@ -446,7 +447,7 @@ bot.action('forDeveloper', async (ctx) => {
   try {
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
-      .catch((e) => console.log(e))
+        .catch((e) => console.log(e))
     await ctx.editMessageText(`*Another Revolution in Blockchain*
 
 *NEST PVM*
@@ -486,10 +487,10 @@ bot.action('setUserWallet', async (ctx) => {
         'Authorization': `Bearer ${nest_token}`
       }
     }).catch((e) => console.log(e))
-
+    
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
-      .catch((e) => console.log(e))
+        .catch((e) => console.log(e))
     await ctx.editMessageText('Please send your wallet address:')
   } catch (e) {
     console.log(e)
@@ -549,17 +550,16 @@ bot.on('message', async (ctx) => {
         'Authorization': `Bearer ${nest_token}`,
       }
     })
-
+    
     const intent = res?.data?.value?.intent
     if (res?.data?.value?.disable === 'Y') {
       await ctx.reply("Sorry, you are blocked.")
       return
     }
-
+    
     if (intent === null) {
-
-    }
-    else if (intent === 'setUserWallet') {
+    
+    } else if (intent === 'setUserWallet') {
       if (isAddress(input)) {
         try {
           await axios({
@@ -573,7 +573,7 @@ bot.on('message', async (ctx) => {
               'Authorization': `Bearer ${nest_token}`
             }
           }).catch((e) => console.log(e))
-
+          
           await axios({
             method: 'POST',
             url: `https://work.parasset.top/workbench-api/activity/user/update`,
@@ -622,7 +622,7 @@ bot.on('message', async (ctx) => {
               'Authorization': `Bearer ${nest_token}`
             }
           }).catch((e) => console.log(e))
-
+          
           await lmt.removeTokens(1)
           ctx.reply(`Your twitter has updated: ${input.slice(1)}`, Markup.inlineKeyboard([
             [Markup.button.callback('« Back', 'menu')],
