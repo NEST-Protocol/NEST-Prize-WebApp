@@ -297,7 +297,8 @@ bot.action('pizza', async (ctx) => {
   await lmt.removeTokens(1)
   await ctx.answerCbQuery()
       .catch((e) => console.log(e))
-  await ctx.editMessageText(`**Invitees conditions**
+  await ctx.editMessageText(`Invitees conditions
+  
 1. 500 NEST accumulated on open futures positions
 2. Leverage 10X or 20X
 3. Position opening time greater than 5 minutes
@@ -305,6 +306,7 @@ bot.action('pizza', async (ctx) => {
 
 Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
 `, {
+    parse_mode: 'Markdown',
     disable_web_page_preview: true,
     ...Markup.inlineKeyboard([
       [Markup.button.webApp('pizza info', `https://nest-prize-web-app.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
