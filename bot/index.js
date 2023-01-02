@@ -365,6 +365,7 @@ ${ticket20History.map((item) => `${item} NEST`).join('\n')}
       ])
     })
   } catch (e) {
+    console.log(e)
     ctx.answerCbQuery('Some error occurred.')
   }
 })
