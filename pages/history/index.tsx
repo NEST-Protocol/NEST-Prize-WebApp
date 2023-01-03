@@ -1,4 +1,4 @@
-import {FormControl, Input, Stack, Table, Tbody, Td, Text, Th, Thead, Tr,} from "@chakra-ui/react";
+import {FormControl, Input, Stack, Table, Tbody, Td, Text, Tr,} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -59,24 +59,16 @@ const Detail = () => {
             }}>« Back</Text>
       <Text textAlign={"center"} fontWeight={'bold'}>Winning Prize Full List</Text>
       <FormControl>
-        <Input placeholder={'search name or wallet...'} value={searchText}
+        <Input placeholder={'search name or wallet...'} value={searchText} fontSize={'xs'}
                onChange={(e) => setSearchText(e.target.value)}/>
       </FormControl>
+      <Text fontSize={'xs'} color={'gray'}>{list.length} users snatched success</Text>
       <Table variant='striped' w={'full'}>
-        <Thead>
-          <Tr>
-            <Th fontSize={'xs'}>index</Th>
-            <Th fontSize={'xs'}>username</Th>
-            <Th fontSize={'xs'} isNumeric>amount</Th>
-          </Tr>
-        </Thead>
         <Tbody>
-          {list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase()) || item.wallet?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase())).map((item, index) => (
+          {list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase()) || item.wallet?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase())).map((item) => (
             <Tr key={item.chat_id}>
               <Td fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''}
-                  color={user?.id === item.chat_id ? 'red' : 'black'}>{index + 1}</Td>
-              <Td fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''}
-                  color={user?.id === item.chat_id ? 'red' : 'black'}>@{item.tgName} ({item.wallet.slice(0, 6)}...{item.wallet.slice(-4)})</Td>
+                  color={user?.id === item.chat_id ? 'red' : 'black'}>@{item.tgName || '-'}<br/>{item.wallet.slice(0, 8)}...{item.wallet.slice(-6)}</Td>
               <Td fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''}
                   color={user?.id === item.chat_id ? 'red' : 'black'} isNumeric>{item.amount} NEST</Td>
             </Tr>
