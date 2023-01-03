@@ -32,9 +32,9 @@ const Prize = () => {
   })
   const [status, setStatus] = useState('IDLE')
   const [checkMsg, setCheckMsg] = useState('')
-  const [snatchMsg, setSnatchMsg] = useState('')
   const [valid, setValid] = useState(false)
   const toast = useToast()
+  const [timer, setTimer] = useState(5)
 
   const fetchPrize = useCallback(async () => {
     // router.query.code should be integer
@@ -71,17 +71,22 @@ const Prize = () => {
     if (res.data.errorCode === 0 && res.data.value) {
       setValid(true)
     } else {
+      toast({
+        title: 'Warning',
+        description: res.data.message,
+        status: 'warning',
+        position: 'top-right',
+      })
       setCheckMsg(res.data.message)
       setValid(false)
     }
-  }, [router.query.code, user])
+  }, [router.query.code, toast, user])
 
   useEffect(() => {
     check()
   }, [check])
 
   const snatch = async () => {
-    onOpen()
     if (!router.query.code || Number.isNaN(Number(router.query.code)) || !user) {
       setStatus('ERROR')
       return
@@ -118,9 +123,17 @@ const Prize = () => {
         position: 'top-right',
       })
       setStatus('ERROR')
-      setSnatchMsg(res.data.message)
     }
   }
+
+  useEffect(() => {
+    if (timer > 0) {
+      onOpen()
+      setTimeout(() => {
+        setTimer(timer - 1)
+      }, 1_000)
+    }
+  }, [timer])
 
   useEffect(() => {
     fetchPrize()
@@ -136,17 +149,14 @@ const Prize = () => {
         {/* eslint-disable-next-line react/no-children-prop */}
         <ReactMarkdown children={prize.text} remarkPlugins={[remarkGfm]} className={'markdown-body'}/>
         <Stack pt={'20px'}>
-          <Text textAlign={"center"} fontSize={'xs'} fontWeight={"bold"}
-                color={'blue'}>{user ? '@' + user?.username : 'Login first'} {checkMsg}</Text>
-          {valid && (
-            <Button minH={'44px'} fontSize={'sm'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{bg: ""}}
-                    _active={{bg: ""}}
-                    disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
-                    borderRadius={'0px'}
-                    onClick={snatch}>
-              Snatch!
-            </Button>
-          )}
+          <Text fontSize={'xs'} color={'blue'} fontWeight={'bold'}>Tips: {user ? '@' + user?.username : 'Login First'} {checkMsg}</Text>
+          <Button minH={'44px'} fontSize={'sm'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{bg: ""}}
+                  _active={{bg: ""}} isDisabled={valid}
+                  disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
+                  borderRadius={'0px'} loadingText={'Snatching...'} isLoading={status === 'Snatching...'}
+                  onClick={snatch}>
+            Snatch!
+          </Button>
           <Button minH={'44px'} variant={"outline"} fontSize={'sm'} _hover={{bg: ""}} _active={{bg: ""}}
                   borderRadius={'0px'} onClick={() => {
             router.push({
@@ -165,28 +175,17 @@ const Prize = () => {
         <Link isExternal href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} fontSize={'sm'}
               fontWeight={'bold'}>Star this project, or new issues!</Link>
       </Stack>
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} closeOnEsc={!timer} closeOnOverlayClick={!timer} autoFocus={false} isCentered>
         <ModalOverlay/>
         <ModalContent>
-          <ModalHeader>Snatch!</ModalHeader>
+          <ModalHeader>Ads can be closed after {timer} seconds</ModalHeader>
           <ModalBody>
             <Stack pb={'20px'}>
-              <Text>{user?.username}</Text>
-              <Text fontSize={'sm'}>
-                {status === 'PROCESSING' && 'Please wait for the result...'}
-                {status === 'SUCCESS' && 'Congratulations! You have successfully snatched the prize!'}
-                {status === 'ERROR' && snatchMsg}
-              </Text>
-              {
-                status === 'PROCESSING' && (
-                  <Progress size='xs' isIndeterminate/>
-                )
-              }
-              {
-                !user && (
-                  <Text fontSize={'sm'} color={'red.500'} fontWeight={"bold"}>Please login first.</Text>
-                )
-              }
+              <Stack border={'1px solid'} p={'20px'} bg={'black'} color={'white'}>
+                <Image src={"/svg/github-mark-white.svg"} width={24} height={24} alt={""}/>
+                <Link isExternal href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} fontSize={'sm'}
+                      fontWeight={'bold'}>Star this project, or new issues!</Link>
+              </Stack>
             </Stack>
           </ModalBody>
         </ModalContent>
