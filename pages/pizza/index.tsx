@@ -1,4 +1,4 @@
-import {Heading, Stack, Text} from "@chakra-ui/react"
+import {Divider, Heading, Stack, Text} from "@chakra-ui/react"
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -6,11 +6,12 @@ import axios from "axios";
 const Pizza = () => {
   const router = useRouter()
   const chatId = router.query.chatId
-  const [data, setData] = useState<any[]>([])
-  const [data2, setData2] = useState<any>({
+  const [data, setData] = useState<any>({
+    tgName: '',
     issued: 0,
     unissued: 0,
     totalTrading: 0,
+    details: []
   })
 
   const fetchData = useCallback(async () => {
@@ -18,7 +19,7 @@ const Pizza = () => {
     try {
       const res = await axios({
         method: 'GET',
-        url: `https://work.parasset.top/workbench-api/activity/user/invite/list?chatId=${chatId}`,
+        url: `https://work.parasset.top/workbench-api/activity/user/invite/info?chatId=${chatId}`,
         headers: {
           'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
         }
@@ -31,43 +32,23 @@ const Pizza = () => {
     }
   }, [chatId])
 
-  const fetchData2 = useCallback(async () => {
-    if (!chatId) return
-    try {
-      const res = await axios({
-        method: 'GET',
-        url: `https://work.parasset.top/workbench-api/activity/user/invite/info?chatId=${chatId}`,
-        headers: {
-          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
-        }
-      })
-      if (res?.data?.data) {
-        setData2(res.data.data)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }, [chatId])
-
   useEffect(() => {
     fetchData()
   }, [fetchData])
 
-  useEffect(() => {
-    fetchData2()
-  }, [fetchData2])
-
   return (
-    <Stack>
+    <Stack w={'full'} p={'20px'}>
       <Heading>Pizza Invite Info</Heading>
       <Stack fontSize={'sm'}>
-        <Text>Issued: {data2.issued} NEST</Text>
-        <Text>Unissued: {data2.unissued} NEST</Text>
-        <Text>Total Trading: {data2.totalTrading} NEST</Text>
+        <Text>tgName: @{data.tgName}</Text>
+        <Text>Issued: {data.issued} NEST</Text>
+        <Text>Unissued: {data.unissued} NEST</Text>
+        <Text>Total Trading: {data.totalTrading} NEST</Text>
       </Stack>
+      <Divider/>
       {
-        data.map((item, index) => (
-          <Text key={index}>@{item.tgName}: {item.positions} NEST</Text>
+        data?.details.map((item: any, index: number) => (
+          <Text key={index}>{index + 1}. @{item.tgName}: {item.positions} NEST</Text>
         ))
       }
     </Stack>
