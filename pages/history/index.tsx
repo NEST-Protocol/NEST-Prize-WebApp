@@ -17,7 +17,7 @@ const Detail = () => {
     chat_id: number,
     status: string,
   }[]>([])
-  const [myAmount, setMyAmount] = useState(0)
+  const [myIndex, setMyIndex] = useState(-1)
 
   const fetchList = useCallback(async () => {
     if (!router.query.code || Number.isNaN(Number(router.query.code))) {
@@ -42,7 +42,7 @@ const Detail = () => {
   const fetchMyAmount = useCallback(async () => {
     const index = list.findIndex((item) => item.chat_id === user?.id)
     if (index >= 0) {
-      setMyAmount(list[index].amount)
+      setMyIndex(list[index].amount)
     }
   }, [list, user])
 
@@ -68,14 +68,7 @@ const Detail = () => {
                 }
               })
             }}>« Back</Text>
-      <Text textAlign={"center"} fontWeight={'bold'}>Winning Prize List</Text>
-      {
-        user && myAmount > 0 && (
-          <Text>@{user?.username} have got {myAmount} NEST!</Text>
-        )
-      }
-      <Text textAlign={"center"} fontWeight={'bold'}>Full List</Text>
-
+      <Text textAlign={"center"} fontWeight={'bold'}>Winning Prize Full List</Text>
       <TableContainer>
         <Table variant='striped'>
           <Thead>
@@ -86,7 +79,16 @@ const Detail = () => {
             </Tr>
           </Thead>
           <Tbody>
-            { list.map((item, index) => (
+            {
+              myIndex >= 0 && (
+                <Tr>
+                  <Td fontSize={'sm'} color={'red'} fontWeight={'bold'}>{myIndex + 1}</Td>
+                  <Td fontSize={'sm'} fontWeight={'bold'} color={'red'}>@{list[myIndex].tgName}</Td>
+                  <Td fontSize={'sm'} isNumeric color={'red'} fontWeight={'bold'}>{list[myIndex].amount} NEST</Td>
+                </Tr>
+              )
+            }
+            { list.filter((item) => item?.chat_id !== user?.id).map((item, index) => (
               <Tr key={item.chat_id}>
                 <Td fontSize={'sm'}>{index + 1}</Td>
                 <Td fontSize={'sm'}>@{item.tgName}</Td>
