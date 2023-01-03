@@ -1,4 +1,4 @@
-import {Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr,} from "@chakra-ui/react";
+import {FormControl, Input, Stack, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr,} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -18,6 +18,7 @@ const Detail = () => {
     status: string,
   }[]>([])
   const [myIndex, setMyIndex] = useState(-1)
+  const [searchText, setSearchText] = useState('')
 
   const fetchList = useCallback(async () => {
     if (!router.query.code || Number.isNaN(Number(router.query.code))) {
@@ -69,6 +70,9 @@ const Detail = () => {
               })
             }}>« Back</Text>
       <Text textAlign={"center"} fontWeight={'bold'}>Winning Prize Full List</Text>
+      <FormControl>
+        <Input placeholder={'search...'} value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+      </FormControl>
       <TableContainer>
         <Table variant='striped'>
           <Thead>
@@ -88,7 +92,7 @@ const Detail = () => {
                 </Tr>
               )
             }
-            { list.filter((item) => item?.chat_id !== user?.id).map((item, index) => (
+            { list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase())).filter((item) => item?.chat_id !== user?.id).map((item, index) => (
               <Tr key={item.chat_id}>
                 <Td fontSize={'sm'}>{index + 1}</Td>
                 <Td fontSize={'sm'}>@{item.tgName}</Td>
