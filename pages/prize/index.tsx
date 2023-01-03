@@ -4,9 +4,8 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay, Progress,
-  Spacer,
   Stack, useToast,
-  Text, useDisclosure
+  Text, useDisclosure, Link
 } from "@chakra-ui/react";
 import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/router";
@@ -15,10 +14,11 @@ import useTelegramAuth from "../../hooks/useTelegramAuth";
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Head from "next/head";
+import Image from "next/image";
 
 const Prize = () => {
-  const { user } = useTelegramAuth()
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const {user} = useTelegramAuth()
+  const {isOpen, onOpen, onClose} = useDisclosure()
   const router = useRouter()
   const [prize, setPrize] = useState({
     id: 0,
@@ -131,49 +131,55 @@ const Prize = () => {
       <Head>
         <title>Snatch NEST Prize</title>
       </Head>
-      <Stack>
+      <Stack minH={'200px'}>
         <Text fontWeight={'bold'}>Event Introduction</Text>
         {/* eslint-disable-next-line react/no-children-prop */}
         <ReactMarkdown children={prize.text} remarkPlugins={[remarkGfm]} className={'markdown-body'}/>
-      </Stack>
-
-      <Spacer/>
-      <Stack>
-        <Text textAlign={"center"} fontSize={'xs'} fontWeight={"bold"} color={'blue'}>{user ? '@' + user?.username : 'Login first'} {checkMsg}</Text>
-        { valid && (
-          <Button minH={'44px'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{ bg: "" }} _active={{ bg: "" }}
-                  disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
-                  onClick={snatch}>
-            Snatch!
+        <Stack pt={'20px'}>
+          <Text textAlign={"center"} fontSize={'xs'} fontWeight={"bold"}
+                color={'blue'}>{user ? '@' + user?.username : 'Login first'} {checkMsg}</Text>
+          {valid && (
+            <Button minH={'44px'} fontSize={'sm'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{bg: ""}}
+                    _active={{bg: ""}}
+                    disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
+                    borderRadius={'0px'}
+                    onClick={snatch}>
+              Snatch!
+            </Button>
+          )}
+          <Button minH={'44px'} variant={"outline"} fontSize={'sm'} _hover={{bg: ""}} _active={{bg: ""}}
+                  borderRadius={'0px'} onClick={() => {
+            router.push({
+              pathname: '/history',
+              query: {
+                ...router.query
+              }
+            })
+          }}>
+            Full List
           </Button>
-        ) }
-        <Button variant={"outline"} _hover={{ bg: "" }} _active={{ bg: "" }} onClick={() => {
-          router.push({
-            pathname: '/history',
-            query: {
-              ...router.query
-            }
-          })}
-        }>
-          Full List
-        </Button>
+        </Stack>
       </Stack>
-
+      <Stack border={'1px solid'} p={'20px'} bg={'black'} color={'white'}>
+        <Image src={"/svg/github-mark-white.svg"} width={24} height={24} alt={""}/>
+        <Link isExternal href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} fontSize={'sm'}
+              fontWeight={'bold'}>Star this project, or new issues!</Link>
+      </Stack>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
+        <ModalOverlay/>
         <ModalContent>
           <ModalHeader>Snatch!</ModalHeader>
           <ModalBody>
             <Stack pb={'20px'}>
               <Text>{user?.username}</Text>
               <Text fontSize={'sm'}>
-                { status === 'PROCESSING' && 'Please wait for the result...' }
-                { status === 'SUCCESS' && 'Congratulations! You have successfully snatched the prize!' }
-                { status === 'ERROR' && snatchMsg }
+                {status === 'PROCESSING' && 'Please wait for the result...'}
+                {status === 'SUCCESS' && 'Congratulations! You have successfully snatched the prize!'}
+                {status === 'ERROR' && snatchMsg}
               </Text>
               {
                 status === 'PROCESSING' && (
-                  <Progress size='xs' isIndeterminate />
+                  <Progress size='xs' isIndeterminate/>
                 )
               }
               {

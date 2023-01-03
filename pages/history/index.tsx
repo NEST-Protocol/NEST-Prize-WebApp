@@ -1,4 +1,4 @@
-import {Box, FormControl, HStack, Input, Stack, Table, Tbody, Td, Text, Tr,} from "@chakra-ui/react";
+import {Badge, Box, FormControl, HStack, Input, Link, Stack, Table, Tbody, Td, Text, Tr,} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -62,18 +62,25 @@ const Detail = () => {
         <Box w={'20px'}></Box>
       </HStack>
       <FormControl>
-        <Input placeholder={'search name or wallet...'} value={searchText} fontSize={'xs'}
+        <Input placeholder={'search name or wallet...'} value={searchText} fontSize={'xs'} borderRadius={'0'}
                onChange={(e) => setSearchText(e.target.value)}/>
       </FormControl>
       <Text fontSize={'xs'} color={'gray'}>{list.length} users snatched success</Text>
       <Table variant='striped' w={'full'}>
         <Tbody>
+          <Tr fontWeight={'bold'} fontSize={'xs'}>
+            <Td>
+              <Badge variant={'outline'}>AD</Badge>
+              <Link> Star this project, or new issues on GitHub!</Link>
+            </Td>
+            <Td isNumeric>
+              NEST-Protocol
+            </Td>
+          </Tr>
           {list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase()) || item.wallet?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase())).map((item) => (
-            <Tr key={item.chat_id}>
-              <Td fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''}
-                  color={user?.id === item.chat_id ? 'red' : 'black'}>@{item.tgName || '-'}<br/>{item.wallet.slice(0, 8)}...{item.wallet.slice(-6)}</Td>
-              <Td fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''}
-                  color={user?.id === item.chat_id ? 'red' : 'black'} isNumeric>{item.amount} NEST</Td>
+            <Tr key={item.chat_id} fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''} color={user?.id === item.chat_id ? 'red' : 'black'}>
+              <Td>@{item.tgName || '-'}<br/>{item.wallet.slice(0, 8)}...{item.wallet.slice(-6)}</Td>
+              <Td isNumeric>{item.amount} NEST</Td>
             </Tr>
           ))}
         </Tbody>
