@@ -67,7 +67,7 @@ const Pizza = () => {
       </Stack>
       {
         data.map((item, index) => (
-          <Text key={index}>@{item.tgName}: {item.position} NEST</Text>
+          <Text key={index}>@{item.tgName}: {item.positions} NEST</Text>
         ))
       }
     </Stack>
