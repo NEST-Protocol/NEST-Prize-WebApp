@@ -2,12 +2,10 @@ import {FormControl, Input, Stack, Table, TableContainer, Tbody, Td, Text, Th, T
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
-import useTelegramAuth from "../../hooks/useTelegramAuth";
 import Head from "next/head";
 
 const Detail = () => {
   const router = useRouter();
-  const {user} = useTelegramAuth()
   const [list, setList] = useState<{
     amount: number,
     wallet: string,
@@ -17,7 +15,6 @@ const Detail = () => {
     chat_id: number,
     status: string,
   }[]>([])
-  const [myIndex, setMyIndex] = useState(-1)
   const [searchText, setSearchText] = useState('')
 
   const fetchList = useCallback(async () => {
@@ -39,17 +36,6 @@ const Detail = () => {
       console.log(e)
     }
   }, [router.query.code])
-
-  const fetchMyAmount = useCallback(async () => {
-    const index = list.findIndex((item) => item.chat_id === user?.id)
-    if (index >= 0) {
-      setMyIndex(list[index].amount)
-    }
-  }, [list, user])
-
-  useEffect(() => {
-    fetchMyAmount()
-  }, [fetchMyAmount])
 
   useEffect(() => {
     fetchList()
@@ -83,16 +69,7 @@ const Detail = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {
-              myIndex >= 0 && (
-                <Tr>
-                  <Td fontSize={'sm'} color={'red'} fontWeight={'bold'}>{myIndex + 1}</Td>
-                  <Td fontSize={'sm'} fontWeight={'bold'} color={'red'}>@{list[myIndex].tgName}</Td>
-                  <Td fontSize={'sm'} isNumeric color={'red'} fontWeight={'bold'}>{list[myIndex].amount} NEST</Td>
-                </Tr>
-              )
-            }
-            { list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase())).filter((item) => item?.chat_id !== user?.id).map((item, index) => (
+            { list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase())).map((item, index) => (
               <Tr key={item.chat_id}>
                 <Td fontSize={'sm'}>{index + 1}</Td>
                 <Td fontSize={'sm'}>@{item.tgName}</Td>
