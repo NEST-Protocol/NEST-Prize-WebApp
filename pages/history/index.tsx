@@ -1,4 +1,4 @@
-import {FormControl, Input, Stack, Table, Tbody, Td, Text, Tr,} from "@chakra-ui/react";
+import {Box, FormControl, HStack, Input, Stack, Table, Tbody, Td, Text, Tr,} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -44,20 +44,23 @@ const Detail = () => {
   }, [fetchList])
 
   return (
-    <Stack maxW={'container.sm'} w={'full'} p={'20px'} spacing={'20px'} overflow={"scroll"}>
+    <Stack maxW={'container.sm'} w={'full'} p={'20px'} spacing={'10px'} overflow={"scroll"}>
       <Head>
-        <title>Prize History</title>
+        <title>Winning Prize Full List</title>
       </Head>
-      <Text fontSize={'sm'} fontWeight={'bold'} cursor={"pointer"}
-            onClick={() => {
-              router.push({
-                pathname: '/prize',
-                query: {
-                  ...router.query
-                }
-              })
-            }}>« Back</Text>
-      <Text textAlign={"center"} fontWeight={'bold'}>Winning Prize Full List</Text>
+      <HStack justify={'space-between'}>
+        <Text fontSize={'sm'} fontWeight={'bold'} cursor={"pointer"} w={'20px'}
+              onClick={() => {
+                router.push({
+                  pathname: '/prize',
+                  query: {
+                    ...router.query
+                  }
+                })
+              }}>«</Text>
+        <Text textAlign={"center"} fontWeight={'bold'}>Winning Prize Full List</Text>
+        <Box w={'20px'}></Box>
+      </HStack>
       <FormControl>
         <Input placeholder={'search name or wallet...'} value={searchText} fontSize={'xs'}
                onChange={(e) => setSearchText(e.target.value)}/>
