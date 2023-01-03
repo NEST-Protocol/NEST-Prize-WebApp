@@ -131,7 +131,6 @@ const Prize = () => {
       <Head>
         <title>Snatch NEST Prize</title>
       </Head>
-      <Text textAlign={"center"} fontWeight={'bold'}>NEST Prize</Text>
       <Stack>
         <Text fontWeight={'bold'}>Event Introduction</Text>
         {/* eslint-disable-next-line react/no-children-prop */}
@@ -140,7 +139,7 @@ const Prize = () => {
 
       <Spacer/>
       <Stack>
-        <Text textAlign={"center"} fontWeight={"bold"} color={'blue'}>{user ? '@' + user?.username : 'Login first'} {checkMsg}</Text>
+        <Text textAlign={"center"} fontSize={'xs'} fontWeight={"bold"} color={'blue'}>{user ? '@' + user?.username : 'Login first'} {checkMsg}</Text>
         { valid && (
           <Button minH={'44px'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{ bg: "" }} _active={{ bg: "" }}
                   disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
