@@ -270,11 +270,12 @@ bot.action('NESTFiEvents', async (ctx) => {
 Bonus: 200NEST
 
 🍕 Pizza (Invitation Bonus)
-Fixed Bonus: 10 NEST.
 Ongoing Bonus:0.5% of the total transaction volume
 
 🐣 Butter chicken (Volume Bonus)
-Bonus: 10x leverage bonus 10–100 NEST.
+Bonus:
+5x leverage bonus 5–50 NEST.
+10x leverage bonus 10–100 NEST.
 20x leverage bonus 20–200 NEST.
 
 Details：https://medium.com/@nest-protocol/s4-nestfi-food-festival-4b15ac0bd96f
