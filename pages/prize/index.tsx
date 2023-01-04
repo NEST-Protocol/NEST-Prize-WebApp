@@ -3,7 +3,7 @@ import {
   ModalContent,
   ModalOverlay,
   Stack, useToast,
-  Text, useDisclosure, Link, ModalCloseButton
+  Text, useDisclosure, Link, ModalCloseButton, Badge
 } from "@chakra-ui/react";
 import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/router";
@@ -13,6 +13,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Head from "next/head";
 import Image from "next/image";
+import {env} from "telegraf/typings/util";
 
 const Prize = () => {
   const {user} = useTelegramAuth()
@@ -179,10 +180,18 @@ const Prize = () => {
                 <ModalCloseButton position={'absolute'} top={'-4px'} right={'4px'}/>
               )
             }
-            <Stack border={'1px solid'} p={'16px'} bg={'black'} color={'white'}>
-              <Image src={"/svg/github-mark-white.svg"} width={24} height={24} alt={""}/>
-              <Link isExternal href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} fontSize={'sm'}
-                    fontWeight={'bold'}>Star this project, or new issues!</Link>
+            <Stack>
+              <Link isExternal href={'https://www.nestprotocol.org/developers/bug'}>
+                <Text fontSize={'xl'} fontWeight={'bold'} color={'red'}>Earn up to $200,000 NEST!</Text>
+                <Text fontSize={'sm'}>
+                  for finding related bugs affecting the NEST Protocol.
+                </Text>
+              </Link>
+              <Badge fontWeight={'bold'} bg={'black'} color={'white'} textAlign={"end"}>Bug Bounty Program</Badge>
+              <Badge fontWeight={'bold'} bg={'red'} color={'white'}>Submit low risk bug</Badge>
+              <Badge fontWeight={'bold'} bg={'blue'} color={'white'}>Submit medium risk bug</Badge>
+              <Badge fontWeight={'bold'} bg={'green'} color={'white'}>Submit high risk bug</Badge>
+              <Badge fontWeight={'bold'} bg={'yellow'} color={'black'}>Submit critical risk bug</Badge>
             </Stack>
           </Stack>
         </ModalContent>
