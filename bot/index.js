@@ -76,7 +76,7 @@ bot.start(async (ctx) => {
       } else if (prize.errorCode === 0 && prize.value) {
         ctx.reply(prize.value.text || 'You found a NEST Prize!', {
           ...Markup.inlineKeyboard([
-            [Markup.button.webApp('Snatch!', `https://nest-prize-web-app.vercel.app/prize?code=${ctx.startPayload}`)],
+            [Markup.button.webApp('Snatch!', `https://nest-prize-web-app-delta.vercel.app/prize?code=${ctx.startPayload}`)],
             [Markup.button.url('Star or Issue', 'https://github.com/NEST-Protocol/NEST-Prize-WebApp')],
           ])
         })
@@ -125,7 +125,7 @@ Giveaway events, click on NESTFi Events.
 /help`, {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.url('invite', `https://nest-prize-web-app.vercel.app/api/share2?from=${ctx.from.id}`)],
+        [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.url('invite', `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.from.id}`)],
         [Markup.button.callback('Set Twitter', 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback('Set Wallet', 'setUserWallet', user?.value?.wallet)],
         [Markup.button.callback('NESTFi S3 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback('Share my Futures', 'shareMyFutures')],
@@ -205,7 +205,7 @@ Giveaway events, click on NESTFi Events.
 /help`, {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.url('invite', `https://nest-prize-web-app.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)],
+        [Markup.button.callback('🤩', 'forDeveloper'), Markup.button.url('invite', `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)],
         [Markup.button.callback('Set Twitter', 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback('Set Wallet', 'setUserWallet', res?.data?.value?.wallet)],
         [Markup.button.callback('NESTFi S4 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback('Share my Futures', 'shareMyFutures')],
@@ -249,7 +249,7 @@ bot.action('shareMyFutures', async (ctx) => {
     const orders = res.data.value
     await ctx.answerCbQuery()
     const keyboards = orders.map((order) => {
-      return [Markup.button.url(`${order.token} ${order.level}x ${order.orientation} ${order.rate}%`, `https://nest-prize-web-app.vercel.app/api/shareorder?from=${ctx.update.callback_query.from.id}&rate=${order.rate}&orientation=${order.orientation}&level=${order.level}&token=${order.token}&open_price=${order.open_price}&now_price=${order.now_price}`)]
+      return [Markup.button.url(`${order.token} ${order.level}x ${order.orientation} ${order.rate}%`, `https://nest-prize-web-app-delta.vercel.app/api/shareorder?from=${ctx.update.callback_query.from.id}&rate=${order.rate}&orientation=${order.orientation}&level=${order.level}&token=${order.token}&open_price=${order.open_price}&now_price=${order.now_price}`)]
     })
     // add back button to keyboards
     keyboards.push([Markup.button.callback('« Back', 'menu')])
@@ -310,7 +310,7 @@ Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_quer
     parse_mode: 'Markdown',
     disable_web_page_preview: true,
     ...Markup.inlineKeyboard([
-      [Markup.button.webApp('pizza info', `https://nest-prize-web-app.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
+      [Markup.button.webApp('pizza info', `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
       [Markup.button.callback('« Back', 'NESTFiEvents')],
     ])
   })
