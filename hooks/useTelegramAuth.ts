@@ -49,10 +49,6 @@ const useTelegramAuth = () => {
     getUser();
   }, [])
 
-  useEffect(() => {
-    validInitData()
-  }, [validInitData])
-
   setInterval(() => {
     getUser()
   }, 1000)
