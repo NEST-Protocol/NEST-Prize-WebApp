@@ -1,11 +1,9 @@
 import {
   Button, Modal,
-  ModalBody,
   ModalContent,
-  ModalHeader,
-  ModalOverlay, Progress,
+  ModalOverlay,
   Stack, useToast,
-  Text, useDisclosure, Link
+  Text, useDisclosure, Link, ModalCloseButton
 } from "@chakra-ui/react";
 import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/router";
@@ -34,7 +32,7 @@ const Prize = () => {
   const [checkMsg, setCheckMsg] = useState('')
   const [valid, setValid] = useState(false)
   const toast = useToast()
-  const [timer, setTimer] = useState(5)
+  const [timer, setTimer] = useState(3)
 
   const fetchPrize = useCallback(async () => {
     // router.query.code should be integer
@@ -133,14 +131,14 @@ const Prize = () => {
         setTimer(timer - 1)
       }, 1_000)
     }
-  }, [timer])
+  }, [onOpen, timer])
 
   useEffect(() => {
     fetchPrize()
   }, [fetchPrize])
 
   return (
-    <Stack maxW={'container.sm'} w={'full'} h={'100vh'} p={'20px'} spacing={'20px'}>
+    <Stack maxW={'container.sm'} w={'full'} h={'100vh'} p={'16px'} spacing={'16px'}>
       <Head>
         <title>Snatch NEST Prize</title>
       </Head>
@@ -149,7 +147,8 @@ const Prize = () => {
         {/* eslint-disable-next-line react/no-children-prop */}
         <ReactMarkdown children={prize.text} remarkPlugins={[remarkGfm]} className={'markdown-body'}/>
         <Stack pt={'20px'}>
-          <Text fontSize={'xs'} color={'blue'} fontWeight={'bold'}>Tips: {user ? '@' + user?.username : 'Login First'} {checkMsg}</Text>
+          <Text fontSize={'xs'} color={'blue'}
+                fontWeight={'bold'}>Tips: {user ? '@' + user?.username : 'Login First'} {checkMsg}</Text>
           <Button minH={'44px'} fontSize={'sm'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{bg: ""}}
                   _active={{bg: ""}} isDisabled={valid}
                   disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
@@ -170,24 +169,28 @@ const Prize = () => {
           </Button>
         </Stack>
       </Stack>
-      <Stack border={'1px solid'} p={'20px'} bg={'black'} color={'white'}>
+      <Stack border={'1px solid'} p={'16px'} bg={'black'} color={'white'}>
         <Image src={"/svg/github-mark-white.svg"} width={24} height={24} alt={""}/>
         <Link isExternal href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} fontSize={'sm'}
               fontWeight={'bold'}>Star this project, or new issues!</Link>
       </Stack>
-      <Modal isOpen={isOpen} onClose={onClose} closeOnEsc={!timer} closeOnOverlayClick={!timer} autoFocus={false} isCentered>
-        <ModalOverlay/>
+      <Modal isOpen={isOpen} onClose={onClose} closeOnEsc={!timer} closeOnOverlayClick={!timer} autoFocus={false}
+             size={'sm'}>
+        <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(10px) hue-rotate(90deg)'/>
         <ModalContent>
-          <ModalHeader>Ads can be closed after {timer} seconds</ModalHeader>
-          <ModalBody>
-            <Stack pb={'20px'}>
-              <Stack border={'1px solid'} p={'20px'} bg={'black'} color={'white'}>
-                <Image src={"/svg/github-mark-white.svg"} width={24} height={24} alt={""}/>
-                <Link isExternal href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} fontSize={'sm'}
-                      fontWeight={'bold'}>Star this project, or new issues!</Link>
-              </Stack>
+          <Stack p={'12px'}>
+            <Text fontSize={'xs'}>{timer ? `Ads can be closed after ${timer} seconds` : 'Ads'}</Text>
+            {
+              !timer && (
+                <ModalCloseButton position={'absolute'} top={'-4px'} right={'4px'}/>
+              )
+            }
+            <Stack border={'1px solid'} p={'16px'} bg={'black'} color={'white'}>
+              <Image src={"/svg/github-mark-white.svg"} width={24} height={24} alt={""}/>
+              <Link isExternal href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} fontSize={'sm'}
+                    fontWeight={'bold'}>Star this project, or new issues!</Link>
             </Stack>
-          </ModalBody>
+          </Stack>
         </ModalContent>
       </Modal>
     </Stack>
