@@ -125,7 +125,6 @@ Giveaway events, click on NESTFi Events.
 /help`, {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.callback('🤩', 'forDeveloper')],
         [Markup.button.callback('Set Twitter', 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback('Set Wallet', 'setUserWallet', user?.value?.wallet)],
         [Markup.button.callback('NESTFi S3 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures')],
@@ -205,7 +204,6 @@ Giveaway events, click on NESTFi Events.
 /help`, {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.callback('🤩', 'forDeveloper')],
         [Markup.button.callback('Set Twitter', 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback('Set Wallet', 'setUserWallet', res?.data?.value?.wallet)],
         [Markup.button.callback('NESTFi S4 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures')],
@@ -427,37 +425,6 @@ ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
   }
 })
 
-bot.action('forDeveloper', async (ctx) => {
-  const isBot = ctx.update.callback_query.from.is_bot
-  if (isBot) {
-    return
-  }
-  try {
-    await lmt.removeTokens(1)
-    await ctx.answerCbQuery()
-        .catch((e) => console.log(e))
-    await ctx.editMessageText(`*Another Revolution in Blockchain*
-
-*NEST PVM*
-NEST Probability Virtual Machine (PVM) is a virtual machine-like structure based on the basic function library. Developers can develop various exciting applications based on the function library, similar to Ethereum virtual machine (EVM) programming.
-Github repository: [NEST-PVM-V1.0](https://github.com/NEST-Protocol/NEST-PVM-V1.0). More [PVM Mechanism](https://nestprotocol.org/docs/Concept/PVM/)
-
-*NEST Oracle*
-NEST oracle is the only truly decentralized oracle on the market today.
-Github repository: [NEST-Oracle-V4.0](https://github.com/NEST-Protocol/NEST-Oracle-V4.0). [How to Mining](https://nestprotocol.org/docs/Technical-Reference-NEST-Oracle/#how-to-mining/), [How to Call Price](https://nestprotocol.org/docs/Technical-Reference-NEST-Oracle/#how-to-call-price)
-`, {
-      parse_mode: 'Markdown',
-      disable_web_page_preview: true,
-      ...Markup.inlineKeyboard([
-        [Markup.button.url('Follow Github', 'https://github.com/NEST-Protocol'), Markup.button.url('Developer Doc', 'https://nestprotocol.org/docs/PVM-Technical-Reference/')],
-        [Markup.button.url('New Issues', 'https://github.com/NEST-Protocol/NEST-Prize-WebApp/issues/new'), Markup.button.callback('« Back', 'menu')],
-      ])
-    })
-  } catch (e) {
-    console.log(e)
-  }
-})
-
 bot.action('setUserWallet', async (ctx) => {
   const isBot = ctx.update.callback_query.from.is_bot
   if (isBot) {
@@ -614,7 +581,6 @@ bot.on('message', async (ctx) => {
           await lmt.removeTokens(1)
           ctx.reply(`Your twitter has updated: ${input.slice(1)}`, Markup.inlineKeyboard([
             [Markup.button.callback('« Back', 'menu')],
-            [Markup.button.callback('🤩', 'forDeveloper')],
           ]))
         } catch (e) {
           await lmt.removeTokens(1)
