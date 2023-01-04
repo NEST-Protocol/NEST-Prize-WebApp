@@ -44,7 +44,7 @@ const Detail = () => {
   }, [fetchList])
 
   return (
-    <Stack maxW={'container.sm'} w={'full'} p={'20px'} spacing={'10px'} overflow={"scroll"}>
+    <Stack maxW={'container.sm'} w={'full'} p={'16px'} spacing={'10px'} overflow={"scroll"}>
       <Head>
         <title>Winning Prize Full List</title>
       </Head>
@@ -70,11 +70,11 @@ const Detail = () => {
         <Tbody>
           <Tr fontWeight={'bold'} fontSize={'xs'}>
             <Td>
-              <Badge variant={'outline'}>AD</Badge>
-              <Link> Star this project, or new issues on GitHub!</Link>
+              <Badge variant={'outline'} fontSize={'xs'}>AD</Badge>
+              <Link href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} isExternal> Star this project, or new issues on GitHub!</Link>
             </Td>
             <Td isNumeric>
-              NEST-Protocol
+              NEST Protocol
             </Td>
           </Tr>
           {list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase()) || item.wallet?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase())).map((item) => (

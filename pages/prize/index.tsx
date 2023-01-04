@@ -69,16 +69,10 @@ const Prize = () => {
     if (res.data.errorCode === 0 && res.data.value) {
       setValid(true)
     } else {
-      toast({
-        title: 'Warning',
-        description: res.data.message,
-        status: 'warning',
-        position: 'top-right',
-      })
       setCheckMsg(res.data.message)
       setValid(false)
     }
-  }, [router.query.code, toast, user])
+  }, [router.query.code, user])
 
   useEffect(() => {
     check()
