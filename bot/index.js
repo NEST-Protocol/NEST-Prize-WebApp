@@ -316,7 +316,14 @@ Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_quer
 
 bot.action('butterChicken', async (ctx) => {
   try {
-    const [ticket10, ticket20] = await Promise.all([
+    const [ticket5, ticket10, ticket20] = await Promise.all([
+      axios({
+        method: 'get',
+        url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=5`,
+        headers: {
+          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
+        }
+      }),
       axios({
         method: 'get',
         url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=10`,
@@ -332,6 +339,8 @@ bot.action('butterChicken', async (ctx) => {
         }
       })
     ])
+    const ticket5Count = ticket5?.data?.value?.length || 0
+    const ticket5History = ticket5.data.data?.history || []
     const ticket10Count = ticket10.data.data?.tickets || 0
     const ticket10History = ticket10.data.data?.history || []
     const ticket20Count = ticket20.data.data?.tickets || 0
@@ -344,11 +353,16 @@ Butter chicken （Trading bonus）
 
 Requirements:
 1.random bonus for every 500 futures NEST volume accumulated
-2. Order length must be greater than 5 minutes, with leverage options of 10x, 20x（Unlimited times）
+2. Order length must be greater than 5 minutes, with leverage
+options of 5x, 10x, 20x（Unlimited times）
 
 Bonus:
+5x leverage bonus 5–50 NEST.
 10x leverage bonus 10–100 NEST.
 20x leverage bonus 20–200 NEST.
+
+5x remaining butter chicken: ${ticket5Count}
+${ticket5History.map((item) => `${item} NEST`).join('\n')}
 
 10x remaining butter chicken: ${ticket10Count}
 ${ticket10History.map((item) => `${item} NEST`).join('\n')}
@@ -359,13 +373,43 @@ ${ticket20History.map((item) => `${item} NEST`).join('\n')}
       parse_mode: 'Markdown',
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.callback('10x draw', 'draw10x', ticket10Count <= 0), Markup.button.callback('20x draw', 'draw20x', ticket20Count <= 0)],
+        [Markup.button.callback('5x draw', 'draw5x', ticket5Count <= 0)],
+        [Markup.button.callback('10x draw', 'draw10x', ticket10Count <= 0)],
+        [Markup.button.callback('20x draw', 'draw20x', ticket20Count <= 0)],
         [Markup.button.callback('« Back', 'NESTFiEvents')]
       ])
     })
   } catch (e) {
     console.log(e)
     ctx.answerCbQuery('Some error occurred.')
+  }
+})
+
+bot.action('draw5x', async (ctx) => {
+  try {
+    const res = await axios({
+      method: 'post',
+      url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=5`,
+      headers: {
+        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
+      }
+    })
+    const ticketCount = res.data.data?.tickets || 0
+    const ticketHistory = res.data.data?.history || []
+    
+    await lmt.removeTokens(1)
+    await ctx.answerCbQuery()
+        .catch((e) => console.log(e))
+    await ctx.editMessageText(`5x remaining butter chicken: ${ticketCount}
+${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
+      disable_web_page_preview: true,
+      ...Markup.inlineKeyboard([
+        [Markup.button.callback('5x draw', 'draw5x', ticketCount <= 0)],
+        [Markup.button.callback('« Back', 'butterChicken')]
+      ])
+    })
+  } catch (e) {
+    console.log(e)
   }
 })
 
