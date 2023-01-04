@@ -456,7 +456,7 @@ bot.action('draw20x', async (ctx) => {
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
         .catch((e) => console.log(e))
-    await ctx.editMessageText(`10x remaining butter chicken: ${ticketCount}
+    await ctx.editMessageText(`20x remaining butter chicken: ${ticketCount}
 ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
