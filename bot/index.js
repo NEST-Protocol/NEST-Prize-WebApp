@@ -339,7 +339,7 @@ bot.action('butterChicken', async (ctx) => {
         }
       })
     ])
-    const ticket5Count = ticket5?.data?.value?.length || 0
+    const ticket5Count = ticket5.data.data?.tickets || 0
     const ticket5History = ticket5.data.data?.history || []
     const ticket10Count = ticket10.data.data?.tickets || 0
     const ticket10History = ticket10.data.data?.history || []
