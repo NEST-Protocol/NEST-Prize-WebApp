@@ -1,4 +1,6 @@
 import {useCallback, useEffect, useState} from "react";
+import axios from "axios";
+import qs from "qs";
 
 interface TelegramUser {
   id: number
@@ -9,28 +11,55 @@ interface TelegramUser {
 }
 
 const useTelegramAuth = () => {
+  const [initData, setInitData] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<TelegramUser | undefined>(undefined)
+  const [isValid, setIsValid] = useState<boolean>(false)
 
-  const getUser = useCallback(async () => {
+  const validInitData = useCallback(async () => {
+    if (initData) {
+      const res = await axios("/api/auth", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        data: qs.stringify({
+          _auth: initData,
+        }),
+      });
+      if (res.status === 200) {
+        setIsValid(true)
+      }
+    }
+  }, [initData])
+
+  const getUser = async () => {
     if (typeof window !== 'undefined' && !user) {
       // @ts-ignore
       window?.Telegram?.WebApp.ready();
       // @ts-ignore
+      const initData = window?.Telegram?.WebApp?.initData || "";
+      // @ts-ignore
       const initDataUnsafe = window?.Telegram?.WebApp?.initDataUnsafe || {};
+      setInitData(initData);
       setUser(initDataUnsafe?.user || undefined)
     }
-  }, [user])
+  }
 
   useEffect(() => {
     getUser();
-    const interval = setInterval(() => {
-      getUser();
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [getUser])
+  }, [])
+
+  useEffect(() => {
+    validInitData()
+  }, [validInitData])
+
+  setInterval(() => {
+    getUser()
+  }, 1000)
 
   return {
     user,
+    isValid,
   }
 }
 
