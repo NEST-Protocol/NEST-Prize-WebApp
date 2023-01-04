@@ -1,18 +1,15 @@
-import {NextApiRequest, NextApiResponse} from "next";
-import QRCode from "qrcode";
-import sharp from "sharp"
+const QRCode = require("qrcode");
+const sharp = require("sharp");
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const from = req.query.from as string || "";
-  const rate = req.query.rate as string || "0";
-  const orientation = req.query.orientation as string || "-";
-  const level = req.query.level as string || "0";
-  const token = req.query.token as string || "-";
-  const open_price = req.query.open_price as string || "0";
-  const now_price = req.query.now_price as string || "0";
+exports.handler = async (event) => {
+  const from = event?.queryStringParameters?.from || "";
+  const rate = event?.queryStringParameters?.rate || "0";
+  const orientation = event?.queryStringParameters?.orientation || "-";
+  const level = event?.queryStringParameters?.level || "0";
+  const token = event?.queryStringParameters?.token || "-";
+  const open_price = event?.queryStringParameters?.open_price || "0";
+  const now_price = event?.queryStringParameters?.now_price || "0";
+  
   const qr = await QRCode.toDataURL(`https://t.me/NESTRedEnvelopesBot?start=${from}`);
   const svg = `
 <svg width="720" height="1280" viewBox="0 0 720 1280" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -57,7 +54,13 @@ export default async function handler(
 `;
   // turn svg to jpeg
   const jpeg = await sharp(Buffer.from(svg)).jpeg().toBuffer();
-  res.setHeader("Content-Type", "image/jpeg");
-  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
-  res.end(jpeg);
-}
+
+  return {
+    statusCode: 200,
+    headers: {
+      'Content-Type': 'image/jpeg',
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
+    body: jpeg.toString('base64'),
+  };
+};
