@@ -186,7 +186,7 @@ const Prize = () => {
                 </Heading>
                 <Text fontSize={'xl'}>First 200 NEST</Text>
               </Link>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=73'} isExternal bg={'black'} color={'white'} p={'10px'}>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=77'} isExternal bg={'black'} color={'white'} p={'10px'}>
                 <Heading>
                   30+1 draw = 5x
                 </Heading>
