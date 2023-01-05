@@ -78,7 +78,7 @@ const Detail = () => {
             </Td>
           </Tr>
           {list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase()) || item.wallet?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase())).map((item) => (
-            <Tr key={item.chat_id} fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''} color={user?.id === item.chat_id ? 'red' : 'black'}>
+            <Tr key={item.chat_id} fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''}>
               <Td>@{item.tgName || '-'}<br/>{item.wallet.slice(0, 8)}...{item.wallet.slice(-6)}</Td>
               <Td isNumeric>{item.amount} NEST</Td>
             </Tr>
