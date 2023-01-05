@@ -3,7 +3,7 @@ import {
   ModalContent,
   ModalOverlay,
   Stack, useToast,
-  Text, useDisclosure, Link, ModalCloseButton, Badge
+  Text, useDisclosure, Link, ModalCloseButton, Heading, Divider
 } from "@chakra-ui/react";
 import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/router";
@@ -13,7 +13,6 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Head from "next/head";
 import Image from "next/image";
-import {env} from "telegraf/typings/util";
 
 const Prize = () => {
   const {user} = useTelegramAuth()
@@ -181,17 +180,49 @@ const Prize = () => {
               )
             }
             <Stack>
-              <Link isExternal href={'https://www.nestprotocol.org/developers/bug'}>
-                <Text fontSize={'xl'} fontWeight={'bold'} color={'red'}>Earn up to $200,000 NEST!</Text>
-                <Text fontSize={'sm'}>
-                  for finding related bugs affecting the NEST Protocol.
-                </Text>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=14'} isExternal bg={'yellow'} p={'10px'}>
+                <Heading>
+                  Hamburger
+                </Heading>
+                <Text fontSize={'xl'}>First 200 NEST</Text>
               </Link>
-              <Badge fontWeight={'bold'} bg={'black'} color={'white'} textAlign={"end"}>Bug Bounty Program</Badge>
-              <Badge fontWeight={'bold'} bg={'red'} color={'white'}>Submit low risk bug</Badge>
-              <Badge fontWeight={'bold'} bg={'blue'} color={'white'}>Submit medium risk bug</Badge>
-              <Badge fontWeight={'bold'} bg={'green'} color={'white'}>Submit high risk bug</Badge>
-              <Badge fontWeight={'bold'} bg={'yellow'} color={'black'}>Submit critical risk bug</Badge>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=73'} isExternal bg={'black'} color={'white'} p={'10px'}>
+                <Heading>
+                  30+1 draw = 5x
+                </Heading>
+                <Text fontSize={'xl'}>leverage 500NEST 5 min</Text>
+              </Link>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=74'} isExternal bg={'red'} color={'white'} p={'10px'}>
+                <Heading>
+                  Butter Chicken
+                </Heading>
+                <Text fontSize={'xl'}>45+1 draw = 10x leverage 500NEST 5 min</Text>
+              </Link>
+              <Divider/>
+              <Stack>
+                <Heading fontSize={'md'}>Butter Chicken Eating (Draw)</Heading>
+                <Text fontSize={'xs'}>
+                  1. <Link href={'https://t.me/NESTRedEnvelopesBot'} isExternal color={'red'}>https://t.me/NESTRedEnvelopesBot</Link><br/>
+                  2. Click S4<br/>
+                  3. Click on Butter Chicken<br/>
+                  4. Click on the Drew<br/>
+
+                  The position must be opened after 1 am UTC time!The position must be opened after 1 am UTC time!The position must be opened after 1 am UTC time!<br/>
+
+                  Food Festival reward time, UTC 7:00 am on the next day<br/>
+
+                  If you have any questions about the award, please fill out the form<br/>
+
+                  <Link href={'https://forms.gle/e5yPadfPBRQtj8pm6'} isExternal color={'red'}>https://forms.gle/e5yPadfPBRQtj8pm6</Link><br/>
+
+                  We will have someone dedicated to check. If one person repeatedly asks the same question will be kicked out of the group!<br/>
+
+                  Total trading volume greater than 10,000 NEST: <Link href={'https://t.me/nestfiwl'} isExternal color={'red'}>https://t.me/nestfiwl</Link><br/>
+                  Futures Exchange Group (only futures signals are discussed): <Link href={'https://t.me/nestfideal'} isExternal color={'red'}>https://t.me/nestfideal</Link><br/>
+                </Text>
+              </Stack>
+             <Text>
+             </Text>
             </Stack>
           </Stack>
         </ModalContent>
