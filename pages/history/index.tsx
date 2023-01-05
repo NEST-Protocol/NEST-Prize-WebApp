@@ -73,8 +73,8 @@ const Detail = () => {
               <Badge variant={'outline'} fontSize={'xs'}>AD</Badge>
               <Link href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} isExternal> Star this project, or new issues on GitHub!</Link>
             </Td>
-            <Td isNumeric>
-              NEST Protocol
+            <Td>
+              NEST
             </Td>
           </Tr>
           {list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase()) || item.wallet?.toLowerCase().startsWith(searchText.toLowerCase())).map((item) => (
