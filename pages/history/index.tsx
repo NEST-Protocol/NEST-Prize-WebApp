@@ -85,6 +85,9 @@ const Detail = () => {
           ))}
         </Tbody>
       </Table>
+      <Text fontSize={'xs'} color={'gray'}>
+        Tips: If your username is not displayed, try searching your wallet address.
+      </Text>
     </Stack>
   )
 }
