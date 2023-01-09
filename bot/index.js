@@ -20,18 +20,7 @@ if (token === undefined) {
 
 const bot = new Telegraf(token)
 
-const botName = "NESTRedEnvelopesBot"
-
-function hashCode(str) {
-  let hash = 0, i, chr, len;
-  if (str.length === 0) return hash;
-  for (i = 0, len = str.length; i < len; i++) {
-    chr = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + chr;
-    hash |= 0;
-  }
-  return hash;
-}
+const botName = 'NESTRedEnvelopesBot'
 
 bot.start(async (ctx) => {
   const chatId = ctx.chat.id
@@ -118,7 +107,7 @@ bot.start(async (ctx) => {
 Your wallet: ${user?.value?.wallet || 'Not set yet'},
 Your twitter: ${user?.value?.twitterName || 'Not set yet'},
 
-Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.from.id}
+Your ref link: https://t.me/${botName}?start=${ctx.from.id}
 
 Giveaway events, click on NESTFi Events.
 
@@ -197,7 +186,7 @@ bot.action('menu', async (ctx) => {
 Your wallet: ${res?.data?.value?.wallet || 'Not set yet'},
 Your twitter: ${res?.data?.value?.twitterName || 'Not set yet'},
 
-Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
+Your ref link: https://t.me/${botName}?start=${ctx.update.callback_query.from.id}
 
 Giveaway events, click on NESTFi Events.
 
@@ -212,48 +201,6 @@ Giveaway events, click on NESTFi Events.
   } catch (e) {
     console.log(e)
     await lmt.removeTokens(1)
-  }
-})
-
-bot.action('shareMyFutures', async (ctx) => {
-  try {
-    const userRes = await axios({
-      method: 'GET',
-      url: `https://cms.nestfi.net/bot-api/red-bot/user/${ctx.update.callback_query.from.id}`,
-      headers: {
-        'Authorization': `Bearer ${nest_token}`,
-      }
-    })
-    
-    if (!userRes?.data?.value?.wallet) {
-      await lmt.removeTokens(1)
-      await ctx.answerCbQuery()
-          .catch((e) => console.log(e))
-      await ctx.editMessageText(`Please set your wallet first`, {
-        ...Markup.inlineKeyboard([
-          [Markup.button.callback('« Back', 'menu')],
-        ])
-      })
-      return
-    }
-    
-    const res = await axios({
-      method: 'GET',
-      url: `https://cms.nestfi.net/bot-api/red-bot/user/future?wallet=${userRes?.data?.value?.wallet}`,
-      headers: {
-        'Authorization': nest_token,
-      }
-    })
-    const orders = res.data.value
-    await ctx.answerCbQuery()
-    const keyboards = orders.map((order) => {
-      return [Markup.button.url(`${order.token} ${order.level}x ${order.orientation} ${order.rate}%`, `https://nest-prize-web-app-delta.vercel.app/api/shareorder?from=${ctx.update.callback_query.from.id}&rate=${order.rate}&orientation=${order.orientation}&level=${order.level}&token=${order.token}&open_price=${order.open_price}&now_price=${order.now_price}`)]
-    })
-    // add back button to keyboards
-    keyboards.push([Markup.button.callback('« Back', 'menu')])
-    await ctx.editMessageText(`Share your futures orders:`, Markup.inlineKeyboard(keyboards))
-  } catch (e) {
-    console.log(e)
   }
 })
 
@@ -282,7 +229,7 @@ All delicious meals are done in our kitchen robot!`, {
       parse_mode: 'Markdown',
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.url('🍔 Hamburger', 'https://t.me/NESTRedEnvelopesBot?start=14'), Markup.button.callback('🍕 Pizza', 'pizza')],
+        [Markup.button.url('🍔 Hamburger', `https://t.me/${botName}?start=14`), Markup.button.callback('🍕 Pizza', 'pizza')],
         [Markup.button.callback('🐣 Butter chicken', 'butterChicken')],
         [Markup.button.callback('« Back', 'menu')]
       ])
@@ -303,7 +250,7 @@ bot.action('pizza', async (ctx) => {
 3. Position opening time greater than 5 minutes
 0.5% of initial margin will be awarded to the inviter
 
-Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
+Your ref link: https://t.me/${botName}?start=${ctx.update.callback_query.from.id}
 `, {
     parse_mode: 'Markdown',
     disable_web_page_preview: true,
@@ -494,43 +441,6 @@ bot.action('setUserWallet', async (ctx) => {
   } catch (e) {
     console.log(e)
     await lmt.removeTokens(1)
-  }
-})
-
-bot.action('checkTwitter', async (ctx) => {
-  try {
-    const res = await axios({
-      method: 'GET',
-      timeout: 3000,
-      url: `https://work.parasset.top/workbench-api/twitter/userInfo?cond=${ctx.update.callback_query.from.id}`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
-      }
-    })
-    if (res.data?.data.length === 0) {
-      ctx.editMessageText("You haven't authorized yet, please click the 'Authorize' button to authorize.", Markup.inlineKeyboard([
-        [Markup.button.url('Authorize', `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=dU9nMk54dnQzc0UtNjNwbDRrWno6MTpjaQ&redirect_uri=https://nestdapp.io/twitter&scope=tweet.read%20users.read%20follows.read%20like.read%20offline.access&state=${hashCode(botName)}_${ctx.update.callback_query.from.id}&code_challenge=challenge&code_challenge_method=plain`)],
-        [Markup.button.callback('I have Authorized', 'checkTwitter')],
-      ]))
-    } else {
-      // const access_token = res.data.data[0].access_token
-      const twitter_name = res.data.data[0].twitter_name.replace('@', '')
-      const twitter_id = res.data.data[0].twitter_id
-      await axios({
-        method: 'POST',
-        url: `https://cms.nestfi.net/bot-api/red-bot/user`,
-        data: {
-          chatId: ctx.update.callback_query.from.id,
-          twitterName: twitter_name,
-          twitterId: twitter_id,
-        }
-      })
-      ctx.editMessageText("You have authorized successfully.", Markup.inlineKeyboard([
-        [Markup.button.callback('« Back', 'menu')],
-      ]))
-    }
-  } catch (e) {
-    ctx.answerCbQuery("Some error occurred.")
   }
 })
 
