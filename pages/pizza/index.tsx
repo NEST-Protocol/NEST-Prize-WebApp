@@ -60,7 +60,7 @@ const Pizza = () => {
       <HStack justify={"space-between"} border={'1px'} p={4} borderRadius={'8px'}>
         {
           [
-            {key: 'Total trading', value: data.totalTrading},
+            {key: 'Total rewards', value: '-'},
             {key: 'Received rewards', value: data.issued},
             {key: 'Not settled', value: data.unissued},
           ].map((item, index) => (
@@ -79,7 +79,6 @@ const Pizza = () => {
                 <Stack key={index}>
                   <Text>@{item.tgName}</Text>
                   <Text>{item.wallet}</Text>
-                  <Text>{index + 1}. : {item.positions} NEST</Text>
                 </Stack>
               ))
             }
