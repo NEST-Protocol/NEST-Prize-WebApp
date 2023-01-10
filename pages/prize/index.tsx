@@ -186,13 +186,13 @@ const Prize = () => {
                 </Heading>
                 <Text fontSize={'xl'}>First 200 NEST</Text>
               </Link>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=82'} isExternal bg={'black'} color={'white'} p={'10px'}>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=96'} isExternal bg={'black'} color={'white'} p={'10px'}>
                 <Heading>
                   30+1 draw = 5x
                 </Heading>
                 <Text fontSize={'xl'}>leverage 500NEST 5 min</Text>
               </Link>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=79'} isExternal bg={'red'} color={'white'} p={'10px'}>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=95'} isExternal bg={'red'} color={'white'} p={'10px'}>
                 <Heading>
                   Butter Chicken
                 </Heading>
