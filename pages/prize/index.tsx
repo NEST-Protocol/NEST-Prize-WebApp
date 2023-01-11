@@ -79,6 +79,15 @@ const Prize = () => {
   }, [check])
 
   const snatch = async () => {
+    // @ts-ignore
+    if (window.gtag) {
+      // @ts-ignore
+      window.gtag('event', 'click', {
+        'event_category': 'snatch',
+        'event_label': 'snatch',
+        'value': router.query.code
+      });
+    }
     if (!router.query.code || Number.isNaN(Number(router.query.code)) || !user) {
       setStatus('ERROR')
       return
