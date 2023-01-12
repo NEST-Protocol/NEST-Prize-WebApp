@@ -197,7 +197,7 @@ const Prize = () => {
               </Link>
               <Link href={'https://t.me/NESTRedEnvelopesBot?start=96'} isExternal bg={'black'} color={'white'} p={'10px'}>
                 <Heading>
-                  30+1 draw = 5x
+                  25+1 draw = 5x
                 </Heading>
                 <Text fontSize={'xl'}>leverage 500NEST 5 min</Text>
               </Link>
@@ -205,7 +205,7 @@ const Prize = () => {
                 <Heading>
                   Butter Chicken
                 </Heading>
-                <Text fontSize={'xl'}>45+1 draw = 10x leverage 500NEST 5 min</Text>
+                <Text fontSize={'xl'}>40+1 draw = 10x leverage 500NEST 5 min</Text>
               </Link>
               <Divider/>
               <Stack>
