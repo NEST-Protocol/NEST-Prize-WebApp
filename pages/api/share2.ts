@@ -1,10 +1,14 @@
-const QRCode = require("qrcode");
-const sharp = require("sharp");
+import {NextApiRequest, NextApiResponse} from "next";
+import QRCode from "qrcode";
+import sharp from "sharp";
 
-exports.handler = async (event) => {
-  const from = event?.queryStringParameters?.from;
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const from = req.query.from as string || "";
   const qr = await QRCode.toDataURL(`https://t.me/NESTRedEnvelopesBot?start=${from}`);
-  
+
   const svg = `
 <svg width="720" height="1280" viewBox="0 0 720 1280" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g clip-path="url(#clip0_18_2)">
@@ -54,13 +58,7 @@ exports.handler = async (event) => {
 </svg>
   `;
   const jpeg = await sharp(Buffer.from(svg)).jpeg().toBuffer();
-
-  return {
-    statusCode: 200,
-    headers: {
-      "Content-Type": "image/jpeg",
-      "Cache-Control": "public, max-age=31536000, immutable",
-    },
-    body: jpeg.toString("base64"),
-  };
-};
+  res.setHeader("Content-Type", "image/jpeg");
+  res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  res.end(jpeg);
+}
