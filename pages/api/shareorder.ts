@@ -31,7 +31,7 @@ export default async function handler(
 <path d="M395 482H393V522H395V482Z" fill="#A56250"/>
 </g>
 <image x="260" y="935" width="200" height="200" xlink:href="${qr}"/>
-<text x="232" y="316" fill="#013358" font-weight="bold" font-size="60px" font-family="Montserrat">${Number(rate).toFixed(2)}%</text>
+<text x="232" y="316" fill="#013358" font-weight="bold" font-size="60px" font-family="Montserrat">${Number(rate) > 0 ? '+' : ''}${Number(rate).toFixed(2)}%</text>
 <text x="107" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">${orientation}</text>
 <text x="284" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">${level}x</text>
 <text x="438" y="510" fill="#A56250" font-weight="bold" font-size="32px" font-family="Montserrat">${token}</text>
