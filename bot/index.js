@@ -249,7 +249,7 @@ bot.action('shareMyFutures', async (ctx) => {
     const orders = res.data.value
     await ctx.answerCbQuery()
     const keyboards = orders.map((order) => {
-      return [Markup.button.webApp(`${order.token} ${order.level}x ${order.orientation} ${order.rate}%`, `https://nest-prize-web-app-delta.vercel.app/share?from=${ctx.update.callback_query.from.id}&rate=${order.rate}&orientation=${order.orientation}&level=${order.level}&token=${order.token}&open_price=${order.open_price}&now_price=${order.now_price}`)]
+      return [Markup.button.url(`${order.token} ${order.level}x ${order.orientation} ${order.rate}%`, `https://nest-prize-web-app-delta.vercel.app/share?from=${ctx.update.callback_query.from.id}&rate=${order.rate}&orientation=${order.orientation}&level=${order.level}&token=${order.token}&open_price=${order.open_price}&now_price=${order.now_price}`)]
     })
     // add back button to keyboards
     keyboards.push([Markup.button.callback('« Back', 'menu')])
