@@ -112,12 +112,12 @@ const Share = () => {
         </Stack>
       </Stack>
       <HStack w={'full'} maxW={'container.sm'} zIndex={100} position={'absolute'} px={'32px'} bottom={'48px'}>
-        <Button width={"full"} minH={'34px'} borderRadius={'full'} color={'white'} fontWeight={'700'} fontSize={'12.5px'}
-                background={'linear-gradient(90deg, #8BB7FF 0%, #0061FF 100%)'} _hover={{opacity: "0.8"}} _active={{opacity: "0.8"}}
-                onClick={copy}
-                boxShadow={'0px 4px 4px rgba(0, 0, 0, 0.25)'}>
-          { hasCopied ? 'Copied' : 'Copy' }
-        </Button>
+        {/*<Button width={"full"} minH={'34px'} borderRadius={'full'} color={'white'} fontWeight={'700'} fontSize={'12.5px'}*/}
+        {/*        background={'linear-gradient(90deg, #8BB7FF 0%, #0061FF 100%)'} _hover={{opacity: "0.8"}} _active={{opacity: "0.8"}}*/}
+        {/*        onClick={copy}*/}
+        {/*        boxShadow={'0px 4px 4px rgba(0, 0, 0, 0.25)'}>*/}
+        {/*  { hasCopied ? 'Copied' : 'Copy' }*/}
+        {/*</Button>*/}
         <Button width={"full"} minH={'34px'} borderRadius={'full'} color={'white'} fontWeight={'700'} fontSize={'12.5px'}
                 background={'linear-gradient(90deg, #8BB7FF 0%, #0061FF 100%)'} _hover={{opacity: "0.8"}} _active={{opacity: "0.8"}}
                 onClick={download}
