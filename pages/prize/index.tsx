@@ -195,17 +195,17 @@ const Prize = () => {
                 </Heading>
                 <Text fontSize={'xl'}>First 200 NEST</Text>
               </Link>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=96'} isExternal bg={'black'} color={'white'} p={'10px'}>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=118'} isExternal bg={'black'} color={'white'} p={'10px'}>
                 <Heading>
-                  25+1 draw = 5x
+                  20+1 draw = 5x
                 </Heading>
                 <Text fontSize={'xl'}>leverage 500NEST 5 min</Text>
               </Link>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=95'} isExternal bg={'red'} color={'white'} p={'10px'}>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=119'} isExternal bg={'red'} color={'white'} p={'10px'}>
                 <Heading>
                   Butter Chicken
                 </Heading>
-                <Text fontSize={'xl'}>40+1 draw = 10x leverage 500NEST 5 min</Text>
+                <Text fontSize={'xl'}>35+1 draw = 10x leverage 500NEST 5 min</Text>
               </Link>
               <Divider/>
               <Stack>
