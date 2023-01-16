@@ -17,7 +17,7 @@ const Share = () => {
       errorCorrectionLevel: 'L',
       margin: 0,
       color: {
-        dark: '#000000ff',
+        dark: '#003232',
         light: '#0000',
       }
     });
