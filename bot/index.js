@@ -298,14 +298,9 @@ bot.action('pizza', async (ctx) => {
   await lmt.removeTokens(1)
   await ctx.answerCbQuery()
       .catch((e) => console.log(e))
-  await ctx.editMessageText(`Invitees conditions
-  
-1. 500 NEST accumulated on open futures positions
-2. Leverage 10X or 20X
-3. Position opening time greater than 5 minutes
-0.5% of initial margin will be awarded to the inviter
+  await ctx.editMessageText(`Commission = 0.1% of the trading volume (only calculate the leverage of opening quantity X).
 
-Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
+Your reference link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
 `, {
     parse_mode: 'Markdown',
     disable_web_page_preview: true,
