@@ -32,7 +32,7 @@ const Share = () => {
     const node = document.getElementById('my-share');
     if (node) {
       domtoimage.toPng(node, {
-        bgcolor: '#fff',
+        bgcolor: '#f1fff9',
         width: node.clientWidth || 360,
         height: node.clientHeight || 640,
         quality: 1,
