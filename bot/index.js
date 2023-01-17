@@ -113,7 +113,9 @@ bot.start(async (ctx) => {
     ])
     const user = res[1].data
     await lmt.removeTokens(1)
-    ctx.reply(`Welcome to NEST Prize
+    ctx.reply(`Welcome to NEST FI
+
+Wallet and Twitter must be added to join NEST FI campaign
 
 Your wallet: ${user?.value?.wallet || 'Not set yet'},
 Your twitter: ${user?.value?.twitterName || 'Not set yet'},
@@ -193,7 +195,9 @@ bot.action('menu', async (ctx) => {
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
         .catch((e) => console.log(e))
-    await ctx.editMessageText(`Welcome to NEST Prize
+    await ctx.editMessageText(`Welcome to NEST Fi
+
+Wallet and Twitter must be added to join NEST FI campaign
 
 Your wallet: ${res?.data?.value?.wallet || 'Not set yet'},
 Your twitter: ${res?.data?.value?.twitterName || 'Not set yet'},
