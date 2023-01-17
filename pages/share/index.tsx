@@ -90,7 +90,7 @@ const Share = () => {
                 <Image src={`/svg/${String(token)?.toLowerCase().split('/')[1]}.svg`} h={'20px'} alt={''}/>
               </HStack>
             </HStack>
-            <Stack spacing={'24px'} py={'80px'}>
+            <Stack spacing={'24px'} pt={'80px'} pb={'40px'}>
               <Stack spacing={'4px'} textAlign={"center"}>
                 <Text fontSize={'12.5px'} fontWeight={'500'} color={'#2F759D'}>Total Profit</Text>
                 <Text fontSize={'80px'} fontWeight={'700'} color={'#0047BB'}>{Number(rate) > 0 ? '+' : ''}{Number(rate).toFixed(2) || '-'}%</Text>
@@ -104,7 +104,7 @@ const Share = () => {
                 <Text fontSize={'24px'} fontWeight={'500'} color={'#003232'}>{Number(open_price).toFixed(2) || '-'}</Text>
               </Stack>
             </Stack>
-            <Stack pb={'80px'}>
+            <Stack pb={'40px'}>
               <Text textAlign={"center"} fontSize={'20px'} color={'#003232'}>$5 NEST rewards for each new user</Text>
             </Stack>
             <Stack align={"center"} pb={'80px'}>
