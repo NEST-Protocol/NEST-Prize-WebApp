@@ -127,7 +127,7 @@ Giveaway events, click on NESTFi Events.
       ...Markup.inlineKeyboard([
         [Markup.button.url('invite', `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.from.id}`)],
         [Markup.button.callback('Set Twitter', 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback('Set Wallet', 'setUserWallet', user?.value?.wallet)],
-        [Markup.button.callback('NESTFi S3 Food Festival', 'NESTFiEvents')],
+        [Markup.button.callback('NESTFi S4 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback('Share my Futures', 'shareMyFutures')],
       ])
     })
