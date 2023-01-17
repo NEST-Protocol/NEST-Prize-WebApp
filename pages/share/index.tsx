@@ -125,7 +125,8 @@ const Share = () => {
         <Button width={"full"} minH={'34px'} borderRadius={'full'} color={'white'} fontWeight={'700'} fontSize={'12.5px'}
                 background={'linear-gradient(90deg, #8BB7FF 0%, #0061FF 100%)'} _hover={{opacity: "0.8"}} _active={{opacity: "0.8"}}
                 onClick={() => {
-                  const text = `$5 NEST rewards for each new user`
+                  const text = `Follow the right person, making money is as easy as breathing.
+You can follow the right person on NESTFi, here is my refer link:`
                   window.open(`https://twitter.com/intent/tweet?text=${encodeURI(text)}&url=https://t.me/NESTRedEnvelopesBot?start=${from}&hashtags=NEST,btc,eth&via=NEST_Protocol`)
                 }}
                 boxShadow={'0px 4px 4px rgba(0, 0, 0, 0.25)'}>Twitter</Button>
