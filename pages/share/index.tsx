@@ -94,7 +94,7 @@ const Share = () => {
             <Stack spacing={'24px'} py={'80px'}>
               <Stack spacing={'4px'} textAlign={"center"}>
                 <Text fontSize={'12.5px'} fontWeight={'500'} color={'#2F759D'}>Total Profit</Text>
-                <Text fontSize={'24px'} fontWeight={'500'} color={'#0047BB'}>{Number(rate) > 0 ? '+' : ''}{Number(rate).toFixed(2) || '-'}%</Text>
+                <Text fontSize={'80px'} fontWeight={'700'} color={'#0047BB'}>{Number(rate) > 0 ? '+' : ''}{Number(rate).toFixed(2) || '-'}%</Text>
               </Stack>
               <Stack spacing={'4px'} textAlign={"center"}>
                 <Text fontSize={'12.5px'} fontWeight={'500'} color={'#2F759D'}>Last price</Text>
