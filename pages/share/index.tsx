@@ -77,7 +77,6 @@ const Share = () => {
           <Stack id={'my-share'} p={'16px'} bgImage={'/img/shareOrder.png'} bgSize={'cover'} borderRadius={'20px'}>
             <HStack justify={"center"} spacing={'10px'} pt={'8px'} pb={'20px'}>
               <Image src={'/svg/NEST_LOGO.svg'} alt={'logo'}/>
-              <Text fontSize={'12.5px'} fontWeight={'500'} color={'#2F759D'}>Share</Text>
             </HStack>
             <HStack justify={"space-around"} h={'40px'} borderTop={'1px solid #CCDDF4'} borderBottom={'1px solid #CCDDF4'}>
               <Stack w={'80px'} align={"center"}>
@@ -104,6 +103,9 @@ const Share = () => {
                 <Text fontSize={'12.5px'} fontWeight={'500'} color={'#2F759D'}>Avg Open Price</Text>
                 <Text fontSize={'24px'} fontWeight={'500'} color={'#003232'}>{Number(open_price).toFixed(2) || '-'}</Text>
               </Stack>
+            </Stack>
+            <Stack pb={'80px'}>
+              <Text textAlign={"center"} fontSize={'20px'} color={'#003232'}>$5 NEST rewards for each new user</Text>
             </Stack>
             <Stack align={"center"} pb={'80px'}>
               <Image src={qr} h={'80px'} w={'80px'} alt={'url'} />
