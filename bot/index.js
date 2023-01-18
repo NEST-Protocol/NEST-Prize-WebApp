@@ -274,7 +274,7 @@ bot.action('NESTFiEvents', async (ctx) => {
 Bonus: 200NEST
 
 🍕 Pizza (Invitation Bonus)
-Ongoing Bonus:0.5% of the total transaction volume
+Ongoing Bonus:0.1% of the trading volume (only calculate the leverage of opening quantity X).
 
 🐣 Butter chicken (Volume Bonus)
 Bonus:
