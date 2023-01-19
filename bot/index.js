@@ -353,7 +353,7 @@ bot.action('butterChicken', async (ctx) => {
 Butter chicken （Trading bonus）
 
 Requirements:
-1.random bonus for every 500 futures NEST volume accumulated
+1.random bonus for every 800 futures NEST volume accumulated
 2. Order length must be greater than 5 minutes, with leverage
 options of 5x, 10x, 20x（Unlimited times）
 
