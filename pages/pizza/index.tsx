@@ -1,4 +1,4 @@
-import {Button, Divider, Heading, HStack, Spacer, Stack, Text, useClipboard} from "@chakra-ui/react"
+import {Button, Divider, chakra, HStack, Select, Spacer, Stack, Text, useClipboard} from "@chakra-ui/react"
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -6,15 +6,31 @@ import axios from "axios";
 const Pizza = () => {
   const router = useRouter()
   const chatId = router.query.chatId
-  const [data, setData] = useState<any>({
-    tgName: '',
-    issued: 0,
-    unissued: 0,
-    totalTrading: 0,
+  const [data, setData] = useState<{
+    tgName: string,
+    wallet: string,
+    totalRewards: number,
+    recentRewards: number,
+    notSettled: number,
+    details: {
+      tgName: string,
+      wallet: string,
+      totalTrading: number,
+      totalRewards: number,
+      recentRewards: number,
+      notSettled: number,
+    }[]
+  }>({
+    tgName: '-',
+    wallet: '',
+    totalRewards: 0,
+    recentRewards: 0,
+    notSettled: 0,
     details: [],
-    wallet: ''
   })
   const {onCopy, setValue, hasCopied} = useClipboard('')
+  const [filter, setFilter] = useState('all')
+  const [sort, setSort] = useState('totalTrading')
 
   useEffect(() => {
     if (chatId) {
@@ -46,27 +62,27 @@ const Pizza = () => {
   }, [fetchData])
 
   return (
-    <Stack w={'full'} p={'20px'} spacing={'20px'}>
-      <HStack>
-        <Stack spacing={0}>
-          <Text fontSize={'xl'} fontWeight={'bold'}>@{data.tgName}</Text>
-          <Text fontSize={'sm'} fontWeight={'semibold'}>{data.wallet.slice(0, 8)}...{data.wallet.slice(-6)}</Text>
+    <Stack w={'full'} h={'100vh'} p={'20px'} spacing={'8px'} bgImage={'/images/invite_bg.jpg'} overflow={'scroll'}>
+      <HStack pb={'20px'}>
+        <Stack spacing={'16px'}>
+          <Text fontSize={'16px'} fontWeight={'bold'} color={'#0047BB'}>@{data.tgName || '-'}</Text>
+          <Text fontSize={'12.5px'} fontWeight={'600'} color={'#00B7EE'}>{data.wallet.slice(0, 8)}...{data.wallet.slice(-6)}</Text>
         </Stack>
         <Spacer/>
-        <Button colorScheme={'blue'} onClick={onCopy}>
+        <Button colorScheme={'blue'} onClick={onCopy} color={'white'} bg={'#0047BB'} borderRadius={'full'}>
           {hasCopied ? 'Copied success!' : 'Copy invitation link'}
         </Button>
       </HStack>
-      <HStack justify={"space-between"} border={'1px'} p={4} borderRadius={'8px'}>
+      <HStack justify={"space-between"} border={'2px solid #EEEEEE'} p={4} borderRadius={'14px'} bg={'white'}>
         {
           [
-            {key: 'Total rewards', value: '-'},
-            {key: 'Received rewards', value: data.issued},
-            {key: 'Not settled', value: data.unissued},
+            {key: 'Total rewards', value: '1000'},
+            {key: 'Recent rewards', value: '1000'},
+            {key: 'Not settled', value: '1000'},
           ].map((item, index) => (
-            <Stack key={index} align={"center"}>
-              <Text fontSize={'xl'} color={'#e1490c'} fontWeight={"bold"}>{item.value} NEST</Text>
-              <Text fontSize={'sm'} color={'gray'}>{item.key}</Text>
+            <Stack key={index} align={"start"} textAlign={"start"} py={'20px'}>
+              <Text fontSize={'11px'} color={'black'} fontWeight={"bold"}>{item.value}</Text>
+              <Text fontSize={'10px'} color={'#878787'}>{item.key}</Text>
             </Stack>
           ))
         }
@@ -74,20 +90,75 @@ const Pizza = () => {
       {
         data?.details.length > 0 ? (
           <>
+            <HStack>
+              <Select borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'} border={'1px solid #EEEEEE'}
+                      onChange={(e) => setFilter(e.target.value)} fontSize={'12.5px'}
+              >
+                <option value='all'>All</option>
+                <option value='recentRewards'>Recent Rewards</option>
+                <option value='notSettled'>Not Settled</option>
+                <option value='neverTraded'>Never Traded</option>
+              </Select>
+              <Select bg={'#F7F8FA'}  borderRadius={'full'} boxShadow={'0px 0px 10px 0px #EEEEEE'} border={'1px solid #EEEEEE'}
+                      onChange={(e) => setSort(e.target.value)} fontSize={'12.5px'}
+              >
+                <option value='totalTrading'>Total Trading</option>
+                <option value='totalRewards'>Total Rewards</option>
+                <option value='recentRewards'>Recent Rewards</option>
+                <option value='notSettled'>Not Settled</option>
+              </Select>
+            </HStack>
             {
-              data?.details.map((item: any, index: number) => (
-                <Stack key={index}>
-                  <Text>@{item.tgName}</Text>
-                  <Text>{item.wallet}</Text>
+              data?.details.filter((item, index) => {
+                if (filter === 'all') return true
+                if (filter === 'recentRewards') return item.recentRewards > 0
+                if (filter === 'notSettled') return item.notSettled > 0
+                if (filter === 'neverTraded') return item.totalTrading === 0
+                return false
+              }).sort((a, b) => {
+                if (sort === 'totalTrading') return b.totalTrading - a.totalTrading
+                if (sort === 'totalRewards') return b.totalRewards - a.totalRewards
+                if (sort === 'recentRewards') return b.recentRewards - a.recentRewards
+                if (sort === 'notSettled') return b.notSettled - a.notSettled
+                return 0
+              }).map((item: any, index: number) => (
+                <Stack key={index} p={'20px'} border={'2px solid #EEEEEE'} borderRadius={'14px'} bg={'white'}>
+                  <Text fontSize={'12.5px'} fontWeight={'600'}>@{item.tgName}</Text>
+                  <Text fontSize={'12.5px'} color={'#00B7EE'} fontWeight={'600'}>{item.wallet}</Text>
+                  {
+                    item.totalTrading > 0 && (
+                    <>
+                      <Divider/>
+                      <HStack justify={"space-between"} color={'#878787'} fontSize={'12.5px'} fontWeight={'600'}>
+                        <Text>Total trading</Text>
+                        <Text>Total rewards</Text>
+                      </HStack>
+                      <HStack justify={"space-between"} color={'black'} fontSize={'12.5px'} fontWeight={'bold'}>
+                        <Text>{item.totalTrading} NEST</Text>
+                        <Text>{item.totalRewards} rewards</Text>
+                      </HStack>
+                      <Divider/>
+                      <HStack justify={"space-between"} color={'#878787'} fontSize={'12.5px'} fontWeight={'600'}>
+                        <Text>Recent rewards</Text>
+                        <Text>Not settled</Text>
+                      </HStack>
+                      <HStack justify={"space-between"} color={'black'} fontSize={'12.5px'} fontWeight={'bold'}>
+                        <Text>{item.recentRewards} NEST</Text>
+                        <Text>{item.notSettled} rewards</Text>
+                      </HStack>
+                    </>
+                    )
+                  }
                 </Stack>
               ))
             }
           </>
         ) : (
-          <>
+          <Stack align={"center"} pt={'40px'}>
+            <chakra.img src={'/svg/invite_icon.svg'} alt={'empty'} w={'120px'} h={'120px'}/>
             {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <Text textAlign={"center"}>You haven't invited yet</Text>
-          </>
+            <Text fontSize={'16px'} fontWeight={'600'} color={'#878787'}>You haven't invited yet</Text>
+          </Stack>
         )
       }
     </Stack>
