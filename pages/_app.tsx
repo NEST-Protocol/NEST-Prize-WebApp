@@ -14,8 +14,12 @@ export default function App({Component, pageProps}: AppProps) {
           name="description"
           content="NEST Prize WebApp for Telegram Bot"
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
         <link rel="icon" href="/favicon.ico"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
       </Head>
       <Script id={"telegram-web-app"} async={true} src={"https://telegram.org/js/telegram-web-app.js"}></Script>
       <Script src={"https://www.googletagmanager.com/gtag/js?id=G-BE17GNN7CH"}></Script>
