@@ -319,7 +319,7 @@ Your reference link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callbac
 bot.action('iceCream', async (ctx) => {
   await lmt.removeTokens(1)
   await ctx.answerCbQuery()
-  await ctx.editMessageText(`🍨 Ice cream
+  await ctx.editMessageText(`🍦 Ice cream
 Reward: 0.05% of total trading volume as bonus pool, 50% of trading volume ranking, 50% of profit ranking
 
 1. Trading Volume Ranking
