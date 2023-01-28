@@ -289,7 +289,8 @@ All delicious meals are done in our kitchen robot!`, {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
         [Markup.button.url('🍔 Hamburger', 'https://t.me/NESTRedEnvelopesBot?start=14'), Markup.button.callback('🍕 Pizza', 'pizza')],
-        [Markup.button.callback('🐣 Butter chicken', 'butterChicken'), Markup.button.url('Once a day', 'https://t.me/NEST_DAO/1305')],
+        [Markup.button.callback('🐣 Butter chicken', 'butterChicken'), Markup.button.callback('🍨 Ice cream', 'iceCream')],
+        [Markup.button.url('Once a day', 'https://t.me/NEST_DAO/1305')],
         [Markup.button.callback('« Back', 'menu')]
       ])
     })
@@ -310,6 +311,31 @@ Your reference link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callbac
     disable_web_page_preview: true,
     ...Markup.inlineKeyboard([
       [Markup.button.webApp('pizza info', `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
+      [Markup.button.callback('« Back', 'NESTFiEvents')],
+    ])
+  })
+})
+
+bot.action('iceCream', async (ctx) => {
+  await lmt.removeTokens(1)
+  await ctx.answerCbQuery()
+  await ctx.editMessageText(`🍨 Ice cream
+Reward: 0.05% of total trading volume as bonus pool, 50% of trading volume ranking, 50% of profit ranking
+
+1. Trading Volume Ranking
+
+Conditions: Trading volume must be greater than 500,000 (calculated leverage) to be eligible to participate.
+
+Reward: The top 80 rewards will be awarded every three days according to the trading volume ranking.
+
+2. Profit Ranking
+
+Conditions: The principal amount of a single trade must be greater than 1000nest (not counting leverage) to be eligible to participate.
+
+Reward: The top 80 rewards will be awarded every three days according to the profit ranking`, {
+    parse_mode: 'Markdown',
+    disable_web_page_preview: true,
+    ...Markup.inlineKeyboard([
       [Markup.button.callback('« Back', 'NESTFiEvents')],
     ])
   })
