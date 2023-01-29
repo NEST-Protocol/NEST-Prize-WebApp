@@ -1,4 +1,4 @@
-import {Badge, Box, FormControl, HStack, Input, Link, Stack, Table, Tbody, Td, Text, Tr,} from "@chakra-ui/react";
+import {Box, FormControl, HStack, Input, Link, Stack, Table, Tbody, Td, Text, Tr,} from "@chakra-ui/react";
 import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
@@ -70,11 +70,9 @@ const Detail = () => {
         <Tbody>
           <Tr fontWeight={'bold'} fontSize={'xs'}>
             <Td>
-              <Badge variant={'outline'} fontSize={'xs'}>AD</Badge>
               <Link href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} isExternal> Star this project, or new issues on GitHub!</Link>
             </Td>
             <Td>
-              NEST
             </Td>
           </Tr>
           {list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase()) || item.wallet?.toLowerCase().startsWith(searchText.toLowerCase())).map((item) => (
