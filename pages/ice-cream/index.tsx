@@ -77,8 +77,6 @@ const IceCream = () => {
     return rank.ranking.find(item => item.ranking === rank.myRanking)
   }, [rank])
 
-  console.log(myRank)
-
   return (
     <Stack maxW={'container.sm'} w={'full'} h={'100vh'} p={'16px'} spacing={'16px'}>
       <Select bg={'#F7F8FA'} borderRadius={'full'} border={'1px solid #EEEEEE'} color={'#878787'}
@@ -98,11 +96,15 @@ const IceCream = () => {
       </Tabs>
       <HStack p={'30px'} justifyContent={'space-around'} border={'2px solid #EEEEEE'} borderRadius={'14px'}>
         <Stack w={'120px'}>
-          <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.tradingPool?.toLocaleString() || '-'}</Text>
+          <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.tradingPool?.toLocaleString('en-US', {
+            maximumFractionDigits: 2,
+          }) || '-'}</Text>
           <Text fontSize={'10.5px'} fontWeight={'500'} color={'#878787'}>Transaction amount</Text>
         </Stack>
         <Stack w={'120px'}>
-          <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.bonusPool?.toLocaleString() || '-'}</Text>
+          <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.bonusPool?.toLocaleString('en-US', {
+            maximumFractionDigits: 2,
+          }) || '-'}</Text>
           <Text fontSize={'10.5px'} fontWeight={'500'} color={'#878787'}>Bonus pool</Text>
         </Stack>
       </HStack>
@@ -121,8 +123,12 @@ const IceCream = () => {
                   <Text w={'100px'}>Giveaway</Text>
                 </HStack>
                 <HStack justify={'space-between'} w={'full'}>
-                  <Text w={'100px'}>{myRank.amount} NEST</Text>
-                  <Text w={'100px'}>{myRank.reward} NEST</Text>
+                  <Text w={'100px'}>{myRank.amount.toLocaleString('en-US', {
+                    maximumFractionDigits: 2,
+                  })} NEST</Text>
+                  <Text w={'100px'}>{myRank.reward.toLocaleString('en-US', {
+                    maximumFractionDigits: 2,
+                  })} NEST</Text>
                 </HStack>
               </Stack>
             </HStack>
@@ -148,8 +154,12 @@ const IceCream = () => {
                   <Text w={'full'}>Giveaway</Text>
                 </HStack>
                 <HStack justify={'space-between'} w={'full'}>
-                  <Text w={'full'}>{item.amount.toLocaleString()} NEST</Text>
-                  <Text w={'full'}>{item.reward.toLocaleString()} NEST</Text>
+                  <Text w={'full'}>{item.amount.toLocaleString('en-US', {
+                    maximumFractionDigits: 2,
+                  })} NEST</Text>
+                  <Text w={'full'}>{item.reward.toLocaleString('en-US', {
+                    maximumFractionDigits: 2,
+                  })} NEST</Text>
                 </HStack>
               </Stack>
             </HStack>
