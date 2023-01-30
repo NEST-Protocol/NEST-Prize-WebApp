@@ -28,7 +28,7 @@ const IceCream = () => {
 
   useEffect(() => {
     if (options.length > 0) {
-      setCode(options[0])
+      setCode(options[options.length - 1])
     }
   }, [options])
 
