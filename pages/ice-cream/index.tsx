@@ -111,7 +111,7 @@ const IceCream = () => {
         {
           myRank ? (
             <HStack border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
-              <Text fontSize={'xl'} fontWeight={'semibold'}>80</Text>
+              <Text fontSize={'xl'} fontWeight={'semibold'}>{myRank.ranking}</Text>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
                 <Text>{myRank.tgName}</Text>
                 <Text color={'#00B7EE'}>{myRank.address.slice(0, 6)}...{myRank.address.slice(-4)}</Text>
