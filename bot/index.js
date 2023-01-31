@@ -163,19 +163,23 @@ bot.action('inputUserTwitter', async (ctx) => {
   if (isBot) {
     return
   }
-  await axios({
-    method: 'POST',
-    url: `https://cms.nestfi.net/bot-api/red-bot/user`,
-    data: {
-      chatId: ctx.from.id,
-      intent: 'setUserTwitter',
-    },
-    headers: {
-      'Authorization': `Bearer ${nest_token}`
-    }
-  }).catch((e) => console.log(e))
-  await lmt.removeTokens(1)
-  await ctx.reply('Please input your twitter name with @')
+  try {
+    await axios({
+      method: 'POST',
+      url: `https://cms.nestfi.net/bot-api/red-bot/user`,
+      data: {
+        chatId: ctx.from.id,
+        intent: 'setUserTwitter',
+      },
+      headers: {
+        'Authorization': `Bearer ${nest_token}`
+      }
+    })
+    await lmt.removeTokens(1)
+    await ctx.reply('Please input your twitter name with @')
+  } catch (e) {
+    console.log(e)
+  }
 })
 
 bot.action('menu', async (ctx) => {
@@ -513,15 +517,12 @@ bot.action('setUserWallet', async (ctx) => {
       headers: {
         'Authorization': `Bearer ${nest_token}`
       }
-    }).catch((e) => console.log(e))
-    
+    })
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
-        .catch((e) => console.log(e))
     await ctx.editMessageText('Please send your wallet address:')
   } catch (e) {
     console.log(e)
-    await lmt.removeTokens(1)
   }
 })
 
