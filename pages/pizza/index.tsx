@@ -62,7 +62,7 @@ const Pizza = () => {
   }, [fetchData])
 
   return (
-    <Stack w={'full'} h={'100vh'} p={'20px'} spacing={'8px'} bgImage={'/img/invite_bg.jpg'} bgSize={'cover'} overflow={'scroll'}>
+    <Stack w={'full'} h={'100vh'} p={'20px'} spacing={'8px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} overflow={'scroll'}>
       <HStack pb={'20px'}>
         <Stack spacing={'16px'}>
           <Text fontSize={'16px'} fontWeight={'bold'} color={'#0047BB'}>@{data.user.tgName || '-'}</Text>
@@ -81,10 +81,10 @@ const Pizza = () => {
             {key: 'Not settled', value: data.user.notSettled},
           ].map((item, index) => (
             <Stack key={index} align={"start"} textAlign={"start"} py={'20px'}>
-              <Text fontSize={'11px'} color={'black'} fontWeight={"bold"}>{item.value?.toLocaleString('en-US', {
+              <Text fontSize={'12.5px'} color={'black'} fontWeight={"bold"}>{item.value?.toLocaleString('en-US', {
                 maximumFractionDigits: 2
               }) || '-'} NEST</Text>
-              <Text fontSize={'10px'} color={'#878787'}>{item.key}</Text>
+              <Text fontSize={'12.5px'} color={'#878787'}>{item.key}</Text>
             </Stack>
           ))
         }
@@ -141,7 +141,7 @@ const Pizza = () => {
                         })} NEST</Text>
                         <Text>{item.totalRewards?.toLocaleString('en-US', {
                           maximumFractionDigits: 2
-                        })} rewards</Text>
+                        })} NEST</Text>
                       </HStack>
                       <Divider/>
                       <HStack justify={"space-between"} color={'#878787'} fontSize={'12.5px'} fontWeight={'600'}>
@@ -154,7 +154,7 @@ const Pizza = () => {
                         })} NEST</Text>
                         <Text>{item.notSettled?.toLocaleString('en-US', {
                           maximumFractionDigits: 2
-                        })} rewards</Text>
+                        })} NEST</Text>
                       </HStack>
                     </>
                     )
