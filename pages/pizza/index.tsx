@@ -62,7 +62,7 @@ const Pizza = () => {
   }, [fetchData])
 
   return (
-    <Stack w={'full'} h={'100vh'} p={'20px'} spacing={'8px'} bgImage={'/images/invite_bg.jpg'} overflow={'scroll'}>
+    <Stack w={'full'} h={'100vh'} p={'20px'} spacing={'8px'} bgImage={'/images/invite_bg.jpg'} bgSize={'cover'} overflow={'scroll'}>
       <HStack pb={'20px'}>
         <Stack spacing={'16px'}>
           <Text fontSize={'16px'} fontWeight={'bold'} color={'#0047BB'}>@{data.tgName || '-'}</Text>
