@@ -69,7 +69,7 @@ const Pizza = () => {
           <Text fontSize={'12.5px'} fontWeight={'600'} color={'#00B7EE'}>{data.user.wallet?.slice(0, 8)}...{data.user.wallet?.slice(-6)}</Text>
         </Stack>
         <Spacer/>
-        <Button colorScheme={'blue'} onClick={onCopy} color={'white'} bg={'#0047BB'} borderRadius={'full'}>
+        <Button colorScheme={'blue'} onClick={onCopy} color={'white'} bg={'#0047BB'} borderRadius={'full'} _hover={{ bg: '#0047BB' }} _active={{ bg: '#0047BB' }} >
           {hasCopied ? 'Copied success!' : 'Copy invitation link'}
         </Button>
       </HStack>
@@ -81,7 +81,9 @@ const Pizza = () => {
             {key: 'Not settled', value: data.user.notSettled},
           ].map((item, index) => (
             <Stack key={index} align={"start"} textAlign={"start"} py={'20px'}>
-              <Text fontSize={'11px'} color={'black'} fontWeight={"bold"}>{item.value || '-'}</Text>
+              <Text fontSize={'11px'} color={'black'} fontWeight={"bold"}>{item.value?.toLocaleString('en-US', {
+                maximumFractionDigits: 2
+              }) || '-'} NEST</Text>
               <Text fontSize={'10px'} color={'#878787'}>{item.key}</Text>
             </Stack>
           ))
@@ -123,8 +125,8 @@ const Pizza = () => {
                 return 0
               }).map((item: any, index: number) => (
                 <Stack key={index} p={'20px'} border={'2px solid #EEEEEE'} borderRadius={'14px'} bg={'white'}>
-                  <Text fontSize={'12.5px'} fontWeight={'600'}>@{item.tgName}</Text>
-                  <Text fontSize={'12.5px'} color={'#00B7EE'} fontWeight={'600'}>{item.wallet}</Text>
+                  <Text fontSize={'12.5px'} fontWeight={'600'}>@{item.tgName || '-'}</Text>
+                  <Text fontSize={'12.5px'} color={'#00B7EE'} fontWeight={'600'}>{item.wallet.slice(0, 8)}...{item.wallet.slice(-6)}</Text>
                   {
                     item.totalTrading > 0 && (
                     <>
@@ -134,8 +136,12 @@ const Pizza = () => {
                         <Text>Total rewards</Text>
                       </HStack>
                       <HStack justify={"space-between"} color={'black'} fontSize={'12.5px'} fontWeight={'bold'}>
-                        <Text>{item.totalTrading} NEST</Text>
-                        <Text>{item.totalRewards} rewards</Text>
+                        <Text>{item.totalTrading?.toLocaleString('en-US', {
+                          maximumFractionDigits: 2
+                        })} NEST</Text>
+                        <Text>{item.totalRewards?.toLocaleString('en-US', {
+                          maximumFractionDigits: 2
+                        })} rewards</Text>
                       </HStack>
                       <Divider/>
                       <HStack justify={"space-between"} color={'#878787'} fontSize={'12.5px'} fontWeight={'600'}>
@@ -143,8 +149,12 @@ const Pizza = () => {
                         <Text>Not settled</Text>
                       </HStack>
                       <HStack justify={"space-between"} color={'black'} fontSize={'12.5px'} fontWeight={'bold'}>
-                        <Text>{item.recentRewards} NEST</Text>
-                        <Text>{item.notSettled} rewards</Text>
+                        <Text>{item.recentRewards?.toLocaleString('en-US', {
+                          maximumFractionDigits: 2
+                        })} NEST</Text>
+                        <Text>{item.notSettled?.toLocaleString('en-US', {
+                          maximumFractionDigits: 2
+                        })} rewards</Text>
                       </HStack>
                     </>
                     )
