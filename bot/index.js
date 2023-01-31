@@ -340,7 +340,7 @@ Reward: The top 80 rewards will be awarded every three days according to the pro
     parse_mode: 'Markdown',
     disable_web_page_preview: true,
     ...Markup.inlineKeyboard([
-      [Markup.button.webApp('Rank', `https://nest-prize-web-app-delta.vercel.app/ice-cream?chatId=${ctx.update.callback_query.from.id}`)],
+      // [Markup.button.webApp('Rank', `https://nest-prize-web-app-delta.vercel.app/ice-cream?chatId=${ctx.update.callback_query.from.id}`)],
       [Markup.button.callback('« Back', 'NESTFiEvents')],
     ])
   })
