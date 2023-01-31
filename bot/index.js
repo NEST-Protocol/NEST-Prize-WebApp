@@ -581,12 +581,14 @@ bot.on('message', async (ctx) => {
     
     const intent = res?.data?.value?.intent
     if (res?.data?.value?.disable === 'Y') {
+      await lmt.removeTokens(1)
       await ctx.reply("Sorry, you are blocked.")
       return
     }
     
     if (intent === null) {
-    
+      await lmt.removeTokens(1)
+      ctx.reply('I have no idea what you are talking about.')
     } else if (intent === 'setUserWallet') {
       if (isAddress(input)) {
         try {
@@ -649,8 +651,7 @@ bot.on('message', async (ctx) => {
             headers: {
               'Authorization': `Bearer ${nest_token}`
             }
-          }).catch((e) => console.log(e))
-          
+          })
           await lmt.removeTokens(1)
           ctx.reply(`Your twitter has updated: ${input.slice(1)}`, Markup.inlineKeyboard([
             [Markup.button.callback('« Back', 'menu')],
