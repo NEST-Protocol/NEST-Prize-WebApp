@@ -3,29 +3,30 @@ import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 
+type UserInfo = {
+  notSettled: number,
+  recentRewards: number,
+  tgName: string,
+  totalRewards: number,
+  totalTrading: number,
+  wallet: string,
+}
+
 const Pizza = () => {
   const router = useRouter()
   const chatId = router.query.chatId
   const [data, setData] = useState<{
-    tgName: string,
-    wallet: string,
-    totalRewards: number,
-    recentRewards: number,
-    notSettled: number,
-    details: {
-      tgName: string,
-      wallet: string,
-      totalTrading: number,
-      totalRewards: number,
-      recentRewards: number,
-      notSettled: number,
-    }[]
+    user: UserInfo,
+    details: UserInfo[]
   }>({
-    tgName: '-',
-    wallet: '',
-    totalRewards: 0,
-    recentRewards: 0,
-    notSettled: 0,
+    user: {
+      notSettled: 0,
+      recentRewards: 0,
+      tgName: '-',
+      totalRewards: 0,
+      totalTrading: 0,
+      wallet: '-'
+    },
     details: [],
   })
   const {onCopy, setValue, hasCopied} = useClipboard('')
@@ -43,14 +44,13 @@ const Pizza = () => {
     try {
       const res = await axios({
         method: 'GET',
-        url: `https://work.parasset.top/workbench-api/activity/user/invite/info?chatId=${chatId}`,
+        url: `https://cms.nestfi.net/bot-api/red-bot/s4/invite/info?chatId=${chatId}`,
         headers: {
           'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
         }
       })
-      console.log(res.data)
-      if (res?.data?.data) {
-        setData(res.data.data)
+      if (res?.data?.value) {
+        setData(res.data.value)
       }
     } catch (e) {
       console.log(e)
@@ -65,8 +65,8 @@ const Pizza = () => {
     <Stack w={'full'} h={'100vh'} p={'20px'} spacing={'8px'} bgImage={'/images/invite_bg.jpg'} bgSize={'cover'} overflow={'scroll'}>
       <HStack pb={'20px'}>
         <Stack spacing={'16px'}>
-          <Text fontSize={'16px'} fontWeight={'bold'} color={'#0047BB'}>@{data.tgName || '-'}</Text>
-          <Text fontSize={'12.5px'} fontWeight={'600'} color={'#00B7EE'}>{data.wallet.slice(0, 8)}...{data.wallet.slice(-6)}</Text>
+          <Text fontSize={'16px'} fontWeight={'bold'} color={'#0047BB'}>@{data.user.tgName || '-'}</Text>
+          <Text fontSize={'12.5px'} fontWeight={'600'} color={'#00B7EE'}>{data.user.wallet?.slice(0, 8)}...{data.user.wallet?.slice(-6)}</Text>
         </Stack>
         <Spacer/>
         <Button colorScheme={'blue'} onClick={onCopy} color={'white'} bg={'#0047BB'} borderRadius={'full'}>
@@ -76,12 +76,12 @@ const Pizza = () => {
       <HStack justify={"space-between"} border={'2px solid #EEEEEE'} p={4} borderRadius={'14px'} bg={'white'}>
         {
           [
-            {key: 'Total rewards', value: '1000'},
-            {key: 'Recent rewards', value: '1000'},
-            {key: 'Not settled', value: '1000'},
+            {key: 'Total rewards', value: data.user.totalRewards},
+            {key: 'Recent rewards', value: data.user.recentRewards},
+            {key: 'Not settled', value: data.user.notSettled},
           ].map((item, index) => (
             <Stack key={index} align={"start"} textAlign={"start"} py={'20px'}>
-              <Text fontSize={'11px'} color={'black'} fontWeight={"bold"}>{item.value}</Text>
+              <Text fontSize={'11px'} color={'black'} fontWeight={"bold"}>{item.value || '-'}</Text>
               <Text fontSize={'10px'} color={'#878787'}>{item.key}</Text>
             </Stack>
           ))
@@ -109,7 +109,7 @@ const Pizza = () => {
               </Select>
             </HStack>
             {
-              data?.details.filter((item, index) => {
+              data?.details.filter((item) => {
                 if (filter === 'all') return true
                 if (filter === 'recentRewards') return item.recentRewards > 0
                 if (filter === 'notSettled') return item.notSettled > 0
