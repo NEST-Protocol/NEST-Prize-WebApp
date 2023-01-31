@@ -79,7 +79,7 @@ const IceCream = () => {
   }, [rank])
 
   return (
-    <Stack maxW={'container.sm'} w={'full'} h={'100vh'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}>
+    <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}>
       <Select bg={'#F7F8FA'} borderRadius={'full'} border={'1px solid #EEEEEE'} color={'#878787'}
               onChange={(e) => setCode(e.target.value)}
               boxShadow={'0px 0px 10px 0px #EEEEEE'}>
@@ -143,7 +143,7 @@ const IceCream = () => {
       <Stack>
         <Text fontSize={'14px'} fontWeight={'bold'}>Ranking</Text>
         {
-          rank && rank.ranking.map((item, index) => (
+          rank && rank.ranking?.map((item, index) => (
             <HStack bg={'white'} key={index} p={'20px'} border={'2px solid #EEEEEE'} borderRadius={'14px'} spacing={'20px'}>
               <Text fontSize={'xl'} fontWeight={'semibold'}>{item.ranking}</Text>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
