@@ -117,7 +117,7 @@ const IceCream = () => {
               <Text fontSize={'xl'} fontWeight={'semibold'}>{myRank.ranking}</Text>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
                 <Text>{myRank.tgName}</Text>
-                <Text color={'#00B7EE'}>{myRank.address.slice(0, 6)}...{myRank.address.slice(-4)}</Text>
+                <Text color={'#00B7EE'}>{myRank.address}</Text>
                 <Divider/>
                 <HStack justify={'space-between'} w={'full'} color={'#878787'}>
                   <Text w={'100px'}>{type.slice(0, 1).toUpperCase()}{type.slice(1)}</Text>
@@ -148,7 +148,7 @@ const IceCream = () => {
               <Text fontSize={'xl'} fontWeight={'semibold'}>{item.ranking}</Text>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
                 <Text>@{item.tgName}</Text>
-                <Text color={'#00B7EE'}>{item.address.slice(0, 6)}...{item.address.slice(-4)}</Text>
+                <Text color={'#00B7EE'}>{item.address}</Text>
                 <Divider/>
                 <HStack justify={'space-between'} w={'full'} color={'#878787'}>
                   <Text w={'full'}>{type.slice(0, 1).toUpperCase()}{type.slice(1)}</Text>
