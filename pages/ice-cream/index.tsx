@@ -120,7 +120,7 @@ const IceCream = () => {
                 <Text color={'#00B7EE'}>{myRank.address.slice(0, 6)}...{myRank.address.slice(-4)}</Text>
                 <Divider/>
                 <HStack justify={'space-between'} w={'full'} color={'#878787'}>
-                  <Text w={'100px'}>Trading</Text>
+                  <Text w={'100px'}>{type.slice(0, 1).toUpperCase()}{type.slice(1)}</Text>
                   <Text w={'100px'}>Giveaway</Text>
                 </HStack>
                 <HStack justify={'space-between'} w={'full'}>
@@ -151,7 +151,7 @@ const IceCream = () => {
                 <Text color={'#00B7EE'}>{item.address.slice(0, 6)}...{item.address.slice(-4)}</Text>
                 <Divider/>
                 <HStack justify={'space-between'} w={'full'} color={'#878787'}>
-                  <Text w={'full'}>Trading</Text>
+                  <Text w={'full'}>{type.slice(0, 1).toUpperCase()}{type.slice(1)}</Text>
                   <Text w={'full'}>Giveaway</Text>
                 </HStack>
                 <HStack justify={'space-between'} w={'full'}>
