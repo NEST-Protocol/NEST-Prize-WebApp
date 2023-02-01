@@ -66,7 +66,7 @@ const Pizza = () => {
       <HStack pb={'20px'}>
         <Stack spacing={'16px'}>
           <Text fontSize={'16px'} fontWeight={'bold'} color={'#0047BB'}>@{data.user.tgName || '-'}</Text>
-          <Text fontSize={'12.5px'} fontWeight={'600'} color={'#00B7EE'} pr={'30px'}>{data.user.wallet}</Text>
+          <Text fontSize={'12.5px'} fontWeight={'600'} color={'#00B7EE'}>{data.user.wallet?.slice(0, 8)}...{data.user.wallet?.slice(-6)}</Text>
         </Stack>
         <Spacer/>
         <Button colorScheme={'blue'} onClick={onCopy} color={'white'} bg={'#0047BB'} borderRadius={'full'} _hover={{ bg: '#0047BB' }} _active={{ bg: '#0047BB' }} >
