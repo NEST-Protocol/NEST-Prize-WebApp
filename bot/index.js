@@ -129,7 +129,7 @@ Giveaway events, click on NESTFi Events.
       ...Markup.inlineKeyboard([
         [Markup.button.url('invite', `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.from.id}`)],
         [Markup.button.callback('Set Twitter', 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback('Set Wallet', 'setUserWallet', user?.value?.wallet)],
-        [Markup.button.callback('NESTFi S4 Food Festival', 'NESTFiEvents')],
+        [Markup.button.callback('NESTFi S5 Food Festival', 'NESTFiEvents')],
         [Markup.button.url('go to futures', 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback('Share my positions', 'shareMyFutures')],
       ])
     })
@@ -286,9 +286,10 @@ Bonus:
 10x leverage bonus 10–100 NEST.
 20x leverage bonus 20–200 NEST.
 
-Details：https://medium.com/@nest-protocol/s4-nestfi-food-festival-4b15ac0bd96f
+🍦 Ice cream
+Reward: 0.05% of total trading volume as bonus pool, 50% of trading volume ranking, 50% of profit ranking
 
-All delicious meals are done in our kitchen robot!`, {
+Details：https://nest-protocol.medium.com/s5-nestfi-food-festival-63120836d5ba`, {
       parse_mode: 'Markdown',
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
