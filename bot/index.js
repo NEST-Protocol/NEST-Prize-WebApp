@@ -329,7 +329,7 @@ Reward: 0.05% of total trading volume as bonus pool, 50% of trading volume ranki
 
 1. Trading Volume Ranking
 
-Conditions: Trading volume must be greater than 500,000 (calculated leverage) to be eligible to participate.
+Conditions: Trading volume must be greater than 100,000 (calculated leverage) to be eligible to participate.
 
 Reward: The top 80 rewards will be awarded every three days according to the trading volume ranking.
 
