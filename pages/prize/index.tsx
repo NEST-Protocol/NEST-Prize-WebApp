@@ -189,45 +189,32 @@ const Prize = () => {
               )
             }
             <Stack>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=14'} isExternal bg={'yellow'} p={'10px'}>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=149'} isExternal bg={'yellow'} p={'10px'}>
                 <Heading>
                   Hamburger
                 </Heading>
                 <Text fontSize={'xl'}>First 200 NEST</Text>
               </Link>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=118'} isExternal bg={'black'} color={'white'} p={'10px'}>
+              <Link href={'https://t.me/NESTRedEnvelopesBot?start=170'} isExternal bg={'black'} color={'white'} p={'10px'}>
                 <Heading>
-                  20+1 draw = 5x
+                  70 NEST + 1 draw per day
                 </Heading>
                 <Text fontSize={'xl'}>leverage 500NEST 5 min</Text>
               </Link>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=119'} isExternal bg={'red'} color={'white'} p={'10px'}>
-                <Heading>
-                  Butter Chicken
-                </Heading>
-                <Text fontSize={'xl'}>35+1 draw = 10x leverage 500NEST 5 min</Text>
-              </Link>
               <Divider/>
               <Stack>
-                <Heading fontSize={'md'}>Butter Chicken Eating (Draw)</Heading>
                 <Text fontSize={'xs'}>
-                  1. <Link href={'https://t.me/NESTRedEnvelopesBot'} isExternal color={'red'}>https://t.me/NESTRedEnvelopesBot</Link><br/>
-                  2. Click S4<br/>
-                  3. Click on Butter Chicken<br/>
-                  4. Click on the Drew<br/>
+                  1. https://t.me/NESTRedEnvelopesBot
+                  2. Click S5
+                  3. Click on Butter Chicken
+                  4. Click on the Drew
 
-                  The position must be opened after 1 am UTC time!The position must be opened after 1 am UTC time!The position must be opened after 1 am UTC time!<br/>
+                  The position must be opened after 1 am UTC time!The position must be opened after 1 am UTC time!The position must be opened after 1 am UTC time!
 
-                  Food Festival reward time, UTC 7:00 am on the next day<br/>
-
-                  If you have any questions about the award, please fill out the form<br/>
-
-                  <Link href={'https://forms.gle/e5yPadfPBRQtj8pm6'} isExternal color={'red'}>https://forms.gle/e5yPadfPBRQtj8pm6</Link><br/>
-
-                  We will have someone dedicated to check. If one person repeatedly asks the same question will be kicked out of the group!<br/>
-
-                  Total trading volume greater than 10,000 NEST: <Link href={'https://t.me/nestfiwl'} isExternal color={'red'}>https://t.me/nestfiwl</Link><br/>
-                  Futures Exchange Group (only futures signals are discussed): <Link href={'https://t.me/nestfideal'} isExternal color={'red'}>https://t.me/nestfideal</Link><br/>
+                  Food Festival reward time, UTC 7:00 am on the next day
+                  If you have any questions about the award, please fill out the form
+                  https://forms.gle/e5yPadfPBRQtj8pm6
+                  We will have someone dedicated to check. If one person repeatedly asks the same question will be kicked out of the group!
                 </Text>
               </Stack>
              <Text>
