@@ -199,7 +199,6 @@ const Prize = () => {
                 <Heading>
                   70 NEST + 1 draw per day
                 </Heading>
-                <Text fontSize={'xl'}>leverage 500NEST 5 min</Text>
               </Link>
               <Divider/>
               <Stack>
