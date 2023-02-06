@@ -22,17 +22,6 @@ const bot = new Telegraf(token)
 
 const botName = "NESTRedEnvelopesBot"
 
-function hashCode(str) {
-  let hash = 0, i, chr, len;
-  if (str.length === 0) return hash;
-  for (i = 0, len = str.length; i < len; i++) {
-    chr = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + chr;
-    hash |= 0;
-  }
-  return hash;
-}
-
 bot.start(async (ctx) => {
   const chatId = ctx.chat.id
   const isBot = ctx.from.is_bot
@@ -120,7 +109,7 @@ Wallet and Twitter must be added to join NEST FI campaign
 Your wallet: ${user?.value?.wallet || 'Not set yet'},
 Your twitter: ${user?.value?.twitterName || 'Not set yet'},
 
-Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.from.id}
+Your ref link: https://t.me/${botName}?start=${ctx.from.id}
 
 Giveaway events, click on NESTFi Events.
 
@@ -206,7 +195,7 @@ Wallet and Twitter must be added to join NEST FI campaign
 Your wallet: ${res?.data?.value?.wallet || 'Not set yet'},
 Your twitter: ${res?.data?.value?.twitterName || 'Not set yet'},
 
-Your ref link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
+Your ref link: https://t.me/${botName}?start=${ctx.update.callback_query.from.id}
 
 Giveaway events, click on NESTFi Events.
 
@@ -293,7 +282,7 @@ Details：https://nest-protocol.medium.com/s5-nestfi-food-festival-63120836d5ba`
       parse_mode: 'Markdown',
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.url('🍔 Hamburger', 'https://t.me/NESTRedEnvelopesBot?start=149'), Markup.button.callback('🍕 Pizza', 'pizza')],
+        [Markup.button.url('🍔 Hamburger', `https://t.me/${botName}?start=149`), Markup.button.callback('🍕 Pizza', 'pizza')],
         [Markup.button.callback('🐣 Butter chicken', 'butterChicken'), Markup.button.callback('🍨 Ice cream', 'iceCream')],
         [Markup.button.url('Once a day', 'https://t.me/NEST_DAO/1305')],
         [Markup.button.callback('« Back', 'menu')]
@@ -310,7 +299,7 @@ bot.action('pizza', async (ctx) => {
       .catch((e) => console.log(e))
   await ctx.editMessageText(`Commission = 0.1% of the trading volume (only calculate the leverage of opening quantity X).
 
-Your reference link: https://t.me/NESTRedEnvelopesBot?start=${ctx.update.callback_query.from.id}
+Your reference link: https://t.me/${botName}?start=${ctx.update.callback_query.from.id}
 `, {
     parse_mode: 'Markdown',
     disable_web_page_preview: true,
@@ -524,43 +513,6 @@ bot.action('setUserWallet', async (ctx) => {
     await ctx.editMessageText('Please send your wallet address:')
   } catch (e) {
     console.log(e)
-  }
-})
-
-bot.action('checkTwitter', async (ctx) => {
-  try {
-    const res = await axios({
-      method: 'GET',
-      timeout: 3000,
-      url: `https://work.parasset.top/workbench-api/twitter/userInfo?cond=${ctx.update.callback_query.from.id}`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
-      }
-    })
-    if (res.data?.data.length === 0) {
-      ctx.editMessageText("You haven't authorized yet, please click the 'Authorize' button to authorize.", Markup.inlineKeyboard([
-        [Markup.button.url('Authorize', `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=dU9nMk54dnQzc0UtNjNwbDRrWno6MTpjaQ&redirect_uri=https://nestdapp.io/twitter&scope=tweet.read%20users.read%20follows.read%20like.read%20offline.access&state=${hashCode(botName)}_${ctx.update.callback_query.from.id}&code_challenge=challenge&code_challenge_method=plain`)],
-        [Markup.button.callback('I have Authorized', 'checkTwitter')],
-      ]))
-    } else {
-      // const access_token = res.data.data[0].access_token
-      const twitter_name = res.data.data[0].twitter_name.replace('@', '')
-      const twitter_id = res.data.data[0].twitter_id
-      await axios({
-        method: 'POST',
-        url: `https://cms.nestfi.net/bot-api/red-bot/user`,
-        data: {
-          chatId: ctx.update.callback_query.from.id,
-          twitterName: twitter_name,
-          twitterId: twitter_id,
-        }
-      })
-      ctx.editMessageText("You have authorized successfully.", Markup.inlineKeyboard([
-        [Markup.button.callback('« Back', 'menu')],
-      ]))
-    }
-  } catch (e) {
-    ctx.answerCbQuery("Some error occurred.")
   }
 })
 
