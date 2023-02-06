@@ -111,11 +111,11 @@ const Pizza = () => {
         </Button>
       </HStack>
       <HStack>
-        <Input value={from} type={'date'} borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
+        <Input fontSize={'12.5px'} value={from} type={'date'} borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
                border={'1px solid #EEEEEE'} onChange={(e) => {
           setFrom(e.target.value)
         }}/>
-        <Input value={to} type={'date'} borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
+        <Input fontSize={'12.5px'} value={to} type={'date'} borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
                border={'1px solid #EEEEEE'} onChange={(e) => {
           setTo(e.target.value)
         }}/>
