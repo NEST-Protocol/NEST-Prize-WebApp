@@ -30,7 +30,7 @@ const Pizza = () => {
   const router = useRouter()
   const chatId = router.query.chatId
   const [data, setData] = useState<{
-    user: UserInfo,
+    user: UserInfo | null,
     details: UserInfo[]
   }>({
     user: {
