@@ -100,9 +100,9 @@ const Pizza = () => {
            overflow={'scroll'}>
       <HStack pb={'20px'}>
         <Stack spacing={'16px'}>
-          <Text fontSize={'16px'} fontWeight={'bold'} color={'#0047BB'}>@{data.user.tgName || '-'}</Text>
+          <Text fontSize={'16px'} fontWeight={'bold'} color={'#0047BB'}>@{data.user?.tgName || '-'}</Text>
           <Text fontSize={'12.5px'} fontWeight={'600'}
-                color={'#00B7EE'}>{data.user.wallet?.slice(0, 8)}...{data.user.wallet?.slice(-6)}</Text>
+                color={'#00B7EE'}>{data.user?.wallet?.slice(0, 8)}...{data.user?.wallet?.slice(-6)}</Text>
         </Stack>
         <Spacer/>
         <Button colorScheme={'blue'} onClick={onCopy} color={'white'} bg={'#0047BB'} borderRadius={'full'}
@@ -125,25 +125,25 @@ const Pizza = () => {
           {
             [
               {
-                key: 'Total trading', value: data.user.totalTrading.toLocaleString('en-US', {
+                key: 'Total trading', value: data.user?.totalTrading.toLocaleString('en-US', {
                   maximumFractionDigits: 2
-                }) + ' NEST', hidden: !data.user.totalTrading
+                }) + ' NEST', hidden: !data.user?.totalTrading
               },
-              {key: 'Total number', value: data.user.totalCount},
+              {key: 'Total number', value: data.user?.totalCount},
               {
-                key: 'Total rewards', value: data.user.totalRewards.toLocaleString('en-US', {
+                key: 'Total rewards', value: data.user?.totalRewards.toLocaleString('en-US', {
                   maximumFractionDigits: 2
-                }) + ' NEST', hidden: !data.user.totalRewards
-              },
-              {
-                key: 'Recent rewards', value: data.user.recentRewards?.toLocaleString('en-US', {
-                  maximumFractionDigits: 2
-                }) + ' NEST', hidden: !data.user.recentRewards
+                }) + ' NEST', hidden: !data.user?.totalRewards
               },
               {
-                key: 'Not settled', value: data.user.notSettled?.toLocaleString('en-US', {
+                key: 'Recent rewards', value: data.user?.recentRewards?.toLocaleString('en-US', {
                   maximumFractionDigits: 2
-                }) + ' NEST', hidden: !data.user.notSettled
+                }) + ' NEST', hidden: !data.user?.recentRewards
+              },
+              {
+                key: 'Not settled', value: data.user?.notSettled?.toLocaleString('en-US', {
+                  maximumFractionDigits: 2
+                }) + ' NEST', hidden: !data.user?.notSettled
               },
             ].map((item, index) => (
               <WrapItem key={index} minW={'120px'} hidden={item.hidden}>
