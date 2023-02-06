@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
-    "lint": "next lint"
+    "lint": "next lint",
+    "upload": "localazy upload",
+    "download": "localazy download"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.1",
@@ -26,6 +28,7 @@
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
     "framer-motion": "^7.6.9",
+    "i18n": "^0.15.1",
     "next": "13.0.4",
     "qrcode": "^1.5.1",
     "qs": "^6.11.0",
