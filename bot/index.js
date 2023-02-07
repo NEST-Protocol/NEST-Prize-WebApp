@@ -19,6 +19,9 @@ i18n.configure({
   register: global
 })
 
+const measurement_id = `G-BE17GNN7CH`;
+const api_secret = process.env.GA_API_SECRET;
+
 const t = (p, l, ph) => {
   return i18n.__({phrase: p, locale: l}, ph)
 }
@@ -37,10 +40,25 @@ bot.start(async (ctx) => {
   const chatId = ctx.chat.id
   const isBot = ctx.from.is_bot
   const lang = ctx.from.language_code
-  console.log(lang)
   if (chatId < 0 || isBot) {
     return
   }
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${chatId}`,
+      user_id: `${chatId}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'start',
+          language_code: lang,
+          startPayload: ctx.startPayload,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   if (ctx.startPayload && Number(ctx.startPayload) !== ctx.from.id) {
     try {
       const res = await Promise.all([
@@ -61,9 +79,6 @@ bot.start(async (ctx) => {
       ])
       const user = res[0].data
       const prize = res[1].data
-      
-      console.log(user)
-      
       if (user.errorCode === 0 && user.value) {
         await axios({
           method: 'POST',
@@ -142,12 +157,27 @@ bot.action('inputUserTwitter', async (ctx) => {
   if (isBot) {
     return
   }
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'inputUserTwitter',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     await axios({
       method: 'POST',
       url: `https://cms.nestfi.net/bot-api/red-bot/user`,
       data: {
-        chatId: ctx.from.id,
+        chatId: ctx.update.callback_query.from.id,
         intent: 'setUserTwitter',
       },
       headers: {
@@ -167,6 +197,21 @@ bot.action('menu', async (ctx) => {
   if (isBot) {
     return
   }
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'menu',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     const res = await axios({
       method: 'GET',
@@ -175,7 +220,6 @@ bot.action('menu', async (ctx) => {
         'Authorization': `Bearer ${nest_token}`,
       }
     })
-    
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
         .catch((e) => console.log(e))
@@ -200,6 +244,21 @@ bot.action('menu', async (ctx) => {
 
 bot.action('shareMyFutures', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'shareMyFutures',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     const userRes = await axios({
       method: 'GET',
@@ -208,7 +267,6 @@ bot.action('shareMyFutures', async (ctx) => {
         'Authorization': `Bearer ${nest_token}`,
       }
     })
-    
     if (!userRes?.data?.value?.wallet) {
       await lmt.removeTokens(1)
       await ctx.answerCbQuery()
@@ -220,7 +278,6 @@ bot.action('shareMyFutures', async (ctx) => {
       })
       return
     }
-    
     const res = await axios({
       method: 'GET',
       url: `https://cms.nestfi.net/bot-api/red-bot/user/future?wallet=${userRes?.data?.value?.wallet}`,
@@ -243,6 +300,21 @@ bot.action('shareMyFutures', async (ctx) => {
 
 bot.action('NESTFiEvents', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'NESTFiEvents',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
@@ -264,6 +336,21 @@ bot.action('NESTFiEvents', async (ctx) => {
 
 bot.action('pizza', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'pizza',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   await lmt.removeTokens(1)
   await ctx.answerCbQuery()
       .catch((e) => console.log(e))
@@ -281,6 +368,21 @@ bot.action('pizza', async (ctx) => {
 
 bot.action('iceCream', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'iceCream',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   await lmt.removeTokens(1)
   await ctx.answerCbQuery()
   await ctx.editMessageText(t(`🍦 Ice cream\nReward: 0.05% of total trading volume as bonus pool, 50% of trading volume ranking, 50% of profit ranking\n1. Trading Volume Ranking\nConditions: Trading volume must be greater than 100,000 (calculated leverage) to be eligible to participate.\nReward: The top 80 rewards will be awarded every three days according to the trading volume ranking.\n2. Profit Ranking\nConditions: The principal amount of a single trade must be greater than 1000nest (not counting leverage) to be eligible to participate.\nReward: The top 80 rewards will be awarded every three days according to the profit ranking`, lang), {
@@ -295,6 +397,21 @@ bot.action('iceCream', async (ctx) => {
 
 bot.action('butterChicken', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'butterChicken',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     const [ticket5, ticket10, ticket20] = await Promise.all([
       axios({
@@ -353,6 +470,21 @@ bot.action('butterChicken', async (ctx) => {
 
 bot.action('draw5x', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'draw5x',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     const res = await axios({
       method: 'post',
@@ -382,6 +514,21 @@ ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
 
 bot.action('draw10x', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'draw10x',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     const res = await axios({
       method: 'post',
@@ -411,6 +558,21 @@ ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
 
 bot.action('draw20x', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'draw20x',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     const res = await axios({
       method: 'post',
@@ -444,6 +606,21 @@ bot.action('setUserWallet', async (ctx) => {
   if (isBot) {
     return
   }
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'click',
+        params: {
+          value: 'setUserWallet',
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     await axios({
       method: 'POST',
@@ -472,6 +649,20 @@ bot.on('message', async (ctx) => {
   if (chat_id < 0 || isBot) {
     return
   }
+  axios({
+    method: 'post',
+    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
+    data: {
+      client_id: `${ctx.update.callback_query.from.id}`,
+      user_id: `${ctx.update.callback_query.from.id}`,
+      events: [{
+        name: 'message',
+        params: {
+          language_code: lang,
+        },
+      }]
+    }
+  }).catch((e) => console.log(e))
   try {
     const res = await axios({
       method: 'GET',
