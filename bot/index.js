@@ -653,8 +653,8 @@ bot.on('message', async (ctx) => {
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
     data: {
-      client_id: `${ctx.update.callback_query.from.id}`,
-      user_id: `${ctx.update.callback_query.from.id}`,
+      client_id: `${ctx.message.chat.id}`,
+      user_id: `${ctx.message.chat.id}`,
       events: [{
         name: 'message',
         params: {
