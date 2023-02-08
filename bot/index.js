@@ -416,21 +416,21 @@ bot.action('butterChicken', async (ctx) => {
     const [ticket5, ticket10, ticket20] = await Promise.all([
       axios({
         method: 'get',
-        url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=5`,
+        url: `https://cms.nestfi.net/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=5`,
         headers: {
           'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
         }
       }),
       axios({
         method: 'get',
-        url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=10`,
+        url: `https://cms.nestfi.net/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=10`,
         headers: {
           'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
         }
       }),
       axios({
         method: 'get',
-        url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=20`,
+        url: `https://cms.nestfi.net/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=20`,
         headers: {
           'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
         }
@@ -488,7 +488,7 @@ bot.action('draw5x', async (ctx) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=5`,
+      url: `https://cms.nestfi.net/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=5`,
       headers: {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
       }
@@ -532,7 +532,7 @@ bot.action('draw10x', async (ctx) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=10`,
+      url: `https://cms.nestfi.net/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=10`,
       headers: {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
       }
@@ -576,7 +576,7 @@ bot.action('draw20x', async (ctx) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `https://work.parasset.top/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=20`,
+      url: `https://cms.nestfi.net/workbench-api/activity/tickets?chatId=${ctx.update.callback_query.from.id}&type=20`,
       headers: {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
       }
@@ -699,7 +699,7 @@ bot.on('message', async (ctx) => {
           
           await axios({
             method: 'POST',
-            url: `https://work.parasset.top/workbench-api/activity/user/update`,
+            url: `https://cms.nestfi.net/workbench-api/activity/user/update`,
             data: JSON.stringify({
               user_id: ctx.from.id,
               invite_code: res?.data?.value?.inviteCode || '',
