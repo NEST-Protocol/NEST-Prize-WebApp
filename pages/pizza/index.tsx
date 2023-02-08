@@ -20,7 +20,7 @@ type UserInfo = {
   notSettled: number | null,
   recentRewards: number | null,
   tgName: string,
-  totalInvitees: number,
+  totalInvitees: number | null,
   totalCount: number,
   totalRewards: number,
   totalTrading: number,
@@ -133,7 +133,7 @@ const Pizza = () => {
                 }) + ' NEST', hidden: !data.user?.totalTrading
               },
               {
-                key: 'Total invitees', value: data.user?.totalInvitees.toLocaleString('en-US', {
+                key: 'Total invitees', value: data.user?.totalInvitees?.toLocaleString('en-US', {
                   maximumFractionDigits: 2
                 }), hidden: !data.user?.totalInvitees
               },
@@ -227,6 +227,14 @@ const Pizza = () => {
                               <Text color={'black'} fontSize={'12.5px'} fontWeight={'bold'}>{item.totalTrading?.toLocaleString('en-US', {
                                 maximumFractionDigits: 2
                               })} NEST</Text>
+                            </Stack>
+                          </WrapItem>
+                          <WrapItem minW={'100px'} hidden={item.totalInvitees == null}>
+                            <Stack>
+                              <Text color={'#878787'} fontSize={'12.5px'} fontWeight={'600'}>Total invitees</Text>
+                              <Text color={'black'} fontSize={'12.5px'} fontWeight={'bold'}>{item.totalInvitees?.toLocaleString('en-US', {
+                                maximumFractionDigits: 2
+                              })}</Text>
                             </Stack>
                           </WrapItem>
                           <WrapItem minW={'100px'} hidden={item.totalCount == null}>
