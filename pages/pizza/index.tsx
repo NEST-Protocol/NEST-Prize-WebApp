@@ -229,14 +229,6 @@ const Pizza = () => {
                               })} NEST</Text>
                             </Stack>
                           </WrapItem>
-                          <WrapItem minW={'100px'} hidden={item.totalCount == null}>
-                            <Stack>
-                              <Text color={'#878787'} fontSize={'12.5px'} fontWeight={'600'}>Total number</Text>
-                              <Text color={'black'} fontSize={'12.5px'} fontWeight={'bold'}>{item.totalCount?.toLocaleString('en-US', {
-                                maximumFractionDigits: 2
-                              })}</Text>
-                            </Stack>
-                          </WrapItem>
                           <WrapItem minW={'100px'} hidden={item.totalRewards == null}>
                             <Stack>
                               <Text color={'#878787'} fontSize={'12.5px'} fontWeight={'600'}>Total rewards</Text>
