@@ -20,6 +20,7 @@ type UserInfo = {
   notSettled: number | null,
   recentRewards: number | null,
   tgName: string,
+  totalInvitees: number,
   totalCount: number,
   totalRewards: number,
   totalTrading: number,
@@ -37,6 +38,7 @@ const Pizza = () => {
       notSettled: 0,
       recentRewards: 0,
       tgName: '-',
+      totalInvitees: 0,
       totalCount: 0,
       totalRewards: 0,
       totalTrading: 0,
@@ -83,6 +85,7 @@ const Pizza = () => {
           }
         })
         if (res?.data?.value) {
+          console.log(res.data.value)
           setData(res.data.value)
         }
       } catch (e) {
@@ -128,6 +131,11 @@ const Pizza = () => {
                 key: 'Total trading', value: data.user?.totalTrading.toLocaleString('en-US', {
                   maximumFractionDigits: 2
                 }) + ' NEST', hidden: !data.user?.totalTrading
+              },
+              {
+                key: 'Total invitees', value: data.user?.totalInvitees.toLocaleString('en-US', {
+                  maximumFractionDigits: 2
+                }), hidden: !data.user?.totalInvitees
               },
               {key: 'Total number', value: data.user?.totalCount},
               {
