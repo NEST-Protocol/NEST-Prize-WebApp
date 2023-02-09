@@ -156,6 +156,7 @@ bot.action('NESTRoundtable', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
   await lmt.removeTokens(1)
   await ctx.editMessageText(t(`NEST Roundtable 24\nTasks:\n1. RT the Tweet & @ 3 friends\nLink: [https://twitter.com/NEST_Protocol/status/1623295788985241601](https://twitter.com/NEST_Protocol/status/1623295788985241601)\n2. Join the Space\nLink: [https://twitter.com/i/spaces/1BdGYygBbmBGX?s=20](https://twitter.com/i/spaces/1BdGYygBbmBGX?s=20)`, lang), {
+    parse_mode: 'Markdown',
     ...Markup.inlineKeyboard([
       [Markup.button.callback(t('« Back', lang), 'menu')],
     ])
