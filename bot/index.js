@@ -142,6 +142,7 @@ bot.start(async (ctx) => {
         [Markup.button.url(t('invite', lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.from.id}`)],
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', user?.value?.wallet)],
         [Markup.button.callback(t('NESTFi S5 Food Festival', lang), 'NESTFiEvents')],
+        [Markup.button.callback(t('NEST Roundtable 24', lang), 'NESTRoundtable')],
         [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback(t('Share my positions', lang), 'shareMyFutures')],
       ])
     })
@@ -149,6 +150,16 @@ bot.start(async (ctx) => {
   } catch (e) {
     console.log(e)
   }
+})
+
+bot.action('NESTRoundtable', async (ctx) => {
+  const lang = ctx.update.callback_query.from.language_code
+  await lmt.removeTokens(1)
+  await ctx.editMessageText(t(`NEST Roundtable 24\nTasks:\n1. RT the Tweet & @ 3 friends\nLink: [https://twitter.com/NEST_Protocol/status/1623295788985241601](https://twitter.com/NEST_Protocol/status/1623295788985241601)\n2. Join the Space\nLink: [https://twitter.com/i/spaces/1BdGYygBbmBGX?s=20](https://twitter.com/i/spaces/1BdGYygBbmBGX?s=20)`, lang), {
+    ...Markup.inlineKeyboard([
+      [Markup.button.callback(t('« Back', lang), 'menu')],
+    ])
+  })
 })
 
 bot.action('inputUserTwitter', async (ctx) => {
