@@ -71,7 +71,7 @@ bot.start(async (ctx) => {
         }),
         axios({
           method: 'get',
-          url: `https://cms.nestfi.net/bot-api/red-bot/prizes-info/${ctx.startPayload}`,
+          url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${ctx.startPayload}`,
           headers: {
             'Authorization': `Bearer ${nest_token}`
           }
