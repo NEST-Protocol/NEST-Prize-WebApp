@@ -42,7 +42,7 @@ const Prize = () => {
     try {
       const res = await axios({
         method: 'get',
-        url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}`,
+        url: `https://cms.nestfi.net/bot-api/red-bot/prizes-info/${router.query.code}`,
         headers: {
           'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
         }
@@ -61,7 +61,7 @@ const Prize = () => {
     }
     const res = await axios({
       method: 'POST',
-      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}/verify?chatId=${user.id}`,
+      url: `https://cms.nestfi.net/bot-api/red-bot/prizes-info/${router.query.code}/verify?chatId=${user.id}`,
       headers: {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
       }
@@ -95,7 +95,7 @@ const Prize = () => {
     setStatus('PROCESSING')
     const res = await axios({
       method: 'POST',
-      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}?chatId=${user.id}`,
+      url: `https://cms.nestfi.net/bot-api/red-bot/prizes-info/${router.query.code}?chatId=${user.id}`,
       headers: {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
       }
