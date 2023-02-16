@@ -142,7 +142,7 @@ bot.start(async (ctx) => {
         [Markup.button.url(t('invite', lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.from.id}`)],
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', user?.value?.wallet)],
         [Markup.button.callback(t('NESTFi S5 Food Festival', lang), 'NESTFiEvents')],
-        [Markup.button.callback(t('NEST Roundtable 24', lang), 'NESTRoundtable')],
+        [Markup.button.callback('NEST Roundtable Rewards', 'NESTRoundtable')],
         [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback(t('Share my positions', lang), 'shareMyFutures')],
       ])
     })
