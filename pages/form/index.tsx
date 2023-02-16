@@ -12,8 +12,25 @@ type TelegramData = {
   auth_date: number,
 }
 
+type FormData = {
+  channelName: string,
+  platform: string,
+  link: string,
+  subscribers: string,
+  country: string,
+  reason: string,
+}
+
 const Form = () => {
-  const [data, setData] = useState<TelegramData | undefined>(undefined)
+  const [userData, setUserData] = useState<TelegramData | undefined>(undefined)
+  const [data, setData] = useState<FormData>({
+    channelName: '',
+    platform: '',
+    link: '',
+    subscribers: '',
+    country: '',
+    reason: '',
+  })
   const loginTelegram = () => {
     // @ts-ignore
     window?.Telegram.Login.auth({
@@ -24,7 +41,7 @@ const Form = () => {
       if (!data) {
         return
       }
-      setData(data)
+      setUserData(data)
     });
   };
 
@@ -35,44 +52,44 @@ const Form = () => {
           <FormLabel fontSize={'sm'}>
             Channel Name
           </FormLabel>
-          <Input size={['lg', 'lg', 'md']}/>
+          <Input size={'lg'} value={data.channelName} onChange={(e) => setData({...data, channelName: e.target.value})}/>
         </FormControl>
         <FormControl>
           <FormLabel fontSize={'sm'}>
             Platform
           </FormLabel>
-          <Input size={['lg', 'lg', 'md']}/>
+          <Input size={'lg'} value={data.platform} onChange={(e) => setData({...data, platform: e.target.value})}/>
         </FormControl>
         <FormControl>
           <FormLabel fontSize={'sm'}>
             Link
           </FormLabel>
-          <Input size={['lg', 'lg', 'md']}/>
+          <Input size={'lg'} value={data.link} onChange={(e) => setData({...data, link: e.target.value})} />
         </FormControl>
         <FormControl>
           <FormLabel fontSize={'sm'}>
             Subscribers
           </FormLabel>
-          <Input size={['lg', 'lg', 'md']}/>
+          <Input size={'lg'} type={'number'} value={data.subscribers} onChange={(e) => setData({...data, subscribers: e.target.value})} />
         </FormControl>
         <FormControl>
           <FormLabel fontSize={'sm'}>
             Country
           </FormLabel>
-          <Input size={['lg', 'lg', 'md']}/>
+          <Input size={'lg'} value={data.country} onChange={(e) => setData({...data, country: e.target.value})}/>
         </FormControl>
         <FormControl>
           <FormLabel fontSize={'sm'}>
             Reason for recommendation
           </FormLabel>
-          <Input size={['lg', 'lg', 'md']}/>
+          <Input size={'lg'} value={data.reason} onChange={(e) => setData({...data, reason: e.target.value})}/>
         </FormControl>
       </Stack>
       <Stack pt={'20px'} spacing={'20px'}>
-        <Button onClick={loginTelegram} size={'lg'} variant={data ? 'ghost' : 'solid'}
-                leftIcon={data ? <chakra.img src={data.photo_url} w={'32px'} h={'32px'} borderRadius={'full'} alt={data?.username}/> : <FaTelegramPlane/>}
+        <Button onClick={loginTelegram} size={'lg'} variant={userData ? 'ghost' : 'solid'}
+                leftIcon={userData ? <chakra.img src={userData.photo_url} w={'32px'} h={'32px'} borderRadius={'full'} alt={userData?.username}/> : <FaTelegramPlane/>}
                 colorScheme={'telegram'}>
-          {data ? (data.username || data.first_name) : 'login with telegram'}
+          {userData ? (userData.username || userData.first_name) : 'login with telegram'}
         </Button>
         <Button colorScheme={'whatsapp'} size={'lg'}>
           Submit
