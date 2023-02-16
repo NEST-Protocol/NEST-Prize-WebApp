@@ -69,8 +69,8 @@ const Form = () => {
         </FormControl>
       </Stack>
       <Stack pt={'20px'} spacing={'20px'}>
-        <Button onClick={loginTelegram} size={'lg'}
-                leftIcon={data ? <chakra.img src={data.photo_url} alt={data.username}/> : <FaTelegramPlane/>}
+        <Button onClick={loginTelegram} size={'lg'} variant={data ? 'ghost' : 'solid'}
+                leftIcon={data ? <chakra.img src={data.photo_url} w={'32px'} h={'32px'} borderRadius={'full'} alt={data?.username}/> : <FaTelegramPlane/>}
                 colorScheme={'telegram'}>
           {data ? (data.username || data.first_name) : 'login with telegram'}
         </Button>
