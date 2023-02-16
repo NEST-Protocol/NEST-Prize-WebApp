@@ -155,7 +155,7 @@ bot.start(async (ctx) => {
 bot.action('NESTRoundtable', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
   await lmt.removeTokens(1)
-  await ctx.editMessageText(t('NESTRoundtableContent', lang), {
+  await ctx.editMessageText(t('NESTRoundtableContent', 'en'), {
     ...Markup.inlineKeyboard([
       [Markup.button.callback(t('« Back', lang), 'menu')],
     ])
