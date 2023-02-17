@@ -3,17 +3,16 @@ import {useRouter} from "next/router";
 import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import Head from "next/head";
-import useTelegramAuth from "../../hooks/useTelegramAuth";
 
 const Detail = () => {
   const router = useRouter();
-  const {user} = useTelegramAuth()
   const [list, setList] = useState<{
     amount: number,
     wallet: string,
     twitterName: string,
     updateTime: string,
-    tgName: string,
+    tgName?: string,
+    dcName?: string,
     chat_id: number,
     status: string,
   }[]>([])
@@ -75,9 +74,9 @@ const Detail = () => {
             <Td>
             </Td>
           </Tr>
-          {list.filter((item) => item.tgName?.toLowerCase().startsWith(searchText.replaceAll('@', '').toLowerCase()) || item.wallet?.toLowerCase().startsWith(searchText.toLowerCase())).map((item) => (
-            <Tr key={item.chat_id} fontSize={'xs'} fontWeight={user?.id === item.chat_id ? 'bold' : ''}>
-              <Td>@{item.tgName || '-'}<br/>{item.wallet.slice(0, 8)}...{item.wallet.slice(-6)}</Td>
+          {list.map((item) => (
+            <Tr key={item.chat_id} fontSize={'xs'}>
+              <Td>@{item?.tgName || item?.dcName || '-'}<br/>{item.wallet.slice(0, 8)}...{item.wallet.slice(-6)}</Td>
               <Td isNumeric>{item.amount} NEST</Td>
             </Tr>
           ))}
