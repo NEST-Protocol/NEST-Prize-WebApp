@@ -8,14 +8,12 @@ import {
 import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import axios from "axios";
-import useTelegramAuth from "../../hooks/useTelegramAuth";
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import Head from "next/head";
 import Image from "next/image";
 
 const Prize = () => {
-  const {user} = useTelegramAuth()
   const {isOpen, onOpen, onClose} = useDisclosure()
   const router = useRouter()
   const [prize, setPrize] = useState({
@@ -56,12 +54,12 @@ const Prize = () => {
   }, [router])
 
   const check = useCallback(async () => {
-    if (!router.query.code || Number.isNaN(Number(router.query.code)) || !user) {
+    if (!router.query.code || Number.isNaN(Number(router.query.code)) || !router.query.chatId) {
       return
     }
     const res = await axios({
       method: 'POST',
-      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}/verify?chatId=${user.id}`,
+      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}/verify?chatId=${router.query.chatId}`,
       headers: {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
       }
@@ -72,7 +70,7 @@ const Prize = () => {
       setCheckMsg(res.data.message)
       setValid(false)
     }
-  }, [router.query.code, user])
+  }, [router.query.code, router.query.chatId])
 
   useEffect(() => {
     check()
@@ -88,14 +86,14 @@ const Prize = () => {
         'value': router.query.code
       });
     }
-    if (!router.query.code || Number.isNaN(Number(router.query.code)) || !user) {
+    if (!router.query.code || Number.isNaN(Number(router.query.code)) || !router.query.chatId) {
       setStatus('ERROR')
       return
     }
     setStatus('PROCESSING')
     const res = await axios({
       method: 'POST',
-      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}?chatId=${user.id}`,
+      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}?chatId=${router.query.chatId}`,
       headers: {
         'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
       }
@@ -151,7 +149,7 @@ const Prize = () => {
         <ReactMarkdown children={prize.text} remarkPlugins={[remarkGfm]} className={'markdown-body'}/>
         <Stack pt={'20px'}>
           <Text fontSize={'xs'} color={'blue'}
-                fontWeight={'bold'}>Tips: {user ? '@' + user?.username : 'Login First'} {checkMsg}</Text>
+                fontWeight={'bold'}>Tips: {checkMsg}</Text>
           <Button minH={'44px'} fontSize={'sm'} bg={'rgba(255, 0, 0, 0.7)'} color={'white'} _hover={{bg: ""}}
                   _active={{bg: ""}} isDisabled={valid}
                   disabled={prize.balance <= 0 || prize.status === 'DISABLED' || prize.status === 'CANCLE' || !valid}
