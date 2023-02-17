@@ -1,5 +1,4 @@
 const {ActionRowBuilder, ButtonBuilder, ButtonStyle, SlashCommandBuilder} = require('discord.js');
-const axios = require("axios");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,7 +18,7 @@ module.exports = {
                   .setURL(`https://nest-prize-web-app-delta.vercel.app/prize?code=${code}&dcId=${interaction.user.id}`)
                   .setStyle(ButtonStyle.Link)
           );
-      await interaction.reply({content: `The prize is: ${code}`, ephemeral: true, components: [row]});
+      await interaction.reply({content: `Click Snatch Button to Open It!`, ephemeral: true, components: [row]});
     }
   }
 }
