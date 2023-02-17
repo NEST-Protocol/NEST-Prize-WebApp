@@ -74,8 +74,8 @@ const Detail = () => {
             <Td>
             </Td>
           </Tr>
-          {list.map((item) => (
-            <Tr key={item.chat_id} fontSize={'xs'}>
+          {list.map((item, index) => (
+            <Tr key={index} fontSize={'xs'}>
               <Td>@{item?.tgName || item?.dcName || '-'}<br/>{item.wallet.slice(0, 8)}...{item.wallet.slice(-6)}</Td>
               <Td isNumeric>{item.amount} NEST</Td>
             </Tr>
