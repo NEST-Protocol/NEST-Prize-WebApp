@@ -10,9 +10,9 @@ module.exports = {
               .setDescription('BSC address')
               .setRequired(true)),
   async execute(interaction) {
-    const wallet = interaction.options.getString('wallet');
     try {
-      await axios({
+      const wallet = interaction.options.getString('wallet');
+      axios({
         method: 'post',
         url: 'https://cms.nestfi.net/bot-api/red-bot/user/dc',
         headers: {
@@ -20,15 +20,15 @@ module.exports = {
           'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
         },
         data: {
-          redBotUser: {
-            dcGroupId: interaction.guild.id,
-            dcGroupName: interaction.guild.name,
-            dcId: interaction.user.id,
-            dcName: interaction.user.username,
-            wallet: wallet
-          }
+          dcGroupId: interaction.guild.id,
+          dcGroupName: interaction.guild.name,
+          dcId: interaction.user.id,
+          dcName: interaction.user.username,
+          wallet: wallet
         }
-      });
+      }).catch((e) => {
+        console.log(e);
+      })
       await interaction.reply(`Update ${interaction.user.username} wallet success!`);
     } catch (e) {
       console.log(e);
