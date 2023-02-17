@@ -95,7 +95,7 @@ bot.start(async (ctx) => {
       } else if (prize.errorCode === 0 && prize.value) {
         ctx.reply(prize.value.text || t('You found a NEST Prize!', lang), {
           ...Markup.inlineKeyboard([
-            [Markup.button.webApp(t('Snatch!', lang), `https://nest-prize-web-app-delta.vercel.app/prize?code=${ctx.startPayload}&lang=${lang}`)],
+            [Markup.button.webApp(t('Snatch!', lang), `https://nest-prize-web-app-delta.vercel.app/prize?code=${ctx.startPayload}&lang=${lang}&chatId=${ctx.from.id}`)],
             [Markup.button.url(t('Star or Issue', lang), 'https://github.com/NEST-Protocol/NEST-Prize-WebApp')],
           ])
         })

@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.1",
+    "@discordjs/builders": "^1.4.0",
+    "@discordjs/rest": "^1.5.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@types/dom-to-image": "^2.6.4",
@@ -23,6 +25,8 @@
     "@types/sharp": "^0.31.0",
     "axios": "^1.2.0",
     "b64-to-blob": "^1.2.19",
+    "discord-api-types": "^0.37.34",
+    "discord.js": "^14.7.1",
     "dom-to-image": "^2.6.0",
     "dotenv": "^16.0.3",
     "eslint": "8.28.0",
