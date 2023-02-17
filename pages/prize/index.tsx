@@ -54,23 +54,42 @@ const Prize = () => {
   }, [router])
 
   const check = useCallback(async () => {
-    if (!router.query.code || Number.isNaN(Number(router.query.code)) || !router.query.chatId) {
+    if (!router.query.code || Number.isNaN(Number(router.query.code))) {
       return
     }
-    const res = await axios({
-      method: 'POST',
-      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}/verify?chatId=${router.query.chatId}`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+    if (router.query.chatId) {
+      const res = await axios({
+        method: 'POST',
+        url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}/verify?chatId=${router.query.chatId}`,
+        headers: {
+          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+        }
+      })
+      if (res.data.errorCode === 0 && res.data.value) {
+        setValid(true)
+      } else {
+        setCheckMsg(res.data.message)
+        setValid(false)
       }
-    })
-    if (res.data.errorCode === 0 && res.data.value) {
-      setValid(true)
-    } else {
-      setCheckMsg(res.data.message)
-      setValid(false)
+      return
     }
-  }, [router.query.code, router.query.chatId])
+    if (router.query.dcId) {
+      const res = await axios({
+        method: 'POST',
+        url: `https://cms.nestfi.net/bot-api/red-bot/prizes/dc/${router.query.code}/verify?dcId=${router.query.dcId}`,
+        headers: {
+          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+        }
+      })
+      if (res.data.errorCode === 0 && res.data.value) {
+        setValid(true)
+      } else {
+        setCheckMsg(res.data.message)
+        setValid(false)
+      }
+      return
+    }
+  }, [router.query.code, router.query.chatId, router.query.dcId])
 
   useEffect(() => {
     check()
@@ -86,42 +105,83 @@ const Prize = () => {
         'value': router.query.code
       });
     }
-    if (!router.query.code || Number.isNaN(Number(router.query.code)) || !router.query.chatId) {
+    if (!router.query.code || Number.isNaN(Number(router.query.code)) || (!router.query.chatId && !router.query.dcId)) {
       setStatus('ERROR')
       return
     }
-    setStatus('PROCESSING')
-    const res = await axios({
-      method: 'POST',
-      url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}?chatId=${router.query.chatId}`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
-      }
-    })
-    if (res.data.errorCode === 0 && res.data.value) {
-      setStatus('SUCCESS')
-      toast({
-        title: 'Success',
-        description: "You have snatched success!",
-        status: 'success',
-        position: 'top-right',
+
+    if (router.query.chatId) {
+      setStatus('PROCESSING')
+      const res = await axios({
+        method: 'POST',
+        url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${router.query.code}?chatId=${router.query.chatId}`,
+        headers: {
+          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+        }
       })
-      setTimeout(() => {
-        router.push({
-          pathname: '/history',
-          query: {
-            ...router.query
-          }
+      if (res.data.errorCode === 0 && res.data.value) {
+        setStatus('SUCCESS')
+        toast({
+          title: 'Success',
+          description: "You have snatched success!",
+          status: 'success',
+          position: 'top-right',
         })
-      }, 3_000)
-    } else {
-      toast({
-        title: 'Error',
-        description: res.data.message,
-        status: 'error',
-        position: 'top-right',
+        setTimeout(() => {
+          router.push({
+            pathname: '/history',
+            query: {
+              ...router.query
+            }
+          })
+        }, 3_000)
+      } else {
+        toast({
+          title: 'Error',
+          description: res.data.message,
+          status: 'error',
+          position: 'top-right',
+        })
+        setStatus('ERROR')
+      }
+      return
+    }
+
+    if (router.query.dcId) {
+      setStatus('PROCESSING')
+      const res = await axios({
+        method: 'POST',
+        url: `https://cms.nestfi.net/bot-api/red-bot/prizes/dc/${router.query.code}?dcId=${router.query.dcId}`,
+        headers: {
+          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+        }
       })
-      setStatus('ERROR')
+      if (res.data.errorCode === 0 && res.data.value) {
+        setStatus('SUCCESS')
+        toast({
+          title: 'Success',
+          description: "You have snatched success!",
+          status: 'success',
+          position: 'top-right',
+        })
+        setTimeout(() => {
+          router.push({
+            pathname: '/history',
+            query: {
+              ...router.query
+            }
+          })
+        }, 3_000)
+      } else {
+        toast({
+          title: 'Error',
+          description: res.data.message,
+          status: 'error',
+          position: 'top-right',
+        })
+        setStatus('ERROR')
+      }
+      return
     }
   }
 
