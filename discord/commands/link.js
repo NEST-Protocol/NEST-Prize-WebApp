@@ -14,7 +14,10 @@ module.exports = {
     try {
       const wallet = interaction.options.getString('wallet');
       if (!isAddress(wallet)) {
-        await interaction.reply(`Invalid wallet address!`);
+        await interaction.reply({
+          content: `Invalid wallet address!`,
+          ephemeral: true
+        });
         return;
       }
       axios({
@@ -34,10 +37,16 @@ module.exports = {
       }).catch((e) => {
         console.log(e);
       })
-      await interaction.reply(`Update ${interaction.user.username} wallet success!`);
+      await interaction.reply({
+        content: `Update ${interaction.user.username} wallet success!`,
+        ephemeral: true
+      });
     } catch (e) {
       console.log(e);
-      await interaction.reply(`There was an error while executing this command!`);
+      await interaction.reply({
+        content: `There was an error while executing this command!`,
+        ephemeral: true
+      });
     }
   }
 }
