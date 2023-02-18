@@ -235,7 +235,7 @@ const Prize = () => {
         <Link isExternal href={'https://github.com/NEST-Protocol/NEST-Prize-WebApp'} fontSize={'sm'}
               fontWeight={'bold'}>Star this project, or new issues!</Link>
       </Stack>
-      <Modal isOpen={isOpen} onClose={onClose} closeOnEsc={!timer} closeOnOverlayClick={!timer} autoFocus={false}
+      <Modal isOpen={isOpen && !!router.query?.chatId} onClose={onClose} closeOnEsc={!timer} closeOnOverlayClick={!timer} autoFocus={false}
              size={'sm'}>
         <ModalOverlay bg='blackAlpha.300' backdropFilter='blur(10px) hue-rotate(90deg)'/>
         <ModalContent>
