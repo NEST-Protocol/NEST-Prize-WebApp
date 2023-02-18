@@ -1,5 +1,6 @@
 const {SlashCommandBuilder} = require('@discordjs/builders');
 const axios = require("axios");
+const {isAddress} = require("ethers/lib/utils");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,6 +13,10 @@ module.exports = {
   async execute(interaction) {
     try {
       const wallet = interaction.options.getString('wallet');
+      if (!isAddress(wallet)) {
+        await interaction.reply(`Invalid wallet address!`);
+        return;
+      }
       axios({
         method: 'post',
         url: 'https://cms.nestfi.net/bot-api/red-bot/user/dc',
