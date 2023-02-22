@@ -155,7 +155,17 @@ bot.start(async (ctx) => {
 bot.action('NESTRoundtable', async (ctx) => {
   const lang = ctx.update.callback_query.from.language_code
   await lmt.removeTokens(1)
-  await ctx.editMessageText(t('NESTRoundtableContent', 'en'), {
+  await ctx.editMessageText(`NEST Roundtable 26: AI tools & Blockchain
+Rewards:
+100 $NEST for 100 winners
+
+Tasks:
+1. RT the Tweet & @ 3 friends
+Link: https://twitter.com/NEST_Protocol/status/1628308998813540352
+2. Join the Space
+Link: https://twitter.com/i/spaces/1YqKDoXDRLwxV
+
+We will detect whether you complete the task or not, and the reward will be issued through redenvelopsBot.`, {
     ...Markup.inlineKeyboard([
       [Markup.button.callback(t('« Back', lang), 'menu')],
     ])
