@@ -164,6 +164,7 @@ Tasks:
 Link: https://twitter.com/NEST_Protocol/status/1628308998813540352
 2. Join the Space
 Link: https://twitter.com/i/spaces/1YqKDoXDRLwxV
+3. Follow @NEST_Protocol, @AlveyChain
 
 We will detect whether you complete the task or not, and the reward will be issued through redenvelopsBot.`, {
     ...Markup.inlineKeyboard([
