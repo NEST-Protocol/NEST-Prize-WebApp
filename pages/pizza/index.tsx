@@ -52,11 +52,26 @@ const Pizza = () => {
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
 
-  useEffect(() => {
+  const getCode = useCallback(async () => {
     if (chatId) {
-      setValue(`${chatId}`)
+      const userReq = await axios(`https://cms.nestfi.net/bot-api/red-bot/user/${chatId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+        }
+      })
+      const code = userReq.data?.value?.wallet?.slice(-8)?.toLowerCase()
+      if (code) {
+        setValue(`https://finance.nestprotocol.org/?a=${code}`)
+      }
+    } else {
+      setValue('Set wallet first!')
     }
-  }, [chatId, setValue])
+  }, [chatId])
+
+  useEffect(() => {
+    getCode()
+  }, [getCode])
 
   const fetchData = useCallback(async () => {
     if (!chatId) return
