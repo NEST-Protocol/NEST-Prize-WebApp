@@ -46,7 +46,7 @@ const Pizza = () => {
     },
     details: [],
   })
-  const {onCopy, setValue, hasCopied} = useClipboard('')
+  const {onCopy, setValue, hasCopied, value} = useClipboard('')
   const [filter, setFilter] = useState('all')
   const [sort, setSort] = useState('totalTrading')
   const [from, setFrom] = useState('')
@@ -64,8 +64,6 @@ const Pizza = () => {
       if (code) {
         setValue(`https://finance.nestprotocol.org/?a=${code}`)
       }
-    } else {
-      setValue('Set wallet first!')
     }
   }, [chatId])
 
@@ -124,7 +122,7 @@ const Pizza = () => {
         </Stack>
         <Spacer/>
         <Button colorScheme={'blue'} onClick={onCopy} color={'white'} bg={'#0047BB'} borderRadius={'full'}
-                _hover={{bg: '#0047BB'}} _active={{bg: '#0047BB'}}>
+                isDisabled={!value} _hover={{bg: '#0047BB'}} _active={{bg: '#0047BB'}}>
           {hasCopied ? 'Copied success!' : 'Copy invitation link'}
         </Button>
       </HStack>
