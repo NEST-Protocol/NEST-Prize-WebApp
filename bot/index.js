@@ -39,7 +39,11 @@ const botName = "NESTRedEnvelopesBot"
 bot.start(async (ctx) => {
   const chatId = ctx.chat.id
   const isBot = ctx.from.is_bot
-  const lang = ctx.from.language_code
+  let lang = ctx.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
+  
   if (chatId < 0 || isBot) {
     return
   }
@@ -130,7 +134,11 @@ bot.start(async (ctx) => {
 })
 
 bot.action('NESTRoundtable', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
+  
   await lmt.removeTokens(1)
   await ctx.editMessageText(`NEST Roundtable 26: AI tools & Blockchain
 Rewards:
@@ -151,7 +159,10 @@ We will detect whether you complete the task or not, and the reward will be issu
 })
 
 bot.action('inputUserTwitter', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   const isBot = ctx.update.callback_query.from.is_bot
   if (isBot) {
     return
@@ -191,7 +202,10 @@ bot.action('inputUserTwitter', async (ctx) => {
 })
 
 bot.action('menu', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   const isBot = ctx.update.callback_query.from.is_bot
   if (isBot) {
     return
@@ -243,7 +257,10 @@ bot.action('menu', async (ctx) => {
 })
 
 bot.action('shareMyFutures', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   axios({
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
@@ -299,7 +316,10 @@ bot.action('shareMyFutures', async (ctx) => {
 })
 
 bot.action('NESTFiEvents', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   axios({
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
@@ -335,7 +355,10 @@ bot.action('NESTFiEvents', async (ctx) => {
 })
 
 bot.action('pizza', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   axios({
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
@@ -365,7 +388,10 @@ bot.action('pizza', async (ctx) => {
 })
 
 bot.action('iceCream', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   axios({
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
@@ -394,7 +420,10 @@ bot.action('iceCream', async (ctx) => {
 })
 
 bot.action('butterChicken', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   axios({
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
@@ -467,7 +496,10 @@ bot.action('butterChicken', async (ctx) => {
 })
 
 bot.action('draw5x', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   axios({
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
@@ -511,7 +543,10 @@ ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
 })
 
 bot.action('draw10x', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   axios({
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
@@ -555,7 +590,10 @@ ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
 })
 
 bot.action('draw20x', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   axios({
     method: 'post',
     url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
@@ -599,7 +637,10 @@ ${ticketHistory.map((item) => `${item} NEST`).join('\n')}`, {
 })
 
 bot.action('setUserWallet', async (ctx) => {
-  const lang = ctx.update.callback_query.from.language_code
+  let lang = ctx.update.callback_query.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   const isBot = ctx.update.callback_query.from.is_bot
   if (isBot) {
     return
@@ -640,7 +681,10 @@ bot.action('setUserWallet', async (ctx) => {
 })
 
 bot.on('message', async (ctx) => {
-  const lang = ctx.message.from.language_code
+  let lang = ctx.message.from.language_code
+  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
+    lang = 'en'
+  }
   const input = ctx.message.text
   const chat_id = ctx.message.chat.id
   const isBot = ctx.message.from.is_bot
