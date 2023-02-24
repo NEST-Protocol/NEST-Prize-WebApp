@@ -13,7 +13,7 @@ import {
   WrapItem
 } from "@chakra-ui/react"
 import {useRouter} from "next/router";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import axios from "axios";
 
 type UserInfo = {
@@ -51,6 +51,7 @@ const Pizza = () => {
   const [sort, setSort] = useState('totalTrading')
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
+  const [search, setSearch] = useState('')
 
   const getCode = useCallback(async () => {
     if (chatId) {
@@ -106,6 +107,33 @@ const Pizza = () => {
       }
     }
   }, [chatId, from, to])
+
+  const showData = useMemo(() => {
+    return data?.details.filter((item) => {
+      if (filter === 'all') return true
+      if (filter === 'recentRewards' && item.recentRewards) return item.recentRewards > 0
+      if (filter === 'notSettled' && item.notSettled) return item.notSettled > 0
+      if (filter === 'neverTraded') return item.totalTrading === 0
+      return false
+    }).filter((item) => {
+      if (search) {
+        return item.tgName?.toLowerCase().includes(search.toLowerCase()) ||
+          item.wallet?.toLowerCase().includes(search.toLowerCase())
+      } else {
+        return true
+      }
+    }).sort((a, b) => {
+      if (sort === 'totalTrading') return b.totalTrading - a.totalTrading
+      if (sort === 'totalRewards') return b.totalRewards - a.totalRewards
+      if (a.recentRewards && b.recentRewards) {
+        if (sort === 'recentRewards') return b.recentRewards - a.recentRewards
+      }
+      if (a.notSettled && b.notSettled) {
+        if (sort === 'notSettled') return b.notSettled - a.notSettled
+      }
+      return 0
+    })
+  }, [filter, search, sort, data])
 
   useEffect(() => {
     fetchData()
@@ -208,24 +236,14 @@ const Pizza = () => {
                 <option value='notSettled'>Not Settled</option>
               </Select>
             </HStack>
+            <HStack>
+              <Input fontSize={'12.5px'} value={search} borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
+                     border={'1px solid #EEEEEE'} placeholder={'search'} onChange={(e) => {
+                setSearch(e.target.value)
+              }}/>
+            </HStack>
             {
-              data?.details.filter((item) => {
-                if (filter === 'all') return true
-                if (filter === 'recentRewards' && item.recentRewards) return item.recentRewards > 0
-                if (filter === 'notSettled' && item.notSettled) return item.notSettled > 0
-                if (filter === 'neverTraded') return item.totalTrading === 0
-                return false
-              }).sort((a, b) => {
-                if (sort === 'totalTrading') return b.totalTrading - a.totalTrading
-                if (sort === 'totalRewards') return b.totalRewards - a.totalRewards
-                if (a.recentRewards && b.recentRewards) {
-                  if (sort === 'recentRewards') return b.recentRewards - a.recentRewards
-                }
-                if (a.notSettled && b.notSettled) {
-                  if (sort === 'notSettled') return b.notSettled - a.notSettled
-                }
-                return 0
-              }).map((item: any, index: number) => (
+              showData.map((item: any, index: number) => (
                 <Stack key={index} p={'20px'} border={'2px solid #EEEEEE'} borderRadius={'14px'} bg={'white'}>
                   <Text fontSize={'12.5px'} fontWeight={'600'}>@{item.tgName || '-'}</Text>
                   <Text fontSize={'12.5px'} color={'#00B7EE'} fontWeight={'600'}>{item.wallet}</Text>
