@@ -65,15 +65,38 @@ bot.start(async (ctx) => {
   }).catch((e) => console.log(e))
   if (ctx.startPayload) {
     try {
-      const res = await axios({
-        method: 'get',
-        url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${ctx.startPayload}`,
-        headers: {
-          'Authorization': `Bearer ${nest_token}`
-        }
-      })
-      const prize = res.data
-      if (prize.errorCode === 0 && prize.value) {
+      const res = await Promise.all([
+        axios({
+          method: 'get',
+          url: `https://cms.nestfi.net/bot-api/red-bot/user/${ctx.startPayload}`,
+          headers: {
+            'Authorization': `Bearer ${nest_token}`
+          }
+        }),
+        axios({
+          method: 'get',
+          url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${ctx.startPayload}`,
+          headers: {
+            'Authorization': `Bearer ${nest_token}`
+          }
+        }),
+      ])
+      const user = res[0].data
+      const prize = res[1].data
+      if (user.errorCode === 0 && user.value) {
+        await axios({
+          method: 'POST',
+          url: `https://cms.nestfi.net/bot-api/red-bot/user`,
+          data: {
+            chatId: ctx.from.id,
+            tgName: ctx.from.username,
+            inviteCode: ctx.startPayload,
+          },
+          headers: {
+            'Authorization': `Bearer ${nest_token}`
+          }
+        }).catch((e) => console.log(e))
+      } else if (prize.errorCode === 0 && prize.value) {
         ctx.reply(prize.value.text || t('You found a NEST Prize!', lang), {
           ...Markup.inlineKeyboard([
             [Markup.button.webApp(t('Snatch!', lang), `https://nest-prize-web-app-delta.vercel.app/prize?code=${ctx.startPayload}&lang=${lang}&chatId=${ctx.from.id}`)],
