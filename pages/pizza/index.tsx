@@ -54,7 +54,7 @@ const Pizza = () => {
 
   useEffect(() => {
     if (chatId) {
-      setValue(`https://t.me/NESTRedEnvelopesBot?start=${chatId}`)
+      setValue(`${chatId}`)
     }
   }, [chatId, setValue])
 

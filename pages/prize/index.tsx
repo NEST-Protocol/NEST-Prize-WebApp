@@ -247,13 +247,13 @@ const Prize = () => {
               )
             }
             <Stack>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=149'} isExternal bg={'yellow'} p={'10px'}>
+              <Link href={'149'} isExternal bg={'yellow'} p={'10px'}>
                 <Heading>
                   Hamburger
                 </Heading>
                 <Text fontSize={'xl'}>First 200 NEST</Text>
               </Link>
-              <Link href={'https://t.me/NESTRedEnvelopesBot?start=170'} isExternal bg={'black'} color={'white'} p={'10px'}>
+              <Link href={'170'} isExternal bg={'black'} color={'white'} p={'10px'}>
                 <Heading>
                   70 NEST + 1 draw per day
                 </Heading>

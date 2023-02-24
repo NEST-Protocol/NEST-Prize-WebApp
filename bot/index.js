@@ -109,10 +109,10 @@ bot.start(async (ctx) => {
     ])
     const user = res[1].data
     await lmt.removeTokens(1)
-    ctx.reply(t('Welcome to NEST FI\n\nWallet and Twitter must be added to join NEST FI campaign\n\nYour wallet: {{wallet}}\nYour twitter: {{twitter}}\nYour ref link: https://t.me/NESTRedEnvelopesBot?start={{ref}}\n\nGiveaway events, click on NESTFi Events.', lang, {
+    ctx.reply(t('Welcome', lang, {
       wallet: user?.value?.wallet,
       twitter: user?.value?.twitterName,
-      ref: user?.value?.wallet ? `https://finance.nestprotocol.org/#/futures?a=${user?.value?.wallet?.slice(-8)?.toLowerCase()}` : 'Bind wallet first!'
+      ref: user?.value?.wallet ? `${user?.value?.wallet?.slice(-8)?.toLowerCase()}` : 'Bind wallet first!'
     }), {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
@@ -222,10 +222,10 @@ bot.action('menu', async (ctx) => {
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
         .catch((e) => console.log(e))
-    await ctx.editMessageText(t("Welcome to NEST FI\n\nWallet and Twitter must be added to join NEST FI campaign\n\nYour wallet: {{wallet}}\nYour twitter: {{twitter}}\nYour ref link: https://t.me/NESTRedEnvelopesBot?start={{ref}}\n\nGiveaway events, click on NESTFi Events.", lang, {
+    await ctx.editMessageText(t("Welcome", lang, {
       wallet: res?.data?.value?.wallet,
       twitter: res?.data?.value?.twitterName,
-      ref: res?.data?.value?.wallet ? `https://finance.nestprotocol.org/#/futures?a=${res?.data?.value?.wallet?.slice(-8)?.toLowerCase()}` : 'Bind wallet first!'
+      ref: res?.data?.value?.wallet ? `${res?.data?.value?.wallet?.slice(-8)?.toLowerCase()}` : 'Bind wallet first!'
     }), {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
@@ -354,9 +354,7 @@ bot.action('pizza', async (ctx) => {
   await lmt.removeTokens(1)
   await ctx.answerCbQuery()
       .catch((e) => console.log(e))
-  await ctx.editMessageText(t(`Commission = 0.1% of the trading volume (only calculate the leverage of opening quantity X).\nYour reference link: https://t.me/NESTRedEnvelopesBot?start={{ref}}`, lang, {
-    ref: ctx.update.callback_query.from.id
-  }), {
+  await ctx.editMessageText(t(`Commission = 0.1% of the trading volume (only calculate the leverage of opening quantity X).`, lang), {
     parse_mode: 'Markdown',
     disable_web_page_preview: true,
     ...Markup.inlineKeyboard([

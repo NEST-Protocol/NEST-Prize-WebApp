@@ -13,7 +13,7 @@ export default async function handler(
   const token = req.query.token as string || "-";
   const open_price = req.query.open_price as string || "0";
   const now_price = req.query.now_price as string || "0";
-  const qr = await QRCode.toDataURL(`https://t.me/NESTRedEnvelopesBot?start=${from}`);
+  const qr = await QRCode.toDataURL(`${from}`);
   const svg = `
 <svg width="720" height="1280" viewBox="0 0 720 1280" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g clip-path="url(#clip0_6_2)">

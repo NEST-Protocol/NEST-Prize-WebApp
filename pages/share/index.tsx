@@ -13,7 +13,7 @@ const Share = () => {
   const [hasCopied, setHasCopied] = useState(false)
 
   const buildQrCode = useCallback(async () => {
-    const qr = await QRCode.toDataURL(`https://t.me/NESTRedEnvelopesBot?start=${from}`, {
+    const qr = await QRCode.toDataURL(`${from}`, {
       errorCorrectionLevel: 'L',
       margin: 0,
       color: {
@@ -129,7 +129,7 @@ const Share = () => {
                 onClick={() => {
                   const text = `Follow the right person, making money is as easy as breathing.
 You can follow the right person on NESTFi, here is my refer link:`
-                  window.open(`https://twitter.com/intent/tweet?text=${encodeURI(text)}&url=https://t.me/NESTRedEnvelopesBot?start=${from}&hashtags=NEST,btc,eth&via=NEST_Protocol`)
+                  window.open(`https://twitter.com/intent/tweet?text=${encodeURI(text)}&url=${from}&hashtags=NEST,btc,eth&via=NEST_Protocol`)
                 }}
                 boxShadow={'0px 4px 4px rgba(0, 0, 0, 0.25)'}>Twitter</Button>
       </HStack>
