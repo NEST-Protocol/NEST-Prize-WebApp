@@ -143,7 +143,7 @@ bot.start(async (ctx) => {
     }), {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.url(t('invite', lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.from.id}`)],
+        [Markup.button.url(t('invite', lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${user?.value?.wallet?.slice(-8)?.toLowerCase()}`)],
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', user?.value?.wallet)],
         [Markup.button.callback(t('NESTFi S5 Food Festival', lang), 'NESTFiEvents')],
         [Markup.button.callback('NEST Roundtable Rewards', 'NESTRoundtable')],
@@ -328,7 +328,7 @@ bot.action('shareMyFutures', async (ctx) => {
     const orders = res.data.value
     await ctx.answerCbQuery()
     const keyboards = orders.map((order) => {
-      return [Markup.button.url(`${order.token} ${order.level}x ${order.orientation} ${order.rate}%`, `https://nest-prize-web-app-delta.vercel.app/share?from=${ctx.update.callback_query.from.id}&rate=${order.rate}&orientation=${order.orientation}&level=${order.level}&token=${order.token}&open_price=${order.open_price}&now_price=${order.now_price}`)]
+      return [Markup.button.url(`${order.token} ${order.level}x ${order.orientation} ${order.rate}%`, `https://nest-prize-web-app-delta.vercel.app/share?from=${userRes?.data?.value?.wallet.slice(-8).toLowerCase()}&rate=${order.rate}&orientation=${order.orientation}&level=${order.level}&token=${order.token}&open_price=${order.open_price}&now_price=${order.now_price}`)]
     })
     // add back button to keyboards
     keyboards.push([Markup.button.callback(t('« Back', lang), 'menu')])
