@@ -406,7 +406,7 @@ bot.action('pizza', async (ctx) => {
     parse_mode: 'Markdown',
     disable_web_page_preview: true,
     ...Markup.inlineKeyboard([
-      [Markup.button.webApp(t('pizza info', lang), `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
+      [Markup.button.webApp('Invitation Info', `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
       [Markup.button.callback(t('« Back', lang), 'NESTFiEvents')],
     ])
   })
