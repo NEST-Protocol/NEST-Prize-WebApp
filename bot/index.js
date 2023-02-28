@@ -144,6 +144,7 @@ bot.start(async (ctx) => {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
         [Markup.button.url(t('invite', lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${user?.value?.wallet?.slice(-8)?.toLowerCase()}`)],
+        [Markup.button.callback('Invitation Info', 'pizza')],
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', user?.value?.wallet)],
         [Markup.button.callback(t('NESTFi S5 Food Festival', lang), 'NESTFiEvents')],
         [Markup.button.callback('NEST Roundtable Rewards', 'NESTRoundtable')],
@@ -267,6 +268,7 @@ bot.action('menu', async (ctx) => {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
         [Markup.button.url(t('invite',lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.from.id}`)],
+        [Markup.button.callback('Invitation Info', 'pizza')],
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback(t('Set Wallet',lang), 'setUserWallet', res?.data?.value?.wallet)],
         [Markup.button.callback(t('NESTFi S5 Food Festival', lang), 'NESTFiEvents')],
         [Markup.button.callback(t('NEST Roundtable Rewards', lang), 'NESTRoundtable')],
