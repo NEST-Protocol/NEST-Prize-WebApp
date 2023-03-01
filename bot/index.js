@@ -162,18 +162,16 @@ bot.action('NESTRoundtable', async (ctx) => {
   }
   
   await lmt.removeTokens(1)
-  await ctx.editMessageText(`NEST Roundtable 26: AI tools & Blockchain
+  await ctx.editMessageText(`NEST Roundtable 27: NFT Opportunities in 2023
 Rewards:
 100 $NEST for 100 winners
 
 Tasks:
 1. RT the Tweet & @ 3 friends
-Link: https://twitter.com/NEST_Protocol/status/1628308998813540352
+Link: https://twitter.com/NEST_Protocol/status/1630900495308173313
 2. Join the Space
-Link: https://twitter.com/i/spaces/1YqKDoXDRLwxV
-3. Follow @NEST_Protocol, @AlveyChain
-
-We will detect whether you complete the task or not, and the reward will be issued through redenvelopsBot.`, {
+Link: https://twitter.com/i/spaces/1YpKkgdgDqAKj
+3. Follow @NEST_Protocol, @SeerFoundation`, {
     ...Markup.inlineKeyboard([
       [Markup.button.callback(t('« Back', lang), 'menu')],
     ])
