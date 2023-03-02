@@ -140,7 +140,7 @@ const Pizza = () => {
   }, [fetchData])
 
   return (
-    <Stack w={'full'} h={'100vh'} p={'20px'} spacing={'8px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'}
+    <Stack w={'full'} maxW={'container.sm'} h={'100vh'} p={'20px'} spacing={'8px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'}
            overflow={'scroll'}>
       <HStack pb={'20px'}>
         <Stack spacing={'16px'}>
