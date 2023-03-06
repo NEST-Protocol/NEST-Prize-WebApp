@@ -61,56 +61,6 @@ bot.start(async (ctx) => {
       }]
     }
   }).catch((e) => console.log(e))
-  if (ctx.startPayload) {
-    try {
-      const res = await Promise.all([
-        axios({
-          method: 'get',
-          url: `https://cms.nestfi.net/bot-api/red-bot/user/${ctx.startPayload}`,
-          headers: {
-            'Authorization': `Bearer ${nest_token}`
-          }
-        }),
-        axios({
-          method: 'get',
-          url: `https://cms.nestfi.net/bot-api/red-bot/prizes/${ctx.startPayload}`,
-          headers: {
-            'Authorization': `Bearer ${nest_token}`
-          }
-        }),
-      ])
-      const user = res[0].data
-      const prize = res[1].data
-      if (user.errorCode === 0 && user.value) {
-        await axios({
-          method: 'POST',
-          url: `https://cms.nestfi.net/bot-api/red-bot/user`,
-          data: {
-            chatId: ctx.from.id,
-            tgName: ctx.from.username,
-            inviteCode: ctx.startPayload,
-          },
-          headers: {
-            'Authorization': `Bearer ${nest_token}`
-          }
-        }).catch((e) => console.log(e))
-      } else if (prize.errorCode === 0 && prize.value) {
-        ctx.reply(prize.value.text || t('You found a NEST Prize!', lang), {
-          ...Markup.inlineKeyboard([
-            [Markup.button.webApp(t('Snatch!', lang), `https://nest-prize-web-app-delta.vercel.app/prize?code=${ctx.startPayload}&lang=${lang}&chatId=${ctx.from.id}`)],
-            [Markup.button.url(t('Star or Issue', lang), 'https://github.com/NEST-Protocol/NEST-Prize-WebApp')],
-          ])
-        })
-        return
-      } else {
-        await lmt.removeTokens(1)
-        ctx.reply(t('Sorry, this is not a valid NEST prize', lang))
-        return
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
   try {
     const res = await Promise.all([
       axios({
@@ -459,7 +409,6 @@ bot.on('message', async (ctx) => {
             url: `https://cms.nestfi.net/workbench-api/activity/user/update`,
             data: JSON.stringify({
               user_id: ctx.from.id,
-              invite_code: res?.data?.value?.inviteCode || '',
               username: res?.data?.value?.tgName || '',
               wallet: input
             }),
