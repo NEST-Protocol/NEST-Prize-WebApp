@@ -96,7 +96,7 @@ bot.start(async (ctx) => {
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', user?.value?.wallet)],
         [Markup.button.callback('NESTFi S5 Food Festival (Ended)', 'NESTFiEvents')],
         [Markup.button.callback('NEST Roundtable Rewards', 'NESTRoundtable')],
-        [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback(t('Share my positions', lang), 'shareMyFutures')],
+        [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures')],
       ])
     })
     
@@ -218,71 +218,12 @@ bot.action('menu', async (ctx) => {
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback(t('Set Wallet',lang), 'setUserWallet', res?.data?.value?.wallet)],
         [Markup.button.callback('NESTFi S5 Food Festival (Ended)', 'NESTFiEvents')],
         [Markup.button.callback(t('NEST Roundtable Rewards', lang), 'NESTRoundtable')],
-        [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures'), Markup.button.callback(t('Share my positions',lang), 'shareMyFutures')],
+        [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures')],
       ])
     })
   } catch (e) {
     console.log(e)
     await lmt.removeTokens(1)
-  }
-})
-
-bot.action('shareMyFutures', async (ctx) => {
-  let lang = ctx.update.callback_query.from.language_code
-  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
-    lang = 'en'
-  }
-  axios({
-    method: 'post',
-    url: `https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`,
-    data: {
-      client_id: `${ctx.update.callback_query.from.id}`,
-      user_id: `${ctx.update.callback_query.from.id}`,
-      events: [{
-        name: 'click',
-        params: {
-          value: 'shareMyFutures',
-          language_code: lang,
-        },
-      }]
-    }
-  }).catch((e) => console.log(e))
-  try {
-    const userRes = await axios({
-      method: 'GET',
-      url: `https://cms.nestfi.net/bot-api/red-bot/user/${ctx.update.callback_query.from.id}`,
-      headers: {
-        'Authorization': `Bearer ${nest_token}`,
-      }
-    })
-    if (!userRes?.data?.value?.wallet) {
-      await lmt.removeTokens(1)
-      await ctx.answerCbQuery()
-          .catch((e) => console.log(e))
-      await ctx.editMessageText(t('Please set your wallet first', lang), {
-        ...Markup.inlineKeyboard([
-          [Markup.button.callback(t('« Back', lang), 'menu')],
-        ])
-      })
-      return
-    }
-    const res = await axios({
-      method: 'GET',
-      url: `https://cms.nestfi.net/bot-api/red-bot/user/future?wallet=${userRes?.data?.value?.wallet}`,
-      headers: {
-        'Authorization': nest_token,
-      }
-    })
-    const orders = res.data.value
-    await ctx.answerCbQuery()
-    const keyboards = orders.map((order) => {
-      return [Markup.button.url(`${order.token} ${order.level}x ${order.orientation} ${order.rate}%`, `https://nest-prize-web-app-delta.vercel.app/share?from=${userRes?.data?.value?.wallet.slice(-8).toLowerCase()}&rate=${order.rate}&orientation=${order.orientation}&level=${order.level}&token=${order.token}&open_price=${order.open_price}&now_price=${order.now_price}`)]
-    })
-    // add back button to keyboards
-    keyboards.push([Markup.button.callback(t('« Back', lang), 'menu')])
-    await ctx.editMessageText(t(`Share your futures orders:`, lang), Markup.inlineKeyboard(keyboards))
-  } catch (e) {
-    console.log(e)
   }
 })
 
