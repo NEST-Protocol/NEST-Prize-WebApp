@@ -1,4 +1,4 @@
-import {Divider, HStack, Stack, Text} from "@chakra-ui/react";
+import {Divider, HStack, Link, Stack, Text} from "@chakra-ui/react";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/router";
 
@@ -30,7 +30,7 @@ const IceCream = () => {
     kol: {
       code: "ICECREAM",
       address: "0x0000000",
-      tgName: "@kolname",
+      tgName: "kingtin007",
       chatId: "12345678",
     },
     ranking: [
@@ -82,10 +82,26 @@ const IceCream = () => {
     return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).findIndex(item => item.chatId === router.query.chatId) + 1
   }, [rank, router.query.chatId])
 
+  if (router.query.code !== 'ICECREAM') {
+    return (
+      <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}
+             justifyContent={"center"} alignItems={"center"}
+      >
+        <Text fontSize={'lg'} fontWeight={'500'}>Your kol is not open for activities, you can not participate</Text>
+      </Stack>
+    )
+  }
+
   return (
     <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}>
       <Stack align={"center"} fontSize={'lg'} fontWeight={'500'}>
-        <Text>KOL: {rank?.kol.tgName}</Text>
+        {
+          rank?.kol.tgName ? (
+            <Link href={`https://t.me/${rank?.kol.tgName}`} isExternal>KOL: {rank?.kol.tgName}</Link>
+          ) : (
+            <Text>Code: {rank?.kol.code}</Text>
+          )
+        }
       </Stack>
       <HStack p={'30px'} bg={'white'} justifyContent={'space-around'} border={'2px solid #EEEEEE'} borderRadius={'14px'}>
         <Stack w={'120px'}>
@@ -101,37 +117,41 @@ const IceCream = () => {
           <Text fontSize={'10.5px'} fontWeight={'500'} color={'#878787'}>Bonus pool</Text>
         </Stack>
       </HStack>
-      <Stack>
-        <Text fontSize={'14px'} fontWeight={'bold'}>Your Ranking</Text>
-        {
-          myInfo ? (
-            <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
-              <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{myRanking}</Text>
-              <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
-                <Text>{myInfo.tgName}</Text>
-                <Text color={'#00B7EE'} pr={'30px'}>{myInfo.wallet}</Text>
-                <Divider/>
-                <HStack justify={'space-between'} w={'full'} color={'#878787'}>
-                  <Text w={'full'}>Giveaway</Text>
-                  <Text w={'full'}>Bonus</Text>
+      {
+         router.query.chatId && (
+          <Stack>
+            <Text fontSize={'14px'} fontWeight={'bold'}>Your Ranking</Text>
+            {
+              myInfo ? (
+                <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
+                  <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{myRanking}</Text>
+                  <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
+                    <Text>{myInfo.tgName}</Text>
+                    <Text color={'#00B7EE'} pr={'30px'}>{myInfo.wallet}</Text>
+                    <Divider/>
+                    <HStack justify={'space-between'} w={'full'} color={'#878787'}>
+                      <Text w={'full'}>Giveaway</Text>
+                      <Text w={'full'}>Bonus</Text>
+                    </HStack>
+                    <HStack justify={'space-between'} w={'full'}>
+                      <Text w={'full'}>{myInfo.txAmount.toLocaleString('en-US', {
+                        maximumFractionDigits: 2,
+                      })} NEST</Text>
+                      <Text w={'full'}>{myInfo.rewards.toLocaleString('en-US', {
+                        maximumFractionDigits: 2,
+                      })} NEST</Text>
+                    </HStack>
+                  </Stack>
                 </HStack>
-                <HStack justify={'space-between'} w={'full'}>
-                  <Text w={'full'}>{myInfo.txAmount.toLocaleString('en-US', {
-                    maximumFractionDigits: 2,
-                  })} NEST</Text>
-                  <Text w={'full'}>{myInfo.rewards.toLocaleString('en-US', {
-                    maximumFractionDigits: 2,
-                  })} NEST</Text>
+              ) : (
+                <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
+                  <Text fontSize={'12.5px'}>You are not yet eligible to participate in the event</Text>
                 </HStack>
-              </Stack>
-            </HStack>
-          ) : (
-            <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
-              <Text fontSize={'12.5px'}>You are not yet eligible to participate in the event</Text>
-            </HStack>
-          )
-        }
-      </Stack>
+              )
+            }
+          </Stack>
+        )
+      }
       <Stack>
         <Text fontSize={'14px'} fontWeight={'bold'}>Ranking</Text>
         {
