@@ -49,8 +49,8 @@ const Pizza = () => {
   const {onCopy, setValue, hasCopied, value} = useClipboard('')
   const [filter, setFilter] = useState('all')
   const [sort, setSort] = useState('totalTrading')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
+  const [from, setFrom] = useState('2023-01-01')
+  const [to, setTo] = useState(new Date().toISOString().slice(0, 10))
   const [search, setSearch] = useState('')
 
   const getCode = useCallback(async () => {

@@ -33,34 +33,34 @@ const IceCream = () => {
   }, [options])
 
   const fetchOptions = useCallback(async () => {
-    const res = await axios({
-      method: 'get',
-      url: `https://cms.nestfi.net/bot-api/red-bot/s4/options/list`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
-      }
-    })
-    if (res.data.errorCode === 0) {
-      setOptions(res.data.value)
-    }
+    // const res = await axios({
+    //   method: 'get',
+    //   url: `https://cms.nestfi.net/bot-api/red-bot/s4/options/list`,
+    //   headers: {
+    //     'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+    //   }
+    // })
+    // if (res.data.errorCode === 0) {
+    //   setOptions(res.data.value)
+    // }
   }, [])
 
   const fetchRank = useCallback(async () => {
-    setRank(undefined)
-    const chatId = router.query.chatId
-    if (!chatId || !code) {
-      return
-    }
-    const res = await axios({
-      method: 'get',
-      url: `https://cms.nestfi.net/bot-api/red-bot/s4/ranking/${type}?chatId=${chatId}&code=${code}`,
-      headers: {
-        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
-      }
-    })
-    if (res.data.errorCode === 0) {
-      setRank(res.data.value)
-    }
+    // setRank(undefined)
+    // const chatId = router.query.chatId
+    // if (!chatId || !code) {
+    //   return
+    // }
+    // const res = await axios({
+    //   method: 'get',
+    //   url: `https://cms.nestfi.net/bot-api/red-bot/s4/ranking/${type}?chatId=${chatId}&code=${code}`,
+    //   headers: {
+    //     'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+    //   }
+    // })
+    // if (res.data.errorCode === 0) {
+    //   setRank(res.data.value)
+    // }
   }, [type, router, code])
 
   useEffect(() => {
@@ -80,21 +80,6 @@ const IceCream = () => {
 
   return (
     <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}>
-      <Select bg={'#F7F8FA'} borderRadius={'full'} border={'1px solid #EEEEEE'} color={'#878787'}
-              onChange={(e) => setCode(e.target.value)}
-              boxShadow={'0px 0px 10px 0px #EEEEEE'}>
-        {
-          options.map((item, index) => (
-            <option key={index} value={item}>{item}</option>
-          ))
-        }
-      </Select>
-      <Tabs isFitted>
-        <TabList>
-          <Tab fontSize={'12.5px'} fontWeight={'bold'} onClick={() => setType('trading')}>Trading Ranking</Tab>
-          <Tab fontSize={'12.5px'} fontWeight={'bold'} onClick={() => setType('profit')}>Profit Ranking</Tab>
-        </TabList>
-      </Tabs>
       <HStack p={'30px'} bg={'white'} justifyContent={'space-around'} border={'2px solid #EEEEEE'} borderRadius={'14px'}>
         <Stack w={'120px'}>
           <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.tradingPool?.toLocaleString('en-US', {
@@ -135,7 +120,7 @@ const IceCream = () => {
             </HStack>
           ) : (
             <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
-              <Text fontSize={'12.5px'}>Not in ranking</Text>
+              <Text fontSize={'12.5px'}>You are not yet eligible to participate in the event</Text>
             </HStack>
           )
         }
