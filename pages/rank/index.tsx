@@ -108,6 +108,9 @@ const Rank = () => {
     fetchRank()
   }, [fetchRank])
 
+  console.log(rank)
+  console.log(userData)
+
   const myInfo = useMemo(() => {
     if (!rank || !userData) {
       return undefined
