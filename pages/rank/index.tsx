@@ -91,6 +91,7 @@ const Rank = () => {
       request_access: 'write',
       embed: 1
     }, async (data: TelegramData) => {
+      console.log(data)
       if (!data) {
         return
       }
@@ -109,7 +110,6 @@ const Rank = () => {
   }, [fetchRank])
 
   console.log(rank)
-  console.log(userData)
 
   const myInfo = useMemo(() => {
     if (!rank || !userData) {
