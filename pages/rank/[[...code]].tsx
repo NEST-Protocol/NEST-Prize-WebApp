@@ -1,4 +1,4 @@
-import {Button, Divider, HStack, Link, Stack, Text, chakra, Avatar, Badge} from "@chakra-ui/react";
+import {Button, Divider, HStack, Link, Stack, Text, Avatar, Badge} from "@chakra-ui/react";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/router";
 import {FaTelegramPlane} from "react-icons/fa";
@@ -84,6 +84,10 @@ const Rank = () => {
     ],
   })
 
+  const code = useMemo(() => {
+    return router.query.code?.[0]
+  }, [router])
+
   const loginTelegram = () => {
     // @ts-ignore
     window?.Telegram.Login.auth({
@@ -122,7 +126,7 @@ const Rank = () => {
     return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).findIndex(item => String(item.chatId) === String(userData.id)) + 1
   }, [rank, userData])
 
-  if (router.query.code !== '71a91c10') {
+  if (code !== '71a91c10') {
     return (
       <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}
              justifyContent={"center"} alignItems={"center"}
