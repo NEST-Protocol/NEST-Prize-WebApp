@@ -1,94 +1,101 @@
-import {Divider, HStack, Select, Stack, Tab, TabList, Tabs, Text} from "@chakra-ui/react";
+import {Divider, HStack, Stack, Text} from "@chakra-ui/react";
 import {useCallback, useEffect, useMemo, useState} from "react";
-import axios from "axios";
 import {useRouter} from "next/router";
 
 type RankType = {
-  bonusPool: number,
-  myRanking: number | null,
-  ranking: {
+  txTotalAmount: number,
+  rewardsTotal: number,
+  txTotalUsers: number,
+  kol: {
+    code: string,
     address: string,
-    amount: number,
-    bonusPool: number,
-    chatId: string,
-    ranking: number,
-    reward: number,
     tgName: string,
-    tradingPool: number,
+    chatId: string,
+  },
+  ranking: {
+    chatId: string,
+    txAmount: number,
+    wallet: string,
+    rewards: number,
+    tgName: string,
   }[],
-  tradingPool: number,
 }
 
 const IceCream = () => {
   const router = useRouter()
-  const [options, setOptions] = useState([])
-  const [rank, setRank] = useState<RankType | undefined>(undefined)
-  const [code, setCode] = useState('')
-  const [type, setType] = useState('trading')
-
-  useEffect(() => {
-    if (options.length > 0) {
-      setCode(options[options.length - 1])
-    }
-  }, [options])
-
-  const fetchOptions = useCallback(async () => {
-    // const res = await axios({
-    //   method: 'get',
-    //   url: `https://cms.nestfi.net/bot-api/red-bot/s4/options/list`,
-    //   headers: {
-    //     'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
-    //   }
-    // })
-    // if (res.data.errorCode === 0) {
-    //   setOptions(res.data.value)
-    // }
-  }, [])
+  const [rank, setRank] = useState<RankType | undefined>({
+    txTotalAmount: 1000,
+    rewardsTotal: 200,
+    txTotalUsers: 11,
+    kol: {
+      code: "ICECREAM",
+      address: "0x0000000",
+      tgName: "@kolname",
+      chatId: "12345678",
+    },
+    ranking: [
+      {
+        chatId: "1",
+        txAmount: 200,
+        wallet: "0x00001",
+        rewards: 20,
+        tgName: "User1",
+      },
+      {
+        chatId: "2",
+        txAmount: 300,
+        wallet: "0x00002",
+        rewards: 30,
+        tgName: "User2",
+      },
+      {
+        chatId: "3",
+        txAmount: 400,
+        wallet: "0x00003",
+        rewards: 40,
+        tgName: "User3",
+      },
+    ],
+  })
 
   const fetchRank = useCallback(async () => {
-    // setRank(undefined)
-    // const chatId = router.query.chatId
-    // if (!chatId || !code) {
-    //   return
-    // }
-    // const res = await axios({
-    //   method: 'get',
-    //   url: `https://cms.nestfi.net/bot-api/red-bot/s4/ranking/${type}?chatId=${chatId}&code=${code}`,
-    //   headers: {
-    //     'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
-    //   }
-    // })
-    // if (res.data.errorCode === 0) {
-    //   setRank(res.data.value)
-    // }
-  }, [type, router, code])
-
-  useEffect(() => {
-    fetchOptions()
-  }, [fetchOptions])
+    // const res = await fetch('https://')
+    // const data = await res.json()
+    // setRank(data)
+  }, [])
 
   useEffect(() => {
     fetchRank()
   }, [fetchRank])
 
-  const myRank = useMemo(() => {
-    if (!rank || !rank?.myRanking) {
+  const myInfo = useMemo(() => {
+    if (!rank) {
       return undefined
     }
-    return rank.ranking.find(item => item.ranking === rank.myRanking)
-  }, [rank])
+    return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).find(item => item.chatId === router.query.chatId)
+  }, [rank, router.query.chatId])
+
+  const myRanking = useMemo(() => {
+    if (!rank) {
+      return undefined
+    }
+    return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).findIndex(item => item.chatId === router.query.chatId) + 1
+  }, [rank, router.query.chatId])
 
   return (
     <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}>
+      <Stack align={"center"} fontSize={'lg'} fontWeight={'500'}>
+        <Text>KOL: {rank?.kol.tgName}</Text>
+      </Stack>
       <HStack p={'30px'} bg={'white'} justifyContent={'space-around'} border={'2px solid #EEEEEE'} borderRadius={'14px'}>
         <Stack w={'120px'}>
-          <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.tradingPool?.toLocaleString('en-US', {
+          <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.txTotalAmount?.toLocaleString('en-US', {
             maximumFractionDigits: 2,
           }) || '-'}</Text>
           <Text fontSize={'10.5px'} fontWeight={'500'} color={'#878787'}>Transaction amount</Text>
         </Stack>
         <Stack w={'120px'}>
-          <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.bonusPool?.toLocaleString('en-US', {
+          <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.rewardsTotal?.toLocaleString('en-US', {
             maximumFractionDigits: 2,
           }) || '-'}</Text>
           <Text fontSize={'10.5px'} fontWeight={'500'} color={'#878787'}>Bonus pool</Text>
@@ -97,22 +104,22 @@ const IceCream = () => {
       <Stack>
         <Text fontSize={'14px'} fontWeight={'bold'}>Your Ranking</Text>
         {
-          myRank ? (
+          myInfo ? (
             <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
-              <Text fontSize={'xl'} fontWeight={'semibold'}>{myRank.ranking}</Text>
+              <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{myRanking}</Text>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
-                <Text>{myRank.tgName}</Text>
-                <Text color={'#00B7EE'} pr={'30px'}>{myRank.address}</Text>
+                <Text>{myInfo.tgName}</Text>
+                <Text color={'#00B7EE'} pr={'30px'}>{myInfo.wallet}</Text>
                 <Divider/>
                 <HStack justify={'space-between'} w={'full'} color={'#878787'}>
-                  <Text w={'100px'}>{type.slice(0, 1).toUpperCase()}{type.slice(1)}</Text>
-                  <Text w={'100px'}>Giveaway</Text>
+                  <Text w={'full'}>Giveaway</Text>
+                  <Text w={'full'}>Bonus</Text>
                 </HStack>
                 <HStack justify={'space-between'} w={'full'}>
-                  <Text w={'100px'}>{myRank.amount.toLocaleString('en-US', {
+                  <Text w={'full'}>{myInfo.txAmount.toLocaleString('en-US', {
                     maximumFractionDigits: 2,
                   })} NEST</Text>
-                  <Text w={'100px'}>{myRank.reward.toLocaleString('en-US', {
+                  <Text w={'full'}>{myInfo.rewards.toLocaleString('en-US', {
                     maximumFractionDigits: 2,
                   })} NEST</Text>
                 </HStack>
@@ -128,22 +135,22 @@ const IceCream = () => {
       <Stack>
         <Text fontSize={'14px'} fontWeight={'bold'}>Ranking</Text>
         {
-          rank && rank.ranking?.map((item, index) => (
+          rank && rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).map((item, index) => (
             <HStack bg={'white'} key={index} p={'20px'} border={'2px solid #EEEEEE'} borderRadius={'14px'} spacing={'20px'}>
-              <Text fontSize={'xl'} fontWeight={'semibold'}>{item.ranking}</Text>
+              <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{index + 1}</Text>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
                 <Text>@{item.tgName}</Text>
-                <Text color={'#00B7EE'} pr={'30px'}>{item.address}</Text>
+                <Text color={'#00B7EE'} pr={'30px'}>{item.wallet}</Text>
                 <Divider/>
                 <HStack justify={'space-between'} w={'full'} color={'#878787'}>
-                  <Text w={'full'}>{type.slice(0, 1).toUpperCase()}{type.slice(1)}</Text>
                   <Text w={'full'}>Giveaway</Text>
+                  <Text w={'full'}>Bonus</Text>
                 </HStack>
                 <HStack justify={'space-between'} w={'full'}>
-                  <Text w={'full'}>{item.amount.toLocaleString('en-US', {
+                  <Text w={'full'}>{item.txAmount.toLocaleString('en-US', {
                     maximumFractionDigits: 2,
                   })} NEST</Text>
-                  <Text w={'full'}>{item.reward.toLocaleString('en-US', {
+                  <Text w={'full'}>{item.rewards.toLocaleString('en-US', {
                     maximumFractionDigits: 2,
                   })} NEST</Text>
                 </HStack>
