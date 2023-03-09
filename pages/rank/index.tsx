@@ -5,10 +5,10 @@ import {FaTelegramPlane} from "react-icons/fa";
 
 type TelegramData = {
   hash: string,
-  id: string,
+  id: number,
   photo_url: string,
-  first_name: string,
-  last_name: string,
+  first_name?: string,
+  last_name?: string,
   username: string,
   auth_date: number,
 }
@@ -91,7 +91,6 @@ const Rank = () => {
       request_access: 'write',
       embed: 1
     }, async (data: TelegramData) => {
-      console.log(data)
       if (!data) {
         return
       }
@@ -109,20 +108,18 @@ const Rank = () => {
     fetchRank()
   }, [fetchRank])
 
-  console.log(rank)
-
   const myInfo = useMemo(() => {
     if (!rank || !userData) {
       return undefined
     }
-    return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).find(item => item.chatId === userData.id)
+    return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).find(item => String(item.chatId) === String(userData.id))
   }, [rank, userData])
 
   const myRanking = useMemo(() => {
     if (!rank || !userData) {
       return undefined
     }
-    return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).findIndex(item => item.chatId === userData.id) + 1
+    return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).findIndex(item => String(item.chatId) === String(userData.id)) + 1
   }, [rank, userData])
 
   if (router.query.code !== '71a91c10') {
