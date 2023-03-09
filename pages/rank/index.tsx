@@ -164,13 +164,12 @@ const Rank = () => {
           myInfo ? (
             <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'24px'}>
               <Stack>
-                <Avatar src={userData.photo_url}
-                        name={userData.username ? userData.username : `${userData.first_name} ${userData.last_name}` }/>
+                <Avatar src={userData.photo_url} name={userData.username ? userData.username : `${userData.first_name} ${userData.last_name}` }/>
                 <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{myRanking}</Text>
               </Stack>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
-                <Text>{userData.username ? userData.username : `${userData.first_name} ${userData.last_name}` }</Text>
-                <Text color={'#00B7EE'} pr={'30px'}>{myInfo.wallet}</Text>
+                <Text>{userData.username ?  `@${userData.username}` : `${userData.first_name} ${userData.last_name}` }</Text>
+                <Text color={'#00B7EE'} pr={'30px'} maxW={'250px'}>{myInfo.wallet}</Text>
                 <Divider/>
                 <HStack justify={'space-between'} w={'full'} color={'#878787'}>
                   <Text w={'full'} fontSize={'xs'}>Tx amount</Text>
