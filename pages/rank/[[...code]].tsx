@@ -172,9 +172,23 @@ const Rank = () => {
               </Stack>
             </HStack>
           ) : (
-            <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
-              <Text fontSize={'12.5px'}>You are not yet eligible to participate in the event</Text>
-            </HStack>
+            <Stack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
+              <Text fontSize={'12.5px'} fontWeight={'500'}>You are not yet eligible to participate in the event</Text>
+              <HStack spacing={'20px'}>
+                <Text fontSize={'xs'} color={'#00B7EE'} fontWeight={'500'}>{`https://finance.nestprotocol.org/?a=${code}`}</Text>
+                <Button variant={'outline'} size={'sm'}
+                        onClick={() => {
+                          // copy code to clipboard
+                          if (code) {
+                            navigator.clipboard.writeText(`https://finance.nestprotocol.org/?a=${code}`)
+                          }
+                        }}
+                >
+                  Copy Link
+                </Button>
+              </HStack>
+
+            </Stack>
           )
         ) : (
           <HStack justifyContent={"center"} h={'80px'}>
