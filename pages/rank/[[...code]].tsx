@@ -99,7 +99,8 @@ const Rank = () => {
 
   if (invalid) {
     return (
-      <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}
+      <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'}
+             bgSize={'cover'} spacing={'16px'}
              justifyContent={"center"} alignItems={"center"}
       >
         <Text fontSize={'lg'} fontWeight={'500'}>Your kol is not open for activities, you can not participate</Text>
@@ -109,17 +110,19 @@ const Rank = () => {
 
   if (!rank) {
     return (
-      <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}
+      <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'}
+             bgSize={'cover'} spacing={'16px'}
              justifyContent={"center"} alignItems={"center"}
       >
-        <Spinner />
+        <Spinner/>
         <Text fontSize={'lg'} fontWeight={'500'}>Loading...</Text>
       </Stack>
     )
   }
 
   return (
-    <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}>
+    <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'}
+           bgSize={'cover'} spacing={'16px'}>
       <Stack align={"center"} fontSize={'lg'} fontWeight={'500'}>
         {
           rank?.kol.tgName ? (
@@ -129,7 +132,8 @@ const Rank = () => {
           )
         }
       </Stack>
-      <HStack p={'30px'} bg={'white'} justifyContent={'space-around'} border={'2px solid #EEEEEE'} borderRadius={'14px'}>
+      <HStack p={'30px'} bg={'white'} justifyContent={'space-around'} border={'2px solid #EEEEEE'}
+              borderRadius={'14px'}>
         <Stack w={'120px'}>
           <Text fontSize={'12.5px'} fontWeight={'bold'}>{rank?.txTotalAmount?.toLocaleString('en-US', {
             maximumFractionDigits: 2,
@@ -145,67 +149,70 @@ const Rank = () => {
       </HStack>
       <Stack>
         <Text fontSize={'14px'} fontWeight={'bold'}>Your Ranking</Text>
-      {
-        userData ? (
-          myInfo ? (
-            <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'24px'}>
-              <Stack>
-                <Avatar src={userData.photo_url} name={userData.username ? userData.username : `${userData.first_name} ${userData.last_name}` }/>
-                <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{myRanking}</Text>
-              </Stack>
-              <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
-                <Text>{userData.username ?  `@${userData.username}` : `${userData.first_name} ${userData.last_name}` }</Text>
-                <Text color={'#00B7EE'} pr={'30px'} maxW={'250px'}>{myInfo.wallet}</Text>
-                <Divider/>
-                <HStack justify={'space-between'} w={'full'} color={'#878787'}>
-                  <Text w={'full'} fontSize={'xs'}>Tx amount</Text>
-                  <Text w={'full'} fontSize={'xs'}>Bonus</Text>
-                </HStack>
-                <HStack justify={'space-between'} w={'full'}>
-                  <Text w={'full'}>{myInfo.txAmount.toLocaleString('en-US', {
-                    maximumFractionDigits: 2,
-                  })} NEST</Text>
-                  <Text w={'full'}>{myInfo.rewards.toLocaleString('en-US', {
-                    maximumFractionDigits: 2,
-                  })} NEST</Text>
-                </HStack>
-              </Stack>
-            </HStack>
-          ) : (
-            <Stack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
-              <Text fontSize={'12.5px'} fontWeight={'500'}>You are not yet eligible to participate in the event</Text>
-              <HStack spacing={'20px'}>
-                <Text fontSize={'xs'} color={'#00B7EE'} fontWeight={'500'}>{`https://finance.nestprotocol.org/?a=${code}`}</Text>
-                <Button variant={'outline'} size={'sm'}
-                        onClick={() => {
-                          // copy code to clipboard
-                          if (code) {
-                            navigator.clipboard.writeText(`https://finance.nestprotocol.org/?a=${code}`)
-                          }
-                        }}
-                >
-                  Copy Link
-                </Button>
+        {
+          userData ? (
+            myInfo ? (
+              <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'24px'}>
+                <Stack>
+                  <Avatar src={userData.photo_url}
+                          name={userData.username ? userData.username : `${userData.first_name} ${userData.last_name}`}/>
+                  <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{myRanking}</Text>
+                </Stack>
+                <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
+                  <Text>{userData.username ? `@${userData.username}` : `${userData.first_name} ${userData.last_name}`}</Text>
+                  <Text color={'#00B7EE'} pr={'30px'} maxW={'250px'}>{myInfo.wallet}</Text>
+                  <Divider/>
+                  <HStack justify={'space-between'} w={'full'} color={'#878787'}>
+                    <Text w={'full'} fontSize={'xs'}>Tx amount</Text>
+                    <Text w={'full'} fontSize={'xs'}>Bonus</Text>
+                  </HStack>
+                  <HStack justify={'space-between'} w={'full'}>
+                    <Text w={'full'}>{myInfo.txAmount.toLocaleString('en-US', {
+                      maximumFractionDigits: 2,
+                    })} NEST</Text>
+                    <Text w={'full'}>{myInfo.rewards.toLocaleString('en-US', {
+                      maximumFractionDigits: 2,
+                    })} NEST</Text>
+                  </HStack>
+                </Stack>
               </HStack>
+            ) : (
+              <Stack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
+                <Text fontSize={'12.5px'} fontWeight={'500'}>You are not yet eligible to participate in the event</Text>
+                <HStack spacing={'20px'}>
+                  <Link href={`https://finance.nestprotocol.org/?a=${code}`} isExternal fontSize={'xs'}
+                        color={'#00B7EE'} fontWeight={'500'}>{`https://finance.nestprotocol.org/?a=${code}`}</Link>
+                  <Button variant={'outline'} size={'sm'}
+                          onClick={() => {
+                            // copy code to clipboard
+                            if (code) {
+                              navigator.clipboard.writeText(`https://finance.nestprotocol.org/?a=${code}`)
+                            }
+                          }}
+                  >
+                    Copy Link
+                  </Button>
+                </HStack>
 
-            </Stack>
+              </Stack>
+            )
+          ) : (
+            <HStack justifyContent={"center"} h={'80px'}>
+              <Button onClick={loginTelegram} size={'lg'} variant={userData ? 'ghost' : 'solid'}
+                      leftIcon={<FaTelegramPlane/>} colorScheme={'telegram'}
+              >
+                Continue with telegram
+              </Button>
+            </HStack>
           )
-        ) : (
-          <HStack justifyContent={"center"} h={'80px'}>
-            <Button onClick={loginTelegram} size={'lg'} variant={userData ? 'ghost' : 'solid'}
-                    leftIcon={<FaTelegramPlane/>} colorScheme={'telegram'}
-            >
-              Continue with telegram
-            </Button>
-          </HStack>
-         )
-      }
+        }
       </Stack>
       <Stack>
         <Text fontSize={'14px'} fontWeight={'bold'}>Ranking</Text>
         {
           rank && rank.rankings?.sort((a, b) => b.txAmount - a.txAmount).map((item, index) => (
-            <HStack bg={'white'} key={index} p={'20px'} border={'2px solid #EEEEEE'} borderRadius={'14px'} spacing={'24px'}>
+            <HStack bg={'white'} key={index} p={'20px'} border={'2px solid #EEEEEE'} borderRadius={'14px'}
+                    spacing={'24px'}>
               <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{index + 1}</Text>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
                 <Text>@{item.tgName}</Text>
