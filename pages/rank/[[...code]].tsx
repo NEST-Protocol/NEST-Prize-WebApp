@@ -163,7 +163,7 @@ const Rank = () => {
       <Stack align={"center"} fontSize={'lg'} fontWeight={'500'}>
         {
           rank?.kol.tgName ? (
-            <Text><Badge colorScheme={'telegram'}>KOL</Badge> {rank?.kol.tgName}</Text>
+            <Text>KOL Transaction Ranking</Text>
           ) : (
             <Text>Code: {rank?.kol.code}</Text>
           )
