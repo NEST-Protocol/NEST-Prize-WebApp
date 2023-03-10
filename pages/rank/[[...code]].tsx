@@ -1,4 +1,4 @@
-import {Button, Divider, HStack, Link, Stack, Text, Avatar, Badge} from "@chakra-ui/react";
+import {Button, Divider, HStack, Link, Stack, Text, Avatar, Badge, Spinner} from "@chakra-ui/react";
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/router";
 import {FaTelegramPlane} from "react-icons/fa";
@@ -23,7 +23,7 @@ type RankType = {
     tgName: string,
     chatId: string,
   },
-  ranking: {
+  rankings: {
     chatId: string,
     txAmount: number,
     wallet: string,
@@ -35,54 +35,8 @@ type RankType = {
 const Rank = () => {
   const router = useRouter()
   const [userData, setUserData] = useState<TelegramData | undefined>(undefined)
-  const [rank, setRank] = useState<RankType | undefined>({
-    txTotalAmount: 2000,
-    rewardsTotal: 200,
-    txTotalUsers: 5,
-    kol: {
-      code: "71a91c10",
-      address: "0x3B00ce7E2d0E0E905990f9B09A1F515C71a91C10",
-      tgName: "tunogya",
-      chatId: "2130493951",
-    },
-    ranking: [
-      {
-        chatId: "2130493951",
-        txAmount: 200,
-        wallet: "0x3B00ce7E2d0E0E905990f9B09A1F515C71a91C10",
-        rewards: 20,
-        tgName: "tunogya",
-      },
-      {
-        chatId: "552791389",
-        txAmount: 300,
-        wallet: "0x481a74d43ae3A7BdE38B7fE36E46CF9a6cbb4F39",
-        rewards: 30,
-        tgName: "kingtin007",
-      },
-      {
-        chatId: "3",
-        txAmount: 400,
-        wallet: "0x03",
-        rewards: 40,
-        tgName: "User3",
-      },
-      {
-        chatId: "4",
-        txAmount: 500,
-        wallet: "0x04",
-        rewards: 50,
-        tgName: "User3",
-      },
-      {
-        chatId: "5",
-        txAmount: 600,
-        wallet: "0x05",
-        rewards: 60,
-        tgName: "User3",
-      },
-    ],
-  })
+  const [rank, setRank] = useState<RankType | undefined>(undefined)
+  const [invalid, setInvalid] = useState<boolean>(false)
 
   const code = useMemo(() => {
     return router.query.code?.[0]
@@ -103,10 +57,27 @@ const Rank = () => {
   };
 
   const fetchRank = useCallback(async () => {
-    // const res = await fetch('https://')
-    // const data = await res.json()
-    // setRank(data)
-  }, [])
+    if (!code) {
+      return
+    }
+    try {
+      const res = await fetch(`https://cms.nestfi.net/bot-api/kol/ranking/info?code=${code}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
+        }
+      })
+      const data = await res.json()
+      if (data.value) {
+        setRank(data.value)
+      } else {
+        setInvalid(true)
+      }
+    } catch (e) {
+      setInvalid(true)
+    }
+  }, [code])
 
   useEffect(() => {
     fetchRank()
@@ -116,17 +87,17 @@ const Rank = () => {
     if (!rank || !userData) {
       return undefined
     }
-    return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).find(item => String(item.chatId) === String(userData.id))
+    return rank.rankings?.sort((a, b) => b.txAmount - a.txAmount).find(item => String(item.chatId) === String(userData.id))
   }, [rank, userData])
 
   const myRanking = useMemo(() => {
     if (!rank || !userData) {
       return undefined
     }
-    return rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).findIndex(item => String(item.chatId) === String(userData.id)) + 1
+    return rank.rankings?.sort((a, b) => b.txAmount - a.txAmount).findIndex(item => String(item.chatId) === String(userData.id)) + 1
   }, [rank, userData])
 
-  if (code !== '71a91c10') {
+  if (invalid) {
     return (
       <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}
              justifyContent={"center"} alignItems={"center"}
@@ -136,12 +107,23 @@ const Rank = () => {
     )
   }
 
+  if (!userData) {
+    return (
+      <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}
+             justifyContent={"center"} alignItems={"center"}
+      >
+        <Spinner />
+        <Text fontSize={'lg'} fontWeight={'500'}>Loading...</Text>
+      </Stack>
+    )
+  }
+
   return (
     <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}>
       <Stack align={"center"} fontSize={'lg'} fontWeight={'500'}>
         {
           rank?.kol.tgName ? (
-            <Link href={`https://t.me/${rank?.kol.tgName}`} isExternal><Badge colorScheme={'telegram'}>KOL</Badge> {rank?.kol.tgName}</Link>
+            <Text><Badge colorScheme={'telegram'}>KOL</Badge> {rank?.kol.tgName}</Text>
           ) : (
             <Text>Code: {rank?.kol.code}</Text>
           )
@@ -208,7 +190,7 @@ const Rank = () => {
       <Stack>
         <Text fontSize={'14px'} fontWeight={'bold'}>Ranking</Text>
         {
-          rank && rank.ranking?.sort((a, b) => b.txAmount - a.txAmount).map((item, index) => (
+          rank && rank.rankings?.sort((a, b) => b.txAmount - a.txAmount).map((item, index) => (
             <HStack bg={'white'} key={index} p={'20px'} border={'2px solid #EEEEEE'} borderRadius={'14px'} spacing={'24px'}>
               <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{index + 1}</Text>
               <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
