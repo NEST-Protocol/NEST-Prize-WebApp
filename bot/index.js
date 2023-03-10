@@ -179,26 +179,38 @@ bot.action('menu', async (ctx) => {
     }
   }).catch((e) => console.log(e))
   try {
-    const res = await axios({
-      method: 'GET',
-      url: `https://cms.nestfi.net/bot-api/red-bot/user/${ctx.update.callback_query.from.id}`,
-      headers: {
-        'Authorization': `Bearer ${nest_token}`,
-      }
-    })
+    const res = await Promise.all([
+      axios({
+        method: 'GET',
+        url: `https://cms.nestfi.net/bot-api/red-bot/user/${ctx.from.id}`,
+        headers: {
+          'Authorization': `Bearer ${nest_token}`,
+        }
+      }),
+      axios({
+        method: 'GET',
+        url: `https://cms.nestfi.net/bot-api/kol/code/by/chatId?chatId=${ctx.from.id}`,
+        headers: {
+          'Authorization': `Bearer ${nest_token}`,
+        }
+      })
+    ])
+    const user = res[0].data
+    const myKol = res[1].data
     await lmt.removeTokens(1)
     await ctx.answerCbQuery()
         .catch((e) => console.log(e))
     await ctx.editMessageText(t("Welcome", lang, {
-      wallet: res?.data?.value?.wallet,
-      twitter: res?.data?.value?.twitterName,
-      ref: res?.data?.value?.wallet ? `${res?.data?.value?.wallet?.slice(-8)?.toLowerCase()}` : 'Bind wallet first!'
+      wallet: user?.data?.value?.wallet,
+      twitter: user?.data?.value?.twitterName,
+      ref: user?.data?.value?.wallet ? `${user?.data?.value?.wallet?.slice(-8)?.toLowerCase()}` : 'Bind wallet first!'
     }), {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
         [Markup.button.url(t('invite', lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)],
         [Markup.button.url('Invitation Info', `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
-        [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', res?.data?.value?.wallet)],
+        [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', user?.data?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', user?.data?.value?.wallet)],
+        [Markup.button.url(t('KOL Ranking', lang), `https://nest-prize-web-app-delta.vercel.app/rank/${myKol?.value}?chatId=${ctx.from.id}`, !myKol.value)],
         [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures')],
       ])
     })
