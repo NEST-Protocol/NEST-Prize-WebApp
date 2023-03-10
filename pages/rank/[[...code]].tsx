@@ -107,7 +107,7 @@ const Rank = () => {
     )
   }
 
-  if (!userData) {
+  if (!rank) {
     return (
       <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'} bgSize={'cover'} spacing={'16px'}
              justifyContent={"center"} alignItems={"center"}
