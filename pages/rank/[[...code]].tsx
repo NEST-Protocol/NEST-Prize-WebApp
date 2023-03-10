@@ -161,13 +161,7 @@ const Rank = () => {
     <Stack maxW={'container.sm'} w={'full'} h={'100vh'} overflow={'scroll'} p={'16px'} bgImage={'/img/pizzaBg.jpg'}
            bgSize={'cover'} spacing={'16px'}>
       <Stack align={"center"} fontSize={'lg'} fontWeight={'500'}>
-        {
-          rank?.kol.tgName ? (
-            <Text>KOL Transaction Ranking</Text>
-          ) : (
-            <Text>Code: {rank?.kol.code}</Text>
-          )
-        }
+        <Text>KOL Transaction Ranking</Text>
         <Text fontSize={'xs'} fontWeight={'500'}>{rank.kol.startTime.slice(0, 10)} ~ {rank.kol.endTime.slice(0, 10)}</Text>
       </Stack>
       <HStack p={'30px'} bg={'white'} justifyContent={'space-around'} border={'2px solid #EEEEEE'}
