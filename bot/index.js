@@ -80,9 +80,17 @@ bot.start(async (ctx) => {
         headers: {
           'Authorization': `Bearer ${nest_token}`,
         }
+      }),
+      axios({
+        method: 'GET',
+        url: `https://cms.nestfi.net/bot-api/kol/code/by/chatId?chatId=${ctx.from.id}`,
+        headers: {
+          'Authorization': `Bearer ${nest_token}`,
+        }
       })
     ])
     const user = res[1].data
+    const myKol = res[2].data
     await lmt.removeTokens(1)
     ctx.reply(t('Welcome', lang, {
       wallet: user?.value?.wallet,
@@ -93,6 +101,7 @@ bot.start(async (ctx) => {
       ...Markup.inlineKeyboard([
         [Markup.button.url('Invitation Info', `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.from.id}`)],
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', user?.value?.wallet)],
+        [Markup.button.url(t('KOL Ranking', lang), `https://nest-prize-web-app-delta.vercel.app/rank/${myKol?.value}?chatId=${ctx.from.id}`, !myKol.value)],
         [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures')],
       ])
     })
@@ -187,9 +196,9 @@ bot.action('menu', async (ctx) => {
     }), {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.url(t('invite',lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)],
+        [Markup.button.url(t('invite', lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)],
         [Markup.button.url('Invitation Info', `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
-        [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback(t('Set Wallet',lang), 'setUserWallet', res?.data?.value?.wallet)],
+        [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', res?.data?.value?.wallet)],
         [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures')],
       ])
     })
@@ -286,7 +295,7 @@ bot.on('message', async (ctx) => {
     
     if (intent === null) {
       await lmt.removeTokens(1)
-      ctx.reply(t('I have no idea what you are talking about.',lang))
+      ctx.reply(t('I have no idea what you are talking about.', lang))
     } else if (intent === 'setUserWallet') {
       if (isAddress(input)) {
         try {
@@ -323,7 +332,7 @@ bot.on('message', async (ctx) => {
           ]))
         } catch (e) {
           await lmt.removeTokens(1)
-          ctx.reply(t('Some error occurred.',lang), {
+          ctx.reply(t('Some error occurred.', lang), {
             reply_to_message_id: ctx.message.message_id,
             ...Markup.inlineKeyboard([
               [Markup.button.callback(t('« Back', lang), 'menu')],
@@ -333,7 +342,7 @@ bot.on('message', async (ctx) => {
         }
       } else {
         await lmt.removeTokens(1)
-        ctx.reply(t('Please input a valid wallet address.',lang), {
+        ctx.reply(t('Please input a valid wallet address.', lang), {
           reply_to_message_id: ctx.message.message_id,
         })
       }
