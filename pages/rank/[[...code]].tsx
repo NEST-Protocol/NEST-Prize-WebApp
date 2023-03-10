@@ -37,10 +37,14 @@ const Rank = () => {
   const [userData, setUserData] = useState<TelegramData | undefined>(undefined)
   const [rank, setRank] = useState<RankType | undefined>(undefined)
   const [invalid, setInvalid] = useState<boolean>(false)
+  const [myCode, setMyCode] = useState<string | undefined>(undefined)
 
   const code = useMemo(() => {
     return router.query.code?.[0]
   }, [router])
+
+
+  console.log(myCode, code)
 
   useEffect(() => {
     if (router.query.chatId) {
@@ -90,6 +94,27 @@ const Rank = () => {
       setInvalid(true)
     }
   }, [code])
+
+  const fetchMyCode = useCallback(async () => {
+    if (!userData) {
+      return
+    }
+    const res = await fetch(`https://cms.nestfi.net/bot-api/kol/code/by/chatId?chatId=${userData.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`,
+      }
+    })
+    const data = await res.json()
+    if (data.value) {
+      setMyCode(data.value)
+    }
+  }, [userData])
+
+  useEffect(() => {
+    fetchMyCode()
+  }, [fetchMyCode])
 
   useEffect(() => {
     fetchRank()
@@ -191,21 +216,24 @@ const Rank = () => {
             ) : (
               <Stack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'20px'}>
                 <Text fontSize={'12.5px'} fontWeight={'500'}>You are not yet eligible to participate in the event</Text>
-                <HStack spacing={'20px'}>
-                  <Link href={`https://finance.nestprotocol.org/?a=${code}`} isExternal fontSize={'xs'}
-                        color={'#00B7EE'} fontWeight={'500'}>{`https://finance.nestprotocol.org/?a=${code}`}</Link>
-                  <Button variant={'outline'} size={'sm'}
-                          onClick={() => {
-                            // copy code to clipboard
-                            if (code) {
-                              navigator.clipboard.writeText(`https://finance.nestprotocol.org/?a=${code}`)
-                            }
-                          }}
-                  >
-                    Copy Link
-                  </Button>
-                </HStack>
-
+                {
+                  myCode === undefined && (
+                    <HStack spacing={'20px'}>
+                      <Link href={`https://finance.nestprotocol.org/?a=${code}`} isExternal fontSize={'xs'}
+                            color={'#00B7EE'} fontWeight={'500'}>{`https://finance.nestprotocol.org/?a=${code}`}</Link>
+                      <Button variant={'outline'} size={'sm'}
+                              onClick={() => {
+                                // copy code to clipboard
+                                if (code) {
+                                  navigator.clipboard.writeText(`https://finance.nestprotocol.org/?a=${code}`)
+                                }
+                              }}
+                      >
+                        Copy Link
+                      </Button>
+                    </HStack>
+                  )
+                }
               </Stack>
             )
           ) : (
