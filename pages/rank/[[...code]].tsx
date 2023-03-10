@@ -40,11 +40,8 @@ const Rank = () => {
   const [myCode, setMyCode] = useState<string | undefined>(undefined)
 
   const code = useMemo(() => {
-    return router.query.code?.[0]
+    return router.query.code?.[0].toLowerCase()
   }, [router])
-
-
-  console.log(myCode, code)
 
   useEffect(() => {
     if (router.query.chatId) {
@@ -108,7 +105,7 @@ const Rank = () => {
     })
     const data = await res.json()
     if (data.value) {
-      setMyCode(data.value)
+      setMyCode(data.value.toLowerCase())
     }
   }, [userData])
 
