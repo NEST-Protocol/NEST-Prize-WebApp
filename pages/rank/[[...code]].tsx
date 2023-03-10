@@ -42,6 +42,18 @@ const Rank = () => {
     return router.query.code?.[0]
   }, [router])
 
+  useEffect(() => {
+    if (router.query.chatId) {
+      setUserData({
+        hash: '',
+        id: Number(router.query.chatId),
+        photo_url: '',
+        username: '',
+        auth_date: 0,
+      })
+    }
+  }, [router])
+
   const loginTelegram = () => {
     // @ts-ignore
     window?.Telegram.Login.auth({
@@ -155,11 +167,11 @@ const Rank = () => {
               <HStack bg={'white'} border={'2px solid #EEEEEE'} p={'20px'} borderRadius={'14px'} spacing={'24px'}>
                 <Stack>
                   <Avatar src={userData.photo_url}
-                          name={userData.username ? userData.username : `${userData.first_name} ${userData.last_name}`}/>
+                          name={myInfo.tgName}/>
                   <Text fontSize={'xl'} fontWeight={'semibold'}>NO.{myRanking}</Text>
                 </Stack>
                 <Stack fontSize={'12.5px'} fontWeight={'600'} w={'full'}>
-                  <Text>{userData.username ? `@${userData.username}` : `${userData.first_name} ${userData.last_name}`}</Text>
+                  <Text>{myInfo.tgName}</Text>
                   <Text color={'#00B7EE'} pr={'30px'} maxW={'250px'}>{myInfo.wallet}</Text>
                   <Divider/>
                   <HStack justify={'space-between'} w={'full'} color={'#878787'}>
