@@ -22,6 +22,9 @@ type RankType = {
     address: string,
     tgName: string,
     chatId: string,
+    rate: number,
+    endTime: string,
+    startTime: string,
   },
   rankings: {
     chatId: string,
@@ -165,6 +168,7 @@ const Rank = () => {
             <Text>Code: {rank?.kol.code}</Text>
           )
         }
+        <Text fontSize={'xs'} fontWeight={'500'}>{rank.kol.startTime.slice(0, 10)} ~ {rank.kol.endTime.slice(0, 10)}</Text>
       </Stack>
       <HStack p={'30px'} bg={'white'} justifyContent={'space-around'} border={'2px solid #EEEEEE'}
               borderRadius={'14px'}>
