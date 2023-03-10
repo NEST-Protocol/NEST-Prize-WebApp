@@ -91,11 +91,8 @@ bot.start(async (ctx) => {
     }), {
       disable_web_page_preview: true,
       ...Markup.inlineKeyboard([
-        [Markup.button.url(t('invite', lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${user?.value?.wallet?.slice(-8)?.toLowerCase()}`)],
         [Markup.button.url('Invitation Info', `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.from.id}`)],
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', user?.value?.twitterName), Markup.button.callback(t('Set Wallet', lang), 'setUserWallet', user?.value?.wallet)],
-        [Markup.button.callback('NESTFi S5 Food Festival (Ended)', 'NESTFiEvents')],
-        [Markup.button.callback('NEST Roundtable Rewards', 'NESTRoundtable')],
         [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures')],
       ])
     })
@@ -103,29 +100,6 @@ bot.start(async (ctx) => {
   } catch (e) {
     console.log(e)
   }
-})
-
-bot.action('NESTRoundtable', async (ctx) => {
-  let lang = ctx.update.callback_query.from.language_code
-  if (!['en', 'ja', 'bn', 'id', 'tr', 'vi', 'ko', 'ru'].includes(lang)) {
-    lang = 'en'
-  }
-  
-  await lmt.removeTokens(1)
-  await ctx.editMessageText(`NEST Roundtable 27: NFT Opportunities in 2023
-Rewards:
-100 $NEST for 100 winners
-
-Tasks:
-1. RT the Tweet & @ 3 friends
-Link: https://twitter.com/NEST_Protocol/status/1630900495308173313
-2. Join the Space
-Link: https://twitter.com/i/spaces/1YpKkgdgDqAKj
-3. Follow @NEST_Protocol, @SeerFoundation`, {
-    ...Markup.inlineKeyboard([
-      [Markup.button.callback(t('« Back', lang), 'menu')],
-    ])
-  })
 })
 
 bot.action('inputUserTwitter', async (ctx) => {
@@ -216,29 +190,12 @@ bot.action('menu', async (ctx) => {
         [Markup.button.url(t('invite',lang), `https://nest-prize-web-app-delta.vercel.app/api/share2?from=${ctx.update.callback_query.from.id}`)],
         [Markup.button.url('Invitation Info', `https://nest-prize-web-app-delta.vercel.app/pizza?chatId=${ctx.update.callback_query.from.id}`)],
         [Markup.button.callback(t('Set Twitter', lang), 'inputUserTwitter', res?.data?.value?.twitterName), Markup.button.callback(t('Set Wallet',lang), 'setUserWallet', res?.data?.value?.wallet)],
-        [Markup.button.callback('NESTFi S5 Food Festival (Ended)', 'NESTFiEvents')],
-        [Markup.button.callback(t('NEST Roundtable Rewards', lang), 'NESTRoundtable')],
         [Markup.button.url(t('go to futures', lang), 'https://finance.nestprotocol.org/#/futures')],
       ])
     })
   } catch (e) {
     console.log(e)
     await lmt.removeTokens(1)
-  }
-})
-
-bot.action('NESTFiEvents', async (ctx) => {
-  try {
-    await lmt.removeTokens(1)
-    await ctx.answerCbQuery()
-        .catch((e) => console.log(e))
-    await ctx.editMessageText(`S5 food festival is end, settlement is in progress.`, {
-      ...Markup.inlineKeyboard([
-        [Markup.button.callback('« Back', 'menu')]
-      ])
-    })
-  } catch (e) {
-    console.log(e)
   }
 })
 
