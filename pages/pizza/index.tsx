@@ -49,9 +49,27 @@ const Pizza = () => {
   const {onCopy, setValue, hasCopied, value} = useClipboard('')
   const [filter, setFilter] = useState('all')
   const [sort, setSort] = useState('totalTrading')
-  const [from, setFrom] = useState('2023-01-01')
+  const [from, setFrom] = useState('')
   const [to, setTo] = useState(new Date().toISOString().slice(0, 10))
   const [search, setSearch] = useState('')
+
+  const fetchFrom = useCallback(async () => {
+     // https://cms.nestfi.net/bot-api/red-bot/s4/invite/settle-date
+    const res = await axios({
+      method: 'GET',
+      url: `https://cms.nestfi.net/bot-api/red-bot/s4/invite/settle-date`,
+      headers: {
+        'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
+      }
+    })
+    if (res?.data?.value) {
+      setFrom(res.data.value.slice(0, 10))
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchFrom()
+  }, [fetchFrom])
 
   const getCode = useCallback(async () => {
     if (chatId) {
@@ -99,7 +117,6 @@ const Pizza = () => {
           }
         })
         if (res?.data?.value) {
-          console.log(res.data.value)
           setData(res.data.value)
         }
       } catch (e) {
