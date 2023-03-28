@@ -49,9 +49,10 @@ const Pizza = () => {
   const {onCopy, setValue, hasCopied, value} = useClipboard('')
   const [filter, setFilter] = useState('all')
   const [sort, setSort] = useState('totalTrading')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState(new Date().toISOString().slice(0, 10))
+  const [settledDay, setSettledDay] = useState('')
+  const [today, setToday] = useState(new Date().toISOString().slice(0, 10))
   const [search, setSearch] = useState('')
+  const [index, setIndex] = useState(0)
 
   const fetchFrom = useCallback(async () => {
      // https://cms.nestfi.net/bot-api/red-bot/s4/invite/settle-date
@@ -63,7 +64,7 @@ const Pizza = () => {
       }
     })
     if (res?.data?.value) {
-      setFrom(res.data.value.slice(0, 10))
+      setSettledDay(res.data.value.slice(0, 10))
     }
   }, [])
 
@@ -92,11 +93,11 @@ const Pizza = () => {
 
   const fetchData = useCallback(async () => {
     if (!chatId) return
-    if (from && to) {
+    if (settledDay && today) {
       try {
         const res = await axios({
           method: 'GET',
-          url: `https://cms.nestfi.net/bot-api/red-bot/s4/invite/info?chatId=${chatId}&from=${from}&to=${to}`,
+          url: `https://cms.nestfi.net/bot-api/red-bot/s4/invite/info?chatId=${chatId}&from=${index === 0 ? '2023-01-01' : settledDay}&to=${index === 0 ? settledDay : today}`,
           headers: {
             'Authorization': `Bearer ${process.env.NEST_API_TOKEN}`
           }
@@ -123,7 +124,7 @@ const Pizza = () => {
         console.log(e)
       }
     }
-  }, [chatId, from, to])
+  }, [chatId, settledDay, today, index])
 
   const showData = useMemo(() => {
     return data?.details.filter((item) => {
@@ -171,15 +172,25 @@ const Pizza = () => {
           {hasCopied ? 'Copied success!' : 'Copy invitation link'}
         </Button>
       </HStack>
-      <HStack>
-        <Input fontSize={'12.5px'} value={from} type={'date'} borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
-               border={'1px solid #EEEEEE'} onChange={(e) => {
-          setFrom(e.target.value)
-        }}/>
-        <Input fontSize={'12.5px'} value={to} type={'date'} borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
-               border={'1px solid #EEEEEE'} onChange={(e) => {
-          setTo(e.target.value)
-        }}/>
+      <HStack spacing={0} w={'full'}>
+        <Button w={'full'} borderRadius={"20px 0px 0px 20px"} fontSize={'14px'} fontWeight={'400'} lineHeight={'20px'}
+                _hover={{}} _active={{}}
+                bg={index === 0 ? '#F0F1F5' : '#FFFFFF'} border={"1px solid rgba(28, 28, 35, 0.08)"} color={index === 0 ? '#030308' : 'rgba(3, 3, 8, 0.6)'}
+                onClick={() => {
+                  setIndex(0)
+                }}
+        >
+          Settled
+        </Button>
+        <Button w={'full'} borderRadius={"0px 20px 20px 0px"} fontSize={'14px'} fontWeight={'400'} lineHeight={'20px'}
+                _hover={{}} _active={{}}
+                bg={index === 1 ? '#F0F1F5' : '#FFFFFF'} border={"1px solid rgba(28, 28, 35, 0.08)"} color={index === 1 ? '#030308' : 'rgba(3, 3, 8, 0.6)'}
+                onClick={() => {
+                  setIndex(1)
+                }}
+        >
+          Not settled ({settledDay.slice(5)} - {today.slice(5)})
+        </Button>
       </HStack>
       <Stack>
         <Wrap justify={'space-between'} border={'2px solid #EEEEEE'} p={4} borderRadius={'14px'} bg={'white'}>
@@ -229,8 +240,8 @@ const Pizza = () => {
               <Select borderRadius={'full'} bg={'#F7F8FA'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
                       border={'1px solid #EEEEEE'}
                       onChange={(e) => {
-                        setFrom('')
-                        setTo('')
+                        setSettledDay('')
+                        setToday('')
                         setFilter(e.target.value)
                       }} fontSize={'12.5px'}
               >
@@ -242,8 +253,8 @@ const Pizza = () => {
               <Select bg={'#F7F8FA'} borderRadius={'full'} boxShadow={'0px 0px 10px 0px #EEEEEE'}
                       border={'1px solid #EEEEEE'}
                       onChange={(e) => {
-                        setFrom('')
-                        setTo('')
+                        setSettledDay('')
+                        setToday('')
                         setSort(e.target.value)
                       }} fontSize={'12.5px'}
               >
