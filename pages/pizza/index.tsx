@@ -52,7 +52,7 @@ const Pizza = () => {
   const [settledDay, setSettledDay] = useState('')
   const [today, setToday] = useState(new Date().toISOString().slice(0, 10))
   const [search, setSearch] = useState('')
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(1)
 
   const fetchFrom = useCallback(async () => {
      // https://cms.nestfi.net/bot-api/red-bot/s4/invite/settle-date
